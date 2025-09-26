@@ -1,15 +1,6 @@
 # TSL-SignMap
 Hệ thống quản lý vị trí biển báo giao thông dựa trên cộng đồng, tích hợp AI
 
-Tuyệt vời, đây là bản dịch tiếng Việt cho tài liệu về hệ thống quản lý vị trí biển báo giao thông dựa trên cộng đồng, tích hợp AI tại Việt Nam:
-
-Hệ thống quản lý vị trí biển báo giao thông dựa trên cộng đồng, tích hợp AI tại Việt Nam (SignMap)
-a. Bối cảnh:
-Tại Việt Nam, các biển báo giao thông đóng vai trò quan trọng trong việc đảm bảo an toàn đường bộ, điều tiết luồng giao thông và cung cấp thông tin thiết yếu giúp người lái xe đưa ra quyết định sáng suốt. Những thay đổi thường xuyên trong cơ sở hạ tầng giao thông—do xây dựng đường bộ, phát triển đô thị, hoặc bảo trì—đòi hỏi phải cập nhật liên tục vị trí biển báo, bao gồm thêm mới, loại bỏ, di dời hoặc thay thế.
-
-Các phương pháp quản lý truyền thống, dựa vào khảo sát và kiểm tra thủ công, thường tốn thời gian, chi phí cao, và dễ bị lỗi do con người, dẫn đến dữ liệu bị lỗi thời hoặc không đầy đủ. Điều này làm tăng nguy cơ vi phạm giao thông và tai nạn.
-
-Để khắc phục những thách thức này, Hệ thống Quản lý Vị trí Biển báo Giao thông (TSL) tích hợp AI được đề xuất. TSL tận dụng công nghệ di động, sự đóng góp của cộng đồng và trí tuệ nhân tạo để duy trì một cơ sở dữ liệu biển báo giao thông thời gian thực, có tính cộng tác.
 
 Hệ thống này có một ứng dụng di động thân thiện với người dùng, được tích hợp với OpenStreetMap hoặc các dịch vụ bản đồ mã nguồn mở tương tự, hiển thị các vị trí biển báo giao thông cập nhật để hỗ trợ người lái xe điều hướng an toàn và tự tin hơn. Các tính năng chính bao gồm:
 
