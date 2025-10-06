@@ -15,5 +15,7 @@ namespace WebAppTrafficSign.Models
         public string ImageUrl { get; set; }
         public DateTime validFrom { get; set; }
         public DateTime validTo { get; set; }
+
+        public List<string> Traffic { get; set; } = new List<string>();
     }
 }

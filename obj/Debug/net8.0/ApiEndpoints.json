@@ -22,6 +22,7 @@
         "Type": "WebAppTrafficSign.Models.User",
         "IsRequired": true
       }
+<<<<<<< Updated upstream
     ],
     "ReturnTypes": []
   },
@@ -56,5 +57,8 @@
       }
     ],
     "ReturnTypes": []
+=======
+    ]
+>>>>>>> Stashed changes
   }
 ]

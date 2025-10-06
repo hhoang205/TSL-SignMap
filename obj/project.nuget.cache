@@ -1,5 +1,6 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "gPaT1AmL81Q=",
   "success": true,
   "projectFilePath": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\WebAppTrafficSign.csproj",
@@ -96,6 +97,18 @@
     "C:\\Users\\HP\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+=======
+  "dgSpecHash": "6gpNMulhVEW68U5sARW5bfCQxJ8BH0g9S9nZhAqGvwtEccrZKCel4mTt/nhvxDfAMKKZDJZD87GXsxKfJzBB0Q==",
+  "success": true,
+  "projectFilePath": "Z:\\Project Code C#\\WebAppTrafficSign\\WebAppTrafficSign.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\thoze\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\thoze\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
+    "C:\\Users\\thoze\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
+    "C:\\Users\\thoze\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
+    "C:\\Users\\thoze\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.6.2\\swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
+    "C:\\Users\\thoze\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.6.2\\swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
+>>>>>>> Stashed changes
   ],
   "logs": []
 }

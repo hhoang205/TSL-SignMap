@@ -34,6 +34,7 @@ E:\CODE\Project\WebAppTrafficSign\WebAppTrafficSign\obj\Debug\net8.0\refint\WebA
 E:\CODE\Project\WebAppTrafficSign\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.pdb
 E:\CODE\Project\WebAppTrafficSign\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.genruntimeconfig.cache
 E:\CODE\Project\WebAppTrafficSign\WebAppTrafficSign\obj\Debug\net8.0\ref\WebAppTrafficSign.dll
+<<<<<<< Updated upstream
 C:\Users\HP\OneDrive\Desktop\XDHDT\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\HP\OneDrive\Desktop\XDHDT\bin\Debug\net8.0\appsettings.json
 C:\Users\HP\OneDrive\Desktop\XDHDT\bin\Debug\net8.0\WebAppTrafficSign.staticwebassets.endpoints.json
@@ -211,3 +212,16 @@ C:\Users\HP\OneDrive\Desktop\XDHDT\obj\Debug\net8.0\WebAppTrafficSign.pdb
 C:\Users\HP\OneDrive\Desktop\XDHDT\obj\Debug\net8.0\WebAppTrafficSign.genruntimeconfig.cache
 C:\Users\HP\OneDrive\Desktop\XDHDT\obj\Debug\net8.0\ref\WebAppTrafficSign.dll
 C:\Users\HP\OneDrive\Desktop\XDHDT\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+=======
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.csproj.AssemblyReference.cache
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.GeneratedMSBuildEditorConfig.editorconfig
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.AssemblyInfoInputs.cache
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.AssemblyInfo.cs
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.csproj.CoreCompileInputs.cache
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.MvcApplicationPartsAssemblyInfo.cs
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.MvcApplicationPartsAssemblyInfo.cache
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.sourcelink.json
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.dll
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\refint\WebAppTrafficSign.dll
+Z:\Project Code C#\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.pdb
+>>>>>>> Stashed changes
