@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using NetTopologySuite.Geometries;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace WebAppTrafficSign.Models
 {
@@ -6,6 +8,8 @@ namespace WebAppTrafficSign.Models
     {
         public int Id { get; set; }
         public string Type { get; set; }
+
+        [Column(TypeName = "geometry")]
         public Point Location { get; set; }
         public string status { get; set; } // e.g., "Active", "Inactive", "Under Maintenance"
         public string ImageUrl { get; set; }
