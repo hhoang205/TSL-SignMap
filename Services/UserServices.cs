@@ -5,6 +5,9 @@ using WebAppTrafficSign.Models;
 using WebAppTrafficSign.DTOs;
 using WebAppTrafficSign.Services.Interfaces;
 using WebAppTrafficSign.Mapper;
+using Microsoft.AspNetCore.Mvc;
+using WebAppTrafficSign.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebAppTrafficSign.Services
 {
@@ -20,17 +23,16 @@ namespace WebAppTrafficSign.Services
         Task<bool> DeleteUserAsync(int id);
     }
     /// Lớp triển khai UserService chứa toàn bộ nghiệp vụ người dùng
-    /// </summary>
     public class UserService : IUserService
     {
-        private readonly AppDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly ITokenService _tokenService;
         private readonly ICoinWalletService _coinWalletService;
         private readonly IEmailService _emailService;
 
         public UserService(
-            AppDbContext context,
+            ApplicationDbContext context,
             IPasswordHasher<User> passwordHasher,
             ITokenService tokenService,
             ICoinWalletService coinWalletService,
@@ -43,7 +45,6 @@ namespace WebAppTrafficSign.Services
             _emailService = emailService;
         }
         /// Đăng ký tài khoản mới
-        /// </summary>
         public async Task<UserDto> RegisterAsync(UserRegistrationRequest request)
         {
             // Kiểm tra tài khoản tồn tại
@@ -54,7 +55,7 @@ namespace WebAppTrafficSign.Services
             {
                 Username = request.Username,
                 Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
+                PhoneNumber = int.Parse(request.PhoneNumber),
                 RoleId = 0, // 0: user
                 Reputation = 0f,
                 CreatedAt = DateTime.UtcNow
@@ -74,35 +75,29 @@ namespace WebAppTrafficSign.Services
             return user.toDto();
         }
 
-        /// <summary>
         /// Đăng nhập, trả về token xác thực
-        /// </summary>
         public async Task<AuthResponse> LoginAsync(LoginRequest request)
         {
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
             if (user == null)
                 throw new InvalidOperationException("Tài khoản không tồn tại.");
 
-            var verifyResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
+            var verifyResult = _passwordHasher.VerifyHashedPassword(user, user.Password, request.Password);
             if (verifyResult != PasswordVerificationResult.Success)
                 throw new InvalidOperationException("Mật khẩu không đúng.");
 
             var token = _tokenService.GenerateToken(user);
-            return new AuthResponse { User = user.ToDto(), Token = token };
+            return new AuthResponse { User = user.toDto(), Token = token };
         }
 
-        /// <summary>
         /// Lấy thông tin người dùng theo Id
-        /// </summary>
         public async Task<UserDto> GetByIdAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            return user?.ToDto();
+            return user?.toDto();
         }
 
-        /// <summary>
         /// Cập nhật hồ sơ người dùng (tên, email, phone)
-        /// </summary>
         public async Task<UserDto> UpdateProfileAsync(int id, UserUpdateRequest request)
         {
             var user = await _context.Users.FindAsync(id);
@@ -114,34 +109,30 @@ namespace WebAppTrafficSign.Services
 
             user.Username = request.Username;
             user.Email = request.Email;
-            user.Phone = request.PhoneNumber;
+            user.PhoneNumber = int.Parse(request.PhoneNumber);
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
-            return user.ToDto();
+            return user.toDto();
         }
 
-        /// <summary>
         /// Đổi mật khẩu
-        /// </summary>
         public async Task<bool> ChangePasswordAsync(int id, ChangePasswordRequest request)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null) throw new InvalidOperationException("User not found");
 
-            var verifyResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.CurrentPassword);
+            var verifyResult = _passwordHasher.VerifyHashedPassword(user, user.Password, request.CurrentPassword);
             if (verifyResult != PasswordVerificationResult.Success)
                 throw new InvalidOperationException("Mật khẩu hiện tại không đúng.");
 
-            user.PasswordHash = _passwordHasher.HashPassword(user, request.NewPassword);
+            user.Password = _passwordHasher.HashPassword(user, request.NewPassword);
             user.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
             return true;
         }
 
-        /// <summary>
         /// Yêu cầu đặt lại mật khẩu (gửi email)
-        /// </summary>
         public async Task<bool> ForgotPasswordAsync(ForgotPasswordRequest request)
         {
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
@@ -153,9 +144,7 @@ namespace WebAppTrafficSign.Services
             return true;
         }
 
-        /// <summary>
         /// Xóa hoặc vô hiệu hóa người dùng
-        /// </summary>
         public async Task<bool> DeleteUserAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);

@@ -10,7 +10,7 @@
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
         public float Reputation { get; set; }
-        public int Role { get; set; }  // 0: user, 1: staff, 2: admin
+        public int RoleId { get; set; }  // 0: user, 1: staff, 2: admin
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
@@ -18,7 +18,7 @@
     {
         public string Username { get; set; }
         public string Email { get; set; }
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string Password { get; set; }
     }
     public class LoginRequest

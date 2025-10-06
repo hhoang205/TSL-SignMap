@@ -1,70 +1,37 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\",
+  "WorkspaceRootPath": "Z:\\Project Code C#\\WebAppTrafficSign\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\services\\interface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:services\\interface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\migrations\\20251006062045_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:migrations\\20251006062045_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:migrations\\applicationdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\controller\\contributioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:controller\\contributioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\thoze\\Dropbox\\PC\\Downloads\\ApplicationDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\models\\contribution.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\contribution.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\models\\trafficsign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\trafficsign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\models\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\models\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\models\\staff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\staff.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|c:\\users\\hp\\onedrive\\desktop\\xdhdt\\models\\coinwallet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\coinwallet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,201 +41,107 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": ".gitignore",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\.gitignore",
-              "RelativeDocumentMoniker": ".gitignore",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\.gitignore",
-              "RelativeToolTip": ".gitignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-10-06T12:44:18.476Z",
+              "Title": "Interface.cs",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\Interface.cs",
+              "RelativeDocumentMoniker": "Services\\Interface.cs",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\Interface.cs",
+              "RelativeToolTip": "Services\\Interface.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T15:40:51.537Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "20251006062045_InitialCreate.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Migrations\\20251006062045_InitialCreate.cs",
-              "RelativeDocumentMoniker": "Migrations\\20251006062045_InitialCreate.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Migrations\\20251006062045_InitialCreate.cs",
-              "RelativeToolTip": "Migrations\\20251006062045_InitialCreate.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\UserDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UserDto.cs",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\UserDto.cs",
+              "RelativeToolTip": "DTOs\\UserDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T06:21:56.908Z"
+              "WhenOpened": "2025-10-06T15:38:47.399Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "ApplicationDBContext.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Data\\ApplicationDBContext.cs",
-              "RelativeDocumentMoniker": "Data\\ApplicationDBContext.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Data\\ApplicationDBContext.cs",
-              "RelativeToolTip": "Data\\ApplicationDBContext.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAYwBYAAAANAAAAAAAAAA==",
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\thoze\\Dropbox\\PC\\Downloads\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\thoze\\Dropbox\\PC\\Downloads\\ApplicationDbContext.cs",
+              "ViewState": "AQIAAIUAAAAAAAAAAADwv6YAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T04:39:00.379Z"
+              "WhenOpened": "2025-10-06T15:36:49.452Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-03T08:34:35.678Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Controller\\UserController.cs",
-              "RelativeDocumentMoniker": "Controller\\UserController.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Controller\\UserController.cs",
-              "RelativeToolTip": "Controller\\UserController.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAwwC4AAAAMAAAAAAAAAA==",
+              "Title": "ApplicationDBContext.cs",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Data\\ApplicationDBContext.cs",
+              "RelativeDocumentMoniker": "Data\\ApplicationDBContext.cs",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Data\\ApplicationDBContext.cs",
+              "RelativeToolTip": "Data\\ApplicationDBContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T06:00:11.545Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Models\\User.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\User.cs",
-              "RelativeToolTip": "Models\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T04:14:26.444Z"
+              "WhenOpened": "2025-10-06T15:37:04.004Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAwwCYAAAAAAAAAAAAAAA==",
+              "Title": "UserServices.cs",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\UserServices.cs",
+              "RelativeDocumentMoniker": "Services\\UserServices.cs",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\UserServices.cs",
+              "RelativeToolTip": "Services\\UserServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFQAAABXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-03T08:27:19.796Z",
+              "WhenOpened": "2025-10-06T15:26:44.39Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ApplicationDBContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Migrations\\ApplicationDBContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "Migrations\\ApplicationDBContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Migrations\\ApplicationDBContextModelSnapshot.cs",
-              "RelativeToolTip": "Migrations\\ApplicationDBContextModelSnapshot.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Title": "UserController.cs",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Controller\\UserController.cs",
+              "RelativeDocumentMoniker": "Controller\\UserController.cs",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Controller\\UserController.cs",
+              "RelativeToolTip": "Controller\\UserController.cs",
+              "ViewState": "AQIAACMAAAAAAAAAAAAwwBMAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T06:22:01.075Z"
+              "WhenOpened": "2025-10-06T15:25:50.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAB8AAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-10-06T15:24:09.062Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "ContributionController.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Controller\\ContributionController.cs",
-              "RelativeDocumentMoniker": "Controller\\ContributionController.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Controller\\ContributionController.cs",
-              "RelativeToolTip": "Controller\\ContributionController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T02:39:20.018Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Contribution.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\Contribution.cs",
-              "RelativeDocumentMoniker": "Models\\Contribution.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\Contribution.cs",
-              "RelativeToolTip": "Models\\Contribution.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T02:38:40.885Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "TrafficSign.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\TrafficSign.cs",
-              "RelativeDocumentMoniker": "Models\\TrafficSign.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\TrafficSign.cs",
-              "RelativeToolTip": "Models\\TrafficSign.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T05:58:12.671Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Vote.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\Vote.cs",
-              "RelativeDocumentMoniker": "Models\\Vote.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\Vote.cs",
-              "RelativeToolTip": "Models\\Vote.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T04:33:32.075Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Properties\\launchSettings.json",
-              "RelativeToolTip": "Properties\\launchSettings.json",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-05T10:21:15.303Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Payment.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\Payment.cs",
-              "RelativeDocumentMoniker": "Models\\Payment.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\Payment.cs",
-              "RelativeToolTip": "Models\\Payment.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-05T10:31:19.948Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Staff.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\Staff.cs",
-              "RelativeDocumentMoniker": "Models\\Staff.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\Staff.cs",
-              "RelativeToolTip": "Models\\Staff.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T05:57:41.493Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "CoinWallet.cs",
-              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\CoinWallet.cs",
-              "RelativeDocumentMoniker": "Models\\CoinWallet.cs",
-              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\XDHDT\\Models\\CoinWallet.cs",
-              "RelativeToolTip": "Models\\CoinWallet.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-04T04:11:52.633Z"
+              "WhenOpened": "2025-10-06T15:12:45.047Z"
             }
           ]
         }

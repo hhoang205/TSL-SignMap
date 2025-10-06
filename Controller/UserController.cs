@@ -15,9 +15,9 @@ namespace WebAppTrafficSign.Controller
 
     public class UserController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UserController(ApplicationDBContext context)
+        public UserController(ApplicationDbContext context)
         {
             _context = context;
         }

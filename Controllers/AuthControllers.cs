@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using WebAppTrafficSign.Data;
 using WebAppTrafficSign.DTOs;
 using WebAppTrafficSign.Services;
 
@@ -8,6 +9,11 @@ namespace WebAppTrafficSign.Controllers
 {
     public class AuthControllers
     {
+        private readonly ApplicationDbContext _context;
+        public AuthControllers(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         [ApiController]
         [Route("api/[controller]")]
         public class UsersController : ControllerBase
