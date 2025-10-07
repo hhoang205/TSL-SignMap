@@ -14,7 +14,7 @@ namespace WebAppTrafficSign.Mapper
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Reputation = user.Reputation,
-                Role = user.RoleId,
+                RoleId = user.RoleId,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
             };

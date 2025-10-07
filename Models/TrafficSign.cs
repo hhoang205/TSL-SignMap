@@ -11,10 +11,10 @@ namespace WebAppTrafficSign.Models
 
         [Column(TypeName = "geometry")]
         public Point Location { get; set; }
-        public string status { get; set; } // e.g., "Active", "Inactive", "Under Maintenance"
+        public string Status { get; set; } // e.g., "Active", "Inactive", "Under Maintenance"
         public string ImageUrl { get; set; }
-        public DateTime validFrom { get; set; }
-        public DateTime validTo { get; set; }
+        public DateTime ValidFrom { get; set; }
+        public DateTime ValidTo { get; set; }
 
         public List<string> Traffic { get; set; } = new List<string>();
     }

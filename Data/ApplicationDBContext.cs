@@ -73,7 +73,7 @@ namespace WebAppTrafficSign.Data
                       .IsRequired();
                 entity.Property(t => t.Location)
                       .HasColumnType("geography")
-                      .HasSrid(4326)
+                      .HasColumnType("geography").HasAnnotation("Srid", 4326)
                       .IsRequired();
                 entity.Property(t => t.Status)
                       .HasMaxLength(50);

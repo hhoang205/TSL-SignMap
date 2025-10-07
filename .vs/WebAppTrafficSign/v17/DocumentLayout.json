@@ -3,35 +3,32 @@
   "WorkspaceRootPath": "Z:\\Project Code C#\\WebAppTrafficSign\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\services\\interface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:services\\interface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\controllers\\authcontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:controllers\\authcontrollers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\mapper\\usermapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:mapper\\usermapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:controller\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\thoze\\Dropbox\\PC\\Downloads\\ApplicationDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -41,83 +38,70 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Interface.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\Interface.cs",
-              "RelativeDocumentMoniker": "Services\\Interface.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\Interface.cs",
-              "RelativeToolTip": "Services\\Interface.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACkAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T15:40:51.537Z",
+              "WhenOpened": "2025-10-07T12:15:34.891Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "UserDto.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\UserDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\UserDto.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\UserDto.cs",
-              "RelativeToolTip": "DTOs\\UserDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "UserMapper.cs",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Mapper\\UserMapper.cs",
+              "RelativeDocumentMoniker": "Mapper\\UserMapper.cs",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Mapper\\UserMapper.cs",
+              "RelativeToolTip": "Mapper\\UserMapper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAiwBAAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T15:38:47.399Z",
+              "WhenOpened": "2025-10-07T12:15:24.22Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthControllers.cs",
+              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Controllers\\AuthControllers.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthControllers.cs",
+              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Controllers\\AuthControllers.cs",
+              "RelativeToolTip": "Controllers\\AuthControllers.cs",
+              "ViewState": "AQIAAFEAAAAAAAAAAADwv18AAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T15:43:00.948Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\thoze\\Dropbox\\PC\\Downloads\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\thoze\\Dropbox\\PC\\Downloads\\ApplicationDbContext.cs",
-              "ViewState": "AQIAAIUAAAAAAAAAAADwv6YAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T15:36:49.452Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ApplicationDBContext.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Data\\ApplicationDBContext.cs",
-              "RelativeDocumentMoniker": "Data\\ApplicationDBContext.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Data\\ApplicationDBContext.cs",
-              "RelativeToolTip": "Data\\ApplicationDBContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T15:37:04.004Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "UserServices.cs",
               "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\UserServices.cs",
               "RelativeDocumentMoniker": "Services\\UserServices.cs",
               "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\UserServices.cs",
               "RelativeToolTip": "Services\\UserServices.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFQAAABXAAAA",
+              "ViewState": "AQIAABAAAAAAAAAAAAA1wFQAAABXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T15:26:44.39Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-06T15:26:44.39Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "UserController.cs",
               "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Controller\\UserController.cs",
               "RelativeDocumentMoniker": "Controller\\UserController.cs",
               "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Controller\\UserController.cs",
               "RelativeToolTip": "Controller\\UserController.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAwwBMAAAAyAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-06T15:25:50.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-06T15:25:50.646Z"
             },
             {
               "$type": "Document",
@@ -133,7 +117,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -141,7 +125,8 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-06T15:12:45.047Z"
+              "WhenOpened": "2025-10-06T15:12:45.047Z",
+              "EditorCaption": ""
             }
           ]
         }
