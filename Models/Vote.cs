@@ -8,6 +8,8 @@
         public int Value { get; set; } // e.g., 1 for upvote, -1 for downvote
         public bool IsUpvote { get; set; } // true for upvote, false for downvote
         public float Weight { get; set; } // Weight of the vote, e.g., 1.0 for full vote, 0.5 for half vote
+        public User User { get; set; }
+        public Contribution Contribution { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

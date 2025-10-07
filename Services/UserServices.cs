@@ -55,7 +55,7 @@ namespace WebAppTrafficSign.Services
             {
                 Username = request.Username,
                 Email = request.Email,
-                PhoneNumber = int.Parse(request.PhoneNumber),
+                PhoneNumber = request.PhoneNumber,
                 RoleId = 0, // 0: user
                 Reputation = 0f,
                 CreatedAt = DateTime.UtcNow
@@ -109,7 +109,7 @@ namespace WebAppTrafficSign.Services
 
             user.Username = request.Username;
             user.Email = request.Email;
-            user.PhoneNumber = int.Parse(request.PhoneNumber);
+            user.PhoneNumber = request.PhoneNumber;
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();

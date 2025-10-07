@@ -8,5 +8,6 @@
         public string Status { get; set; } // e.g., "Pending", "Reviewed", "Resolved"
         public DateTime CreatedAt { get; set; }
         public DateTime ResolveAt { get; set; }
+        public User User { get; set; }
     }
 }

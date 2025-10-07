@@ -9,6 +9,9 @@
         public string Action { get; set; } // e.g., "Add", "Update", "Delete"
         public string Decription { get; set; }
         public string Status { get; set; } // e.g., "Pending", "Approved", "Rejected"
+        public ICollection<Vote> Votes { get; set; } = new List<Vote>();
+        public User User { get; set; }
+        public TrafficSign TrafficSign { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
     }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetTopologySuite.Geometries;
 using WebAppTrafficSign.Models;
 
 namespace WebAppTrafficSign.Data
@@ -23,141 +22,143 @@ namespace WebAppTrafficSign.Data
         {
             base.OnModelCreating(builder);
 
-            // User table
+            // =========================
+            // User
+            // =========================
             builder.Entity<User>(entity =>
             {
                 entity.HasKey(u => u.Id);
-                entity.Property(u => u.Username)
-                      .IsRequired()
-                      .HasMaxLength(50);
-                entity.Property(u => u.Email)
-                      .IsRequired()
-                      .HasMaxLength(255);
-                entity.Property(u => u.Password)
-                      .IsRequired();
-                entity.Property(u => u.RoleId)
-                      .IsRequired();
-                entity.Property(u => u.CreatedAt)
-                      .IsRequired();
+
+                entity.Property(u => u.Username).IsRequired().HasMaxLength(50);
+                entity.Property(u => u.Email).IsRequired().HasMaxLength(255);
+                entity.Property(u => u.Password).IsRequired();
+                entity.Property(u => u.RoleId).IsRequired();
+                entity.Property(u => u.CreatedAt).IsRequired();
 
                 entity.HasIndex(u => u.Username).IsUnique();
                 entity.HasIndex(u => u.Email).IsUnique();
 
-                // One-to-one with CoinWallet (configured on CoinWallet)
+                // 1–1: User ↔ CoinWallet (Wallet là dependent, FK ở CoinWallet.UserId)
+                entity.HasOne(u => u.Wallet)
+                      .WithOne(w => w.User)
+                      .HasForeignKey<CoinWallet>(w => w.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // CoinWallet table
+            // =========================
+            // CoinWallet
+            // =========================
             builder.Entity<CoinWallet>(entity =>
             {
                 entity.HasKey(c => c.Id);
+
                 entity.Property(c => c.Balance)
                       .HasColumnType("decimal(18,2)")
                       .IsRequired();
-                entity.Property(c => c.CreatedAt)
-                      .IsRequired();
 
-                // One-to-one relationship with User
-                entity.HasOne<User>()
-                      .WithOne()
-                      .HasForeignKey<CoinWallet>(c => c.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(c => c.CreatedAt).IsRequired();
 
+                // Đảm bảo quan hệ 1–1
                 entity.HasIndex(c => c.UserId).IsUnique();
             });
 
-            // TrafficSign table
+            // =========================
+            // TrafficSign
+            // =========================
             builder.Entity<TrafficSign>(entity =>
             {
                 entity.HasKey(t => t.Id);
-                entity.Property(t => t.Type)
-                      .IsRequired();
+
+                entity.Property(t => t.Type).IsRequired();
                 entity.Property(t => t.Location)
                       .HasColumnType("geography")
-                      .HasColumnType("geography").HasAnnotation("Srid", 4326)
                       .IsRequired();
-                entity.Property(t => t.Status)
-                      .HasMaxLength(50);
-                entity.Property(t => t.ValidFrom)
-                      .IsRequired();
+                entity.Property(t => t.Status).HasMaxLength(50);
+                entity.Property(t => t.ValidFrom).IsRequired();
             });
 
-            // Contribution table
+            // =========================
+            // Contribution
+            // =========================
             builder.Entity<Contribution>(entity =>
             {
                 entity.HasKey(c => c.Id);
-                entity.Property(c => c.Action)
-                      .IsRequired();
-                entity.Property(c => c.Status)
-                      .IsRequired();
-                entity.Property(c => c.CreatedAt)
-                      .IsRequired();
 
-                entity.HasOne<User>()
-                      .WithMany()
+                entity.Property(c => c.Action).IsRequired();
+                entity.Property(c => c.Status).IsRequired();
+                entity.Property(c => c.CreatedAt).IsRequired();
+
+                // Contribution -> User (N-1)
+                entity.HasOne(c => c.User)
+                      .WithMany(u => u.Contributions)   // nếu chưa có property, có thể đổi thành .WithMany()
                       .HasForeignKey(c => c.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne<TrafficSign>()
-                      .WithMany()
+                // Contribution -> TrafficSign (N-1)
+                entity.HasOne(c => c.TrafficSign)
+                      .WithMany(t => t.Contributions)   // nếu chưa có property, có thể đổi thành .WithMany()
                       .HasForeignKey(c => c.SignId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // Vote table
+            // =========================
+            // Vote
+            // =========================
             builder.Entity<Vote>(entity =>
             {
                 entity.HasKey(v => v.Id);
-                entity.Property(v => v.Value)
-                      .IsRequired();
-                entity.Property(v => v.Weight)
-                      .IsRequired();
-                entity.Property(v => v.CreatedAt)
-                      .IsRequired();
 
-                entity.HasOne<Contribution>()
-                      .WithMany()
+                entity.Property(v => v.Value).IsRequired();
+                entity.Property(v => v.Weight).IsRequired();
+                entity.Property(v => v.CreatedAt).IsRequired();
+
+                // Vote -> Contribution (N-1) GIỮ Cascade
+                entity.HasOne(v => v.Contribution)
+                      .WithMany(c => c.Votes)           // nếu chưa có property, có thể đổi thành .WithMany()
                       .HasForeignKey(v => v.ContributionId)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasOne<User>()
-                      .WithMany()
+                // Vote -> User (N-1) ĐỔI sang Restrict để tránh multiple cascade paths
+                entity.HasOne(v => v.User)
+                      .WithMany(u => u.Votes)           // nếu chưa có property, có thể đổi thành .WithMany()
                       .HasForeignKey(v => v.UserId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 // Tránh người dùng bỏ phiếu nhiều lần cho cùng một góp ý
                 entity.HasIndex(v => new { v.ContributionId, v.UserId }).IsUnique();
             });
 
-            // Notification table
+            // =========================
+            // Notification
+            // =========================
             builder.Entity<Notification>(entity =>
             {
                 entity.HasKey(n => n.Id);
-                entity.Property(n => n.Title)
-                      .IsRequired();
-                entity.Property(n => n.Message)
-                      .IsRequired();
-                entity.Property(n => n.CreatedAt)
-                      .IsRequired();
 
-                entity.HasOne<User>()
-                      .WithMany()
+                entity.Property(n => n.Title).IsRequired();
+                entity.Property(n => n.Message).IsRequired();
+                entity.Property(n => n.CreatedAt).IsRequired();
+
+                // Map đúng cặp navigation để tránh shadow property UserId1
+                entity.HasOne(n => n.User)
+                      .WithMany(u => u.Notifications)   // User.Notifications
                       .HasForeignKey(n => n.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // Feedback table
+            // =========================
+            // Feedback
+            // =========================
             builder.Entity<Feedback>(entity =>
             {
                 entity.HasKey(f => f.Id);
-                entity.Property(f => f.Content)
-                      .IsRequired();
-                entity.Property(f => f.Status)
-                      .HasMaxLength(50);
-                entity.Property(f => f.CreatedAt)
-                      .IsRequired();
 
-                entity.HasOne<User>()
-                      .WithMany()
+                entity.Property(f => f.Content).IsRequired();
+                entity.Property(f => f.Status).HasMaxLength(50);
+                entity.Property(f => f.CreatedAt).IsRequired();
+
+                entity.HasOne(f => f.User)
+                      .WithMany(u => u.Feedbacks)       // nếu chưa có property, có thể đổi thành .WithMany()
                       .HasForeignKey(f => f.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
