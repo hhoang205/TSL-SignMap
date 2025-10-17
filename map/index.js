@@ -9,10 +9,8 @@ let signs = [
   { id: 3, name: 'Cấm rẽ trái', category: 'Cấm' }
 ];
 
-// Xem tất cả biển báo
 app.get('/signs', (req, res) => res.json(signs));
 
-// Tìm kiếm biển báo
 app.get('/search', (req, res) => {
   const { q } = req.query;
   const result = signs.filter(s => s.name.toLowerCase().includes(q.toLowerCase()));

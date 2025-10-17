@@ -7,7 +7,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// 🟢 1. Phê duyệt / Từ chối góp ý
 app.get('/review/list', (req, res) => {
   const pending = feedbacks.filter(f => f.status === 'pending');
   res.json(pending);
@@ -15,7 +14,7 @@ app.get('/review/list', (req, res) => {
 
 app.post('/review/:id', (req, res) => {
   const id = parseInt(req.params.id);
-  const { action } = req.body; // approve | reject
+  const { action } = req.body;
   const fb = feedbacks.find(f => f.id === id);
   if (!fb) return res.status(404).json({ msg: 'Không tìm thấy góp ý' });
 
@@ -23,7 +22,6 @@ app.post('/review/:id', (req, res) => {
   res.json({ msg: `Đã ${fb.status === 'approved' ? 'phê duyệt' : 'từ chối'} góp ý`, feedback: fb });
 });
 
-// 🟢 2. Quản lý người dùng & Xu
 app.get('/users', (req, res) => {
   res.json(users);
 });
@@ -43,7 +41,6 @@ app.post('/users/:username/ban', (req, res) => {
   res.json({ msg: `Đã khóa tài khoản ${user.username}` });
 });
 
-// 🟢 3. Xem thống kê hệ thống
 app.get('/stats', (req, res) => {
   const totalUsers = users.length;
   const activeUsers = users.filter(u => u.isActive).length;
@@ -60,7 +57,6 @@ app.get('/stats', (req, res) => {
   });
 });
 
-// 🟢 4. Quản lý mô hình AI
 app.get('/ai/list', (req, res) => {
   res.json(aiModels);
 });
@@ -88,5 +84,4 @@ app.delete('/ai/:id', (req, res) => {
   res.json({ msg: 'Đã xóa mô hình AI' });
 });
 
-// 🟢 Server start
 app.listen(4004, () => console.log('Admin Service chạy tại cổng 4004'));

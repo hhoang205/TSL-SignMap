@@ -14,7 +14,6 @@ const services = {
   admin: 'http://localhost:4004'
 };
 
-// USER
 app.use('/user', (req, res) => {
   const url = services.user + req.path.replace('/user', '');
   axios({ method: req.method, url, data: req.body })
@@ -22,7 +21,6 @@ app.use('/user', (req, res) => {
     .catch(e => res.status(500).json({ msg: e.message }));
 });
 
-// MAP
 app.use('/map', (req, res) => {
   const url = services.map + req.path.replace('/map', '');
   axios({ method: req.method, url, data: req.body })
@@ -30,7 +28,6 @@ app.use('/map', (req, res) => {
     .catch(e => res.status(500).json({ msg: e.message }));
 });
 
-// FEEDBACK
 app.use('/feedback', (req, res) => {
   const url = services.feedback + req.path.replace('/feedback', '');
   axios({ method: req.method, url, data: req.body })
@@ -38,7 +35,6 @@ app.use('/feedback', (req, res) => {
     .catch(e => res.status(500).json({ msg: e.message }));
 });
 
-// ADMIN
 app.use('/admin', (req, res) => {
   const url = services.admin + req.path.replace('/admin', '');
   axios({ method: req.method, url, data: req.body })

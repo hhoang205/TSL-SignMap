@@ -6,10 +6,9 @@ const jwt = require('jsonwebtoken');
 const app = express();
 app.use(bodyParser.json());
 
-let users = []; // lưu tạm (có thể thay bằng MongoDB)
+let users = []; 
 const SECRET = 'supersecret';
 
-// Đăng ký tài khoản
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
   if (users.find(u => u.username === username))
@@ -21,7 +20,6 @@ app.post('/register', (req, res) => {
   res.json({ msg: 'Đăng ký thành công', user: username });
 });
 
-// Đăng nhập
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   const user = users.find(u => u.username === username);
@@ -32,7 +30,6 @@ app.post('/login', (req, res) => {
   res.json({ msg: 'Đăng nhập thành công', token });
 });
 
-// Lấy hồ sơ
 app.get('/profile', (req, res) => {
   const username = req.query.username;
   const user = users.find(u => u.username === username);
@@ -40,7 +37,6 @@ app.get('/profile', (req, res) => {
   res.json(user.profile);
 });
 
-// Cập nhật hồ sơ
 app.post('/profile', (req, res) => {
   const { username, profile } = req.body;
   const user = users.find(u => u.username === username);
@@ -49,7 +45,6 @@ app.post('/profile', (req, res) => {
   res.json({ msg: 'Cập nhật hồ sơ thành công' });
 });
 
-// Nạp xu
 app.post('/topup', (req, res) => {
   const { username, amount } = req.body;
   const user = users.find(u => u.username === username);
