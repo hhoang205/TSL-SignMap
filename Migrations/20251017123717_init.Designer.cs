@@ -13,7 +13,7 @@ using WebAppTrafficSign.Data;
 namespace WebAppTrafficSign.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251007132816_init")]
+    [Migration("20251017123717_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -67,7 +67,7 @@ namespace WebAppTrafficSign.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Decription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -112,7 +112,7 @@ namespace WebAppTrafficSign.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ResolveAt")
+                    b.Property<DateTime?>("ResolvedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
@@ -163,6 +163,39 @@ namespace WebAppTrafficSign.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("WebAppTrafficSign.Models.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("WebAppTrafficSign.Models.TrafficSign", b =>
@@ -350,6 +383,15 @@ namespace WebAppTrafficSign.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WebAppTrafficSign.Models.Payment", b =>
+                {
+                    b.HasOne("WebAppTrafficSign.Models.User", null)
+                        .WithMany("Payments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WebAppTrafficSign.Models.Vote", b =>
                 {
                     b.HasOne("WebAppTrafficSign.Models.Contribution", "Contribution")
@@ -386,6 +428,8 @@ namespace WebAppTrafficSign.Migrations
                     b.Navigation("Feedbacks");
 
                     b.Navigation("Notifications");
+
+                    b.Navigation("Payments");
 
                     b.Navigation("Votes");
 

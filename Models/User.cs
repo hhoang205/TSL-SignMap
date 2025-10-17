@@ -22,6 +22,7 @@ namespace WebAppTrafficSign.Models
         public ICollection<Contribution> Contributions { get; set; }
         public ICollection<Vote> Votes { get; set; } = new List<Vote>();
         public ICollection<Feedback> Feedbacks { get; set; }
+        public ICollection<Payment> Payments { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; }
     }

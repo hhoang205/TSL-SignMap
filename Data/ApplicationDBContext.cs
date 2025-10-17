@@ -18,6 +18,9 @@ namespace WebAppTrafficSign.Data
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
 
+        // Thêm DbSet cho Payment
+        public DbSet<Payment> Payments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -160,6 +163,30 @@ namespace WebAppTrafficSign.Data
                 entity.HasOne(f => f.User)
                       .WithMany(u => u.Feedbacks)       // nếu chưa có property, có thể đổi thành .WithMany()
                       .HasForeignKey(f => f.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // =========================
+            // Payment
+            // =========================
+            builder.Entity<Payment>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+
+                entity.Property(p => p.Amount)
+                      .HasColumnType("decimal(18,2)")
+                      .IsRequired();
+                entity.Property(p => p.PaymentDate)
+                      .IsRequired();
+                entity.Property(p => p.PaymentMethod)
+                      .IsRequired();
+                entity.Property(p => p.Status)
+                      .HasMaxLength(50);
+
+                // Payment -> User (N-1)
+                entity.HasOne<User>()
+                      .WithMany(u => u.Payments)  // cần thêm navigation property User.Payments hoặc dùng WithMany()
+                      .HasForeignKey(p => p.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });
         }

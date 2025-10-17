@@ -1,3 +1,5 @@
+using WebAppTrafficSign.Models;
+
 namespace WebAppTrafficSign.DTOs
 {
     public class CoinWalletDto
@@ -7,5 +9,6 @@ namespace WebAppTrafficSign.DTOs
         public decimal Balance { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public User? User { get; set; }
     }
 }
