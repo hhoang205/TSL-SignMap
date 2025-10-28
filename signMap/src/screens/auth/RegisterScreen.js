@@ -70,7 +70,10 @@ const RegisterScreen = ({ navigation }) => {
       
       // Mock successful registration
       Alert.alert('Thành công', 'Đăng ký thành công!', [
-        { text: 'OK', onPress: () => navigation.navigate('Home') }
+        { text: 'OK', onPress: () => {
+          // Navigate directly to HomeScreen
+          navigation.navigate('Home');
+        }}
       ]);
     } catch (error) {
       Alert.alert('Lỗi', 'Có lỗi xảy ra, vui lòng thử lại');

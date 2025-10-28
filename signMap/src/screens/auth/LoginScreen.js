@@ -42,8 +42,8 @@ const LoginScreen = ({ navigation }) => {
         {
           text: 'OK',
           onPress: () => {
-            // Navigate to main app or home screen
-            console.log('Login successful');
+            // Navigate directly to HomeScreen
+            navigation.navigate('Home');
           }
         }
       ]);

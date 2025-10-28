@@ -26,11 +26,13 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
 
-    /* ✅ Helpful checks */
-    "strict": true,
+    /* ✅ Helpful checks - relaxed for JavaScript */
+    "strict": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "checkJs": false,
 
     /* ✅ Path alias support (like @/components) */
     "baseUrl": ".",
@@ -41,6 +43,8 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ],

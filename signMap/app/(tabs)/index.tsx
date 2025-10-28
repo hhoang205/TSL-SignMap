@@ -164,39 +164,19 @@
 // }
 
 import React, { useState, useEffect } from 'react';
-import { createStackNavigator, StackNavigationOptions } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 
 // Import screens
 import SplashScreen from '../../src/screens/SplashScreen';
 import LoginScreen from '../../src/screens/auth/LoginScreen';
 import RegisterScreen from '../../src/screens/auth/RegisterScreen';
+import HomeScreen from '../../src/screens/main/HomeScreen';
+import MapScreen from '../../src/screens/main/MapScreen';
+import ProfileScreen from '../../src/screens/main/ProfileScreen';
 
-// Define navigation parameter types
-export type AuthStackParamList = {
-  Login: undefined;
-  Register: undefined;
-};
-
-// Create stack
-const AuthStack = createStackNavigator<AuthStackParamList>();
-
-function AuthStackNavigator() {
-  const screenOptions: StackNavigationOptions = {
-    headerShown: false,
-    cardStyle: { backgroundColor: '#fff' },
-  };
-
-  return (
-    <AuthStack.Navigator screenOptions={screenOptions}>
-      <AuthStack.Screen name="Login" component={LoginScreen} />
-      <AuthStack.Screen name="Register" component={RegisterScreen} />
-    </AuthStack.Navigator>
-  );
-}
-
-function AppNavigator() {
+export default function Index() {
   const [isLoading, setIsLoading] = useState(true);
+  const [currentScreen, setCurrentScreen] = useState('Login');
 
   useEffect(() => {
     // Simulate loading time (3 seconds)
@@ -207,20 +187,68 @@ function AppNavigator() {
     return () => clearTimeout(timer);
   }, []);
 
+  const navigation = {
+    navigate: (screen) => {
+      setCurrentScreen(screen);
+    },
+    goBack: () => {
+      // Simple back navigation logic
+      if (currentScreen === 'Register') setCurrentScreen('Login');
+      else if (currentScreen === 'Home') setCurrentScreen('Login');
+      else if (currentScreen === 'Map') setCurrentScreen('Home');
+      else if (currentScreen === 'Profile') setCurrentScreen('Home');
+      else setCurrentScreen('Login');
+    }
+  };
+
   if (isLoading) {
     return <SplashScreen />;
   }
 
-  return <AuthStackNavigator />;
-}
-
-/* ✅ Default export for Expo Router */
-export default function Index() {
-  return (
-    <>
-      <AppNavigator />
-      <StatusBar style="auto" />
-    </>
-  );
+  // Render current screen based on state
+  switch (currentScreen) {
+    case 'Login':
+      return (
+        <>
+          <LoginScreen navigation={navigation} />
+          <StatusBar style="auto" />
+        </>
+      );
+    case 'Register':
+      return (
+        <>
+          <RegisterScreen navigation={navigation} />
+          <StatusBar style="auto" />
+        </>
+      );
+    case 'Home':
+      return (
+        <>
+          <HomeScreen navigation={navigation} />
+          <StatusBar style="auto" />
+        </>
+      );
+    case 'Map':
+      return (
+        <>
+          <MapScreen navigation={navigation} />
+          <StatusBar style="auto" />
+        </>
+      );
+    case 'Profile':
+      return (
+        <>
+          <ProfileScreen navigation={navigation} />
+          <StatusBar style="auto" />
+        </>
+      );
+    default:
+      return (
+        <>
+          <LoginScreen navigation={navigation} />
+          <StatusBar style="auto" />
+        </>
+      );
+  }
 }
 
