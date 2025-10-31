@@ -17,8 +17,6 @@ namespace WebAppTrafficSign.Data
         public DbSet<Vote> Votes { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
-
-        // Thêm DbSet cho Payment
         public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

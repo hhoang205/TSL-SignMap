@@ -5415,11 +5415,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Z:\\Project Code C#\\WebAppTrafficSign\\WebAppTrafficSign.csproj",
+      "projectUniqueName": "Z:\\Project Code Cshap\\WebAppTrafficSign\\WebAppTrafficSign.csproj",
       "projectName": "WebAppTrafficSign",
-      "projectPath": "Z:\\Project Code C#\\WebAppTrafficSign\\WebAppTrafficSign.csproj",
+      "projectPath": "Z:\\Project Code Cshap\\WebAppTrafficSign\\WebAppTrafficSign.csproj",
       "packagesPath": "C:\\Users\\thoze\\.nuget\\packages\\",
-      "outputPath": "Z:\\Project Code C#\\WebAppTrafficSign\\obj\\",
+      "outputPath": "Z:\\Project Code Cshap\\WebAppTrafficSign\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

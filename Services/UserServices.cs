@@ -21,6 +21,9 @@ namespace WebAppTrafficSign.Services
         Task<bool> ChangePasswordAsync(int id, ChangePasswordRequest request);
         Task<bool> ForgotPasswordAsync(ForgotPasswordRequest request);
         Task<bool> DeleteUserAsync(int id);
+        Task<WalletBalanceResponse> GetWalletBalanceAsync(int id);
+        Task<TopUpCoinsResponse> TopUpCoinsAsync(int userId, CoinTopUpRequest request);
+        Task<UserProfileResponse> GetUserProfileAsync(int id);
     }
     /// Lớp triển khai UserService chứa toàn bộ nghiệp vụ người dùng
     public class UserService : IUserService
@@ -30,49 +33,87 @@ namespace WebAppTrafficSign.Services
         private readonly ITokenService _tokenService;
         private readonly ICoinWalletService _coinWalletService;
         private readonly IEmailService _emailService;
+        private readonly IPaymentService _paymentService;
 
         public UserService(
             ApplicationDbContext context,
             IPasswordHasher<User> passwordHasher,
             ITokenService tokenService,
             ICoinWalletService coinWalletService,
-            IEmailService emailService)
+            IEmailService emailService,
+            IPaymentService paymentService)
         {
             _context = context;
             _passwordHasher = passwordHasher;
             _tokenService = tokenService;
             _coinWalletService = coinWalletService;
             _emailService = emailService;
+            _paymentService = paymentService;
         }
         /// Đăng ký tài khoản mới
         public async Task<UserDto> RegisterAsync(UserRegistrationRequest request)
         {
-            // Kiểm tra tài khoản tồn tại
-            if (await _context.Users.AnyAsync(u => u.Email == request.Email || u.Username == request.Username))
-                throw new InvalidOperationException("Tên đăng nhập hoặc email đã tồn tại.");
-
-            var user = new User
+            // Sử dụng transaction để đảm bảo atomicity
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                Username = request.Username,
-                Email = request.Email,
-                PhoneNumber = request.PhoneNumber,
-                RoleId = 0, // 0: user
-                Reputation = 0f,
-                CreatedAt = DateTime.UtcNow
-            };
+                // Kiểm tra tài khoản tồn tại
+                if (await _context.Users.AnyAsync(u => u.Email == request.Email || u.Username == request.Username))
+                    throw new InvalidOperationException("Tên đăng nhập hoặc email đã tồn tại.");
 
-            user.Password = _passwordHasher.HashPassword(user, request.Password);
+                var user = new User
+                {
+                    Username = request.Username,
+                    Email = request.Email,
+                    PhoneNumber = request.PhoneNumber,
+                    Firstname = request.Username, // Required by DB, use Username as default
+                    Lastname = "User", // Required by DB, set default value
+                    RoleId = 0, // 0: user
+                    Reputation = 0f,
+                    CreatedAt = DateTime.UtcNow
+                };
 
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+                user.Password = _passwordHasher.HashPassword(user, request.Password);
 
-            // Tạo ví xu ban đầu 20 coin
-            await _coinWalletService.CreateWalletAsync(user.Id, 20m);
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
 
-            // Gửi email chào mừng (nếu cần)
-            await _emailService.SendWelcomeEmailAsync(user.Email, user.Username);
+                // Tạo ví xu ban đầu 20 coin - tạo trực tiếp trong cùng context để tránh tracking issues
+                var wallet = new CoinWallet
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = user.Id,
+                    Balance = 20m,
+                    CreatedAt = DateTime.UtcNow
+                };
 
-            return user.toDto();
+                await _context.CoinWallets.AddAsync(wallet);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+
+                // Gửi email chào mừng (nếu cần) - không cần trong transaction
+                try
+                {
+                    await _emailService.SendWelcomeEmailAsync(user.Email, user.Username);
+                }
+                catch
+                {
+                    // Ignore email errors, không ảnh hưởng đến registration
+                }
+
+                return user.toDto();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                // Log inner exception nếu có
+                if (ex.InnerException != null)
+                {
+                    throw new Exception($"Lỗi khi đăng ký: {ex.Message}. Chi tiết: {ex.InnerException.Message}", ex);
+                }
+                throw;
+            }
         }
 
         /// Đăng nhập, trả về token xác thực
@@ -94,7 +135,9 @@ namespace WebAppTrafficSign.Services
         public async Task<UserDto> GetByIdAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            return user?.toDto();
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+            return user.toDto();
         }
 
         /// Cập nhật hồ sơ người dùng (tên, email, phone)
@@ -153,6 +196,87 @@ namespace WebAppTrafficSign.Services
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+
+        /// Lấy số dư coin trong ví của user
+        public async Task<WalletBalanceResponse> GetWalletBalanceAsync(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+
+            var balance = await _coinWalletService.GetBalanceAsync(id);
+            return new WalletBalanceResponse
+            {
+                UserId = id,
+                Balance = balance,
+                Username = user.Username
+            };
+        }
+
+
+        /// Nạp coin vào ví (tích hợp với Payment service)
+        /// Theo requirement: $1 = 10 Coins
+        public async Task<TopUpCoinsResponse> TopUpCoinsAsync(int userId, CoinTopUpRequest request)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+
+            // Tính số coin dựa trên số tiền: $1 = 10 Coins
+            const decimal coinRate = 10m; // 10 coins per dollar
+            decimal coinsToAdd = request.AmountInDollars * coinRate;
+
+            if (coinsToAdd <= 0)
+                throw new ArgumentException("Số tiền phải lớn hơn 0");
+
+            // Tạo payment record
+            var paymentRequest = new PaymentCreateRequest
+            {
+                UserId = userId,
+                Amount = coinsToAdd,
+                PaymentDate = DateTime.UtcNow,
+                PaymentMethod = request.PaymentMethod ?? "Credit Card",
+                Status = "Completed" // Giả sử thanh toán thành công ngay lập tức
+            };
+
+            var payment = await _paymentService.CreateAsync(paymentRequest);
+
+            // Lấy số dư mới sau khi nạp
+            var newBalance = await _coinWalletService.GetBalanceAsync(userId);
+
+            return new TopUpCoinsResponse
+            {
+                UserId = userId,
+                AmountInDollars = request.AmountInDollars,
+                CoinsAdded = coinsToAdd,
+                NewBalance = newBalance,
+                PaymentId = payment.Id,
+                PaymentDate = payment.PaymentDate
+            };
+        }
+
+
+        /// Lấy thông tin đầy đủ profile của user bao gồm coin balance
+        public async Task<UserProfileResponse> GetUserProfileAsync(int id)
+        {
+            var user = await _context.Users
+                .Include(u => u.Wallet)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+
+            var balance = await _coinWalletService.GetBalanceAsync(id);
+
+            return new UserProfileResponse
+            {
+                User = user.toDto(),
+                CoinBalance = balance,
+                TotalContributions = user.Contributions?.Count ?? 0,
+                TotalVotes = user.Votes?.Count ?? 0
+            };
         }
     }
 }

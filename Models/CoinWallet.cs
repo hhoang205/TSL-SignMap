@@ -1,4 +1,6 @@
-﻿namespace WebAppTrafficSign.Models
+﻿using System.Text.Json.Serialization;
+
+namespace WebAppTrafficSign.Models
 {
     public class CoinWallet
     {
@@ -7,7 +9,8 @@
         public decimal Balance { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public User User { get; set; }
+        [JsonIgnore]
+        public User? User { get; set; }
     }
 
 }

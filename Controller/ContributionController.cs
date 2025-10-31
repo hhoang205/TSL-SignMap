@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebAppTrafficSign.Data;
 using WebAppTrafficSign.Models;
+using WebAppTrafficSign.DTOs;
 
 namespace WebAppTrafficSign.Controller
 {
@@ -36,10 +37,22 @@ namespace WebAppTrafficSign.Controller
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Contribution contribution)
+        public IActionResult Create([FromBody] ContributionDto contributionDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var contribution = new Contribution
+            {
+                UserId = contributionDto.UserId,
+                SignId = contributionDto.SignId,
+                TrafficSignId = contributionDto.SignId,
+                Action = contributionDto.Action,
+                Description = contributionDto.Description,
+                ImageUrl = contributionDto.ImageUrl,
+                Status = contributionDto.Status,
+                CreatedAt = DateTime.Now
+            };
 
             _context.Contributions.Add(contribution);
             _context.SaveChanges();
@@ -47,19 +60,23 @@ namespace WebAppTrafficSign.Controller
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] Contribution updated)
+        public IActionResult Update([FromRoute] int id, [FromBody] ContributionDto contributionDto)
         {
             var contribution = _context.Contributions.Find(id);
             if (contribution == null)
                 return NotFound();
 
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             // Cập nhật các trường cần thiết
-            contribution.Action      = updated.Action;
-            contribution.Description = updated.Description;
-            contribution.ImageUrl    = updated.ImageUrl;
-            contribution.Status      = updated.Status;
-            contribution.SignId      = updated.SignId;
-            contribution.UserId      = updated.UserId;
+            contribution.Action = contributionDto.Action;
+            contribution.Description = contributionDto.Description;
+            contribution.ImageUrl = contributionDto.ImageUrl;
+            contribution.Status = contributionDto.Status;
+            contribution.SignId = contributionDto.SignId;
+            contribution.TrafficSignId = contributionDto.SignId;
+            contribution.UserId = contributionDto.UserId;
 
             _context.SaveChanges();
             return Ok(contribution);

@@ -7,6 +7,7 @@ using WebAppTrafficSign.Data;
 using WebAppTrafficSign.DTOs;
 using WebAppTrafficSign.Models;
 using WebAppTrafficSign.Mapper;
+using WebAppTrafficSign.Services.Interfaces;
 
 namespace WebAppTrafficSign.Services
 {
@@ -26,10 +27,12 @@ namespace WebAppTrafficSign.Services
     public class PaymentService : IPaymentService
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICoinWalletService _coinWalletService;
 
-        public PaymentService(ApplicationDbContext context)
+        public PaymentService(ApplicationDbContext context, ICoinWalletService coinWalletService)
         {
             _context = context;
+            _coinWalletService = coinWalletService;
         }
 
         /// Lấy danh sách tất cả giao dịch thanh toán.
@@ -54,31 +57,46 @@ namespace WebAppTrafficSign.Services
         /// Tạo giao dịch thanh toán mới. Khi thanh toán thành công, số xu được cộng vào ví của người dùng.
         public async Task<PaymentDto> CreateAsync(PaymentCreateRequest request)
         {
-            if (request.Amount <= 0m) throw new ArgumentException("Số tiền phải lớn hơn 0");
-
-            // Kiểm tra người dùng tồn tại
-            var user = await _context.Users.FindAsync(request.UserId);
-            if (user == null) throw new InvalidOperationException("User not found");
-
-            var payment = new Payment
+            // Sử dụng transaction để đảm bảo atomicity
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                UserId = request.UserId,
-                Amount = request.Amount,
-                PaymentDate = request.PaymentDate ?? DateTime.UtcNow,
-                PaymentMethod = request.PaymentMethod,
-                Status = string.IsNullOrWhiteSpace(request.Status) ? "Completed" : request.Status
-            };
+                if (request.Amount <= 0m) throw new ArgumentException("Số tiền phải lớn hơn 0");
 
-            await _context.Set<Payment>().AddAsync(payment);
+                // Kiểm tra người dùng tồn tại
+                var user = await _context.Users.FindAsync(request.UserId);
+                if (user == null) throw new InvalidOperationException("User not found");
 
-            // Cập nhật ví xu của người dùng nếu trạng thái là Completed
-            if (payment.Status.Equals("Completed", StringComparison.OrdinalIgnoreCase))
-            {
-                await CreditWalletAsync(payment.UserId, payment.Amount);
+                var payment = new Payment
+                {
+                    UserId = request.UserId,
+                    Amount = request.Amount,
+                    PaymentDate = request.PaymentDate ?? DateTime.UtcNow,
+                    PaymentMethod = request.PaymentMethod,
+                    Status = string.IsNullOrWhiteSpace(request.Status) ? "Completed" : request.Status
+                };
+
+                await _context.Set<Payment>().AddAsync(payment);
+                await _context.SaveChangesAsync();
+
+                // Cập nhật ví xu của người dùng nếu trạng thái là Completed (sử dụng CoinWalletService)
+                if (payment.Status.Equals("Completed", StringComparison.OrdinalIgnoreCase))
+                {
+                    await _coinWalletService.CreditAsync(payment.UserId, payment.Amount);
+                }
+
+                await transaction.CommitAsync();
+                return payment.toDto();
             }
-
-            await _context.SaveChangesAsync();
-            return payment.toDto();
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                if (ex.InnerException != null)
+                {
+                    throw new Exception($"Lỗi khi tạo payment: {ex.Message}. Chi tiết: {ex.InnerException.Message}", ex);
+                }
+                throw;
+            }
         }
 
         /// Cập nhật giao dịch thanh toán. Nếu thay đổi số tiền hoặc trạng thái từ Pending sang Completed, 
@@ -103,14 +121,14 @@ namespace WebAppTrafficSign.Services
                 payment.Amount = request.Amount.Value;
             }
 
-            // Lưu thay đổi và cập nhật ví
+            // Lưu thay đổi
             await _context.SaveChangesAsync();
 
-            // Nếu trạng thái mới là Completed nhưng trước đó không phải Completed, cộng xu
+            // Nếu trạng thái mới là Completed nhưng trước đó không phải Completed, cộng xu (sử dụng CoinWalletService)
             if (!oldStatus.Equals("Completed", StringComparison.OrdinalIgnoreCase) &&
                 payment.Status.Equals("Completed", StringComparison.OrdinalIgnoreCase))
             {
-                await CreditWalletAsync(payment.UserId, payment.Amount);
+                await _coinWalletService.CreditAsync(payment.UserId, payment.Amount);
             }
             // Nếu thay đổi số tiền trong trạng thái Completed, điều chỉnh chênh lệch
             else if (oldStatus.Equals("Completed", StringComparison.OrdinalIgnoreCase) &&
@@ -118,7 +136,10 @@ namespace WebAppTrafficSign.Services
                      payment.Amount != oldAmount)
             {
                 var difference = payment.Amount - oldAmount;
-                await CreditWalletAsync(payment.UserId, difference);
+                if (difference > 0)
+                    await _coinWalletService.CreditAsync(payment.UserId, difference);
+                else
+                    await _coinWalletService.DebitAsync(payment.UserId, Math.Abs(difference));
             }
 
             return payment.toDto();
@@ -133,27 +154,6 @@ namespace WebAppTrafficSign.Services
             _context.Payments.Remove(payment);
             await _context.SaveChangesAsync();
             return true;
-        }
-
-        /// Cộng thêm số xu cho ví của người dùng. Nếu ví chưa tồn tại, tạo ví mới.
-        private async Task CreditWalletAsync(int userId, decimal amount)
-        {
-            if (amount == 0m) return;
-            var wallet = await _context.CoinWallets.FirstOrDefaultAsync(w => w.UserId == userId);
-            if (wallet == null)
-            {
-                wallet = new CoinWallet
-                {
-                    UserId = userId,
-                    Balance = amount,
-                    CreatedAt = DateTime.UtcNow
-                };
-                await _context.CoinWallets.AddAsync(wallet);
-            }
-            else
-            {
-                wallet.Balance += amount;
-            }
         }
     }
 }

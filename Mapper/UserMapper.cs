@@ -12,11 +12,14 @@ namespace WebAppTrafficSign.Mapper
                 Id = user.Id,
                 Username = user.Username,
                 Email = user.Email,
-                PhoneNumber = int.TryParse(user.PhoneNumber, out var phoneNumber) ? phoneNumber : 0,
+                PhoneNumber = user.PhoneNumber,
                 Reputation = user.Reputation,
                 RoleId = user.RoleId,
                 CreatedAt = user.CreatedAt,
-                UpdatedAt = user.UpdatedAt
+                UpdatedAt = user.UpdatedAt,
+                Password = user.Password,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname
             };
         }
     }

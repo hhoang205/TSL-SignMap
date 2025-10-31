@@ -1,10 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebAppTrafficSign.Data;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
+using WebAppTrafficSign.Models;
+using WebAppTrafficSign.Services;
+using WebAppTrafficSign.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
@@ -22,6 +32,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("MyDb"),
         x => x.UseNetTopologySuite());
+});
+
+// Đăng ký các services
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICoinWalletService, CoinWalletService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+// Cấu hình JWT (có thể thêm vào appsettings.json)
+builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+{
+    { "Jwt:SecretKey", builder.Configuration["Jwt:SecretKey"] ?? "YourSuperSecretKeyThatShouldBeAtLeast32CharactersLongForHS256" },
+    { "Jwt:Issuer", builder.Configuration["Jwt:Issuer"] ?? "WebAppTrafficSign" },
+    { "Jwt:Audience", builder.Configuration["Jwt:Audience"] ?? "WebAppTrafficSignUsers" }
 });
 
 var app = builder.Build();

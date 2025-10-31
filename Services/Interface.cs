@@ -11,6 +11,10 @@ namespace WebAppTrafficSign.Services.Interfaces
     public interface ICoinWalletService
     {
         Task CreateWalletAsync(int userId, decimal initialBalance);
+        Task<decimal> GetBalanceAsync(int userId);
+        Task<bool> CreditAsync(int userId, decimal amount);
+        Task<bool> DebitAsync(int userId, decimal amount);
+        Task<bool> HasEnoughBalanceAsync(int userId, decimal amount);
     }
 
     public interface IEmailService

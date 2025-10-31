@@ -2,13 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAppTrafficSign.Data;
 using WebAppTrafficSign.Models;
+using WebAppTrafficSign.DTOs;
 
 namespace WebAppTrafficSign.Controller
 {
-    /// <summary>
     /// API controller quản lý CRUD cho phiếu bầu (Vote).  
     /// Cho phép tạo, xem, cập nhật và xoá phiếu bầu cho góp ý.
-    /// </summary>
     [Route("api/votes")]
     [ApiController]
     public class VoteController : ControllerBase
@@ -37,26 +36,43 @@ namespace WebAppTrafficSign.Controller
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Vote vote)
+        public IActionResult Create([FromBody] VoteDto voteDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var vote = new Vote
+            {
+                ContributionId = voteDto.ContributionId,
+                UserId = voteDto.UserId,
+                Value = voteDto.Value ? 1 : -1,
+                IsUpvote = voteDto.Value,
+                Weight = voteDto.Weight,
+                CreatedAt = DateTime.Now
+            };
+
             _context.Votes.Add(vote);
             _context.SaveChanges();
             return Ok(vote);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] Vote updated)
+        public IActionResult Update([FromRoute] int id, [FromBody] VoteDto voteDto)
         {
             var vote = _context.Votes.Find(id);
             if (vote == null)
                 return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             // Cập nhật các trường cần thiết
-            vote.Value        = updated.Value;
-            vote.Weight       = updated.Weight;
-            vote.UserId       = updated.UserId;
-            vote.ContributionId = updated.ContributionId;
+            vote.Value = voteDto.Value ? 1 : -1;
+            vote.IsUpvote = voteDto.Value;
+            vote.Weight = voteDto.Weight;
+            vote.UserId = voteDto.UserId;
+            vote.ContributionId = voteDto.ContributionId;
+
             _context.SaveChanges();
             return Ok(vote);
         }

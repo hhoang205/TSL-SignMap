@@ -2,13 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAppTrafficSign.Data;
 using WebAppTrafficSign.Models;
+using WebAppTrafficSign.DTOs;
 
 namespace WebAppTrafficSign.Controller
 {
-    /// <summary>
     /// API controller quản lý các thông báo (Notification).  
     /// Cho phép xem, tạo, cập nhật trạng thái đọc và xoá thông báo.
-    /// </summary>
     [Route("api/notifications")]
     [ApiController]
     public class NotificationController : ControllerBase
@@ -37,29 +36,44 @@ namespace WebAppTrafficSign.Controller
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Notification notification)
+        public IActionResult Create([FromBody] NotificationDto notificationDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var notification = new Notification
+            {
+                UserId = notificationDto.UserId,
+                Title = notificationDto.Title,
+                Message = notificationDto.Message,
+                IsRead = notificationDto.IsRead,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
             _context.Notifications.Add(notification);
             _context.SaveChanges();
             return Ok(notification);
         }
 
-        /// <summary>
         /// Cập nhật thông báo, ví dụ đánh dấu đã đọc.
-        /// </summary>
         [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] Notification updated)
+        public IActionResult Update([FromRoute] int id, [FromBody] NotificationDto notificationDto)
         {
             var notification = _context.Notifications.Find(id);
             if (notification == null)
                 return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             // Cập nhật các trường cần thiết
-            notification.Title   = updated.Title;
-            notification.Message = updated.Message;
-            notification.UserId  = updated.UserId;
-            // Nếu model có thuộc tính Read, cập nhật: notification.Read = updated.Read;
+            notification.Title = notificationDto.Title;
+            notification.Message = notificationDto.Message;
+            notification.UserId = notificationDto.UserId;
+            notification.IsRead = notificationDto.IsRead;
+            notification.UpdatedAt = DateTime.Now;
+
             _context.SaveChanges();
             return Ok(notification);
         }
