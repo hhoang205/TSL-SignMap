@@ -14,7 +14,8 @@ namespace WebAppTrafficSign.Mapper
                 Amount = payment.Amount,
                 PaymentDate = payment.PaymentDate,
                 PaymentMethod = payment.PaymentMethod,
-                Status = payment.Status
+                Status = payment.Status,
+                Username = payment.User?.Username ?? string.Empty
             };
         }
     }

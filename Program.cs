@@ -42,6 +42,10 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ITrafficSignService, TrafficSignService>();
+builder.Services.AddScoped<IContributionService, ContributionService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IVoteService, VoteService>();
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 
 // Cấu hình JWT (có thể thêm vào appsettings.json)
 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>

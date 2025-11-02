@@ -182,8 +182,8 @@ namespace WebAppTrafficSign.Data
                       .HasMaxLength(50);
 
                 // Payment -> User (N-1)
-                entity.HasOne<User>()
-                      .WithMany(u => u.Payments)  // cần thêm navigation property User.Payments hoặc dùng WithMany()
+                entity.HasOne(p => p.User)
+                      .WithMany(u => u.Payments)
                       .HasForeignKey(p => p.UserId)
                       .OnDelete(DeleteBehavior.Cascade);
             });

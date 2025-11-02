@@ -1,92 +1,181 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebAppTrafficSign.Data;
-using WebAppTrafficSign.Models;
 using WebAppTrafficSign.DTOs;
+using WebAppTrafficSign.Services.Interfaces;
 
 namespace WebAppTrafficSign.Controller
 {
     /// API controller quản lý các thông báo (Notification).  
     /// Cho phép xem, tạo, cập nhật trạng thái đọc và xoá thông báo.
+    /// Theo requirement: Users receive real-time notifications about approved changes and submission outcomes.
     [Route("api/notifications")]
     [ApiController]
     public class NotificationController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly INotificationService _notificationService;
 
-        public NotificationController(ApplicationDbContext context)
+        public NotificationController(INotificationService notificationService)
         {
-            _context = context;
+            _notificationService = notificationService;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
+        /// Lấy tất cả notifications của user
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetByUserId([FromRoute] int userId)
         {
-            var notifications = _context.Notifications.ToList();
-            return Ok(notifications);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
-        {
-            var notification = _context.Notifications.Find(id);
-            if (notification == null)
-                return NotFound();
-            return Ok(notification);
-        }
-
-        [HttpPost]
-        public IActionResult Create([FromBody] NotificationDto notificationDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var notification = new Notification
+            try
             {
-                UserId = notificationDto.UserId,
-                Title = notificationDto.Title,
-                Message = notificationDto.Message,
-                IsRead = notificationDto.IsRead,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
-
-            _context.Notifications.Add(notification);
-            _context.SaveChanges();
-            return Ok(notification);
+                var notifications = await _notificationService.GetByUserIdAsync(userId);
+                return Ok(new { message = "Lấy danh sách notifications thành công", data = notifications });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
         }
 
-        /// Cập nhật thông báo, ví dụ đánh dấu đã đọc.
-        [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] NotificationDto notificationDto)
+        /// Lấy notifications chưa đọc của user
+        [HttpGet("user/{userId}/unread")]
+        public async Task<IActionResult> GetUnreadByUserId([FromRoute] int userId)
         {
-            var notification = _context.Notifications.Find(id);
-            if (notification == null)
-                return NotFound();
+            try
+            {
+                var notifications = await _notificationService.GetUnreadByUserIdAsync(userId);
+                return Ok(new { message = "Lấy danh sách notifications chưa đọc thành công", data = notifications });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
 
+        /// Đếm số notifications chưa đọc của user
+        [HttpGet("user/{userId}/unread/count")]
+        public async Task<IActionResult> GetUnreadCount([FromRoute] int userId)
+        {
+            try
+            {
+                var count = await _notificationService.GetUnreadCountAsync(userId);
+                return Ok(new NotificationUnreadCountResponse
+                {
+                    UserId = userId,
+                    UnreadCount = count
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Lấy notification theo ID
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            try
+            {
+                var notification = await _notificationService.GetByIdAsync(id);
+                return Ok(new { message = "Lấy notification thành công", data = notification });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Tạo notification mới (thường được gọi bởi các service khác)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] NotificationCreateRequest request)
+        {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // Cập nhật các trường cần thiết
-            notification.Title = notificationDto.Title;
-            notification.Message = notificationDto.Message;
-            notification.UserId = notificationDto.UserId;
-            notification.IsRead = notificationDto.IsRead;
-            notification.UpdatedAt = DateTime.Now;
-
-            _context.SaveChanges();
-            return Ok(notification);
+            try
+            {
+                var notification = await _notificationService.CreateAsync(request);
+                return Ok(new { message = "Tạo notification thành công", data = notification });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        /// Đánh dấu notification là đã đọc
+        [HttpPut("{id}/read")]
+        public async Task<IActionResult> MarkAsRead([FromRoute] int id)
         {
-            var notification = _context.Notifications.Find(id);
-            if (notification == null)
-                return NotFound();
-            _context.Notifications.Remove(notification);
-            _context.SaveChanges();
-            return Ok(notification);
+            try
+            {
+                var notification = await _notificationService.MarkAsReadAsync(id);
+                return Ok(new { message = "Đánh dấu đã đọc thành công", data = notification });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Đánh dấu tất cả notifications của user là đã đọc
+        [HttpPut("user/{userId}/read-all")]
+        public async Task<IActionResult> MarkAllAsRead([FromRoute] int userId)
+        {
+            try
+            {
+                var result = await _notificationService.MarkAllAsReadAsync(userId);
+                return Ok(new { message = "Đánh dấu tất cả đã đọc thành công", success = result });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Filter notifications theo các criteria
+        [HttpPost("filter")]
+        public async Task<IActionResult> Filter([FromBody] NotificationFilterRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var notifications = await _notificationService.FilterAsync(request);
+                return Ok(new { message = "Filter notifications thành công", data = notifications });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Xóa notification
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            try
+            {
+                var result = await _notificationService.DeleteAsync(id);
+                if (!result)
+                    return NotFound(new { message = "Notification not found" });
+
+                return Ok(new { message = "Xóa notification thành công", success = true });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
         }
     }
 }

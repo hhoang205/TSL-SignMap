@@ -1,91 +1,172 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebAppTrafficSign.Data;
-using WebAppTrafficSign.Models;
 using WebAppTrafficSign.DTOs;
+using WebAppTrafficSign.Services.Interfaces;
 
 namespace WebAppTrafficSign.Controller
 {
-    /// API controller quản lý CRUD cho phiếu bầu (Vote).  
-    /// Cho phép tạo, xem, cập nhật và xoá phiếu bầu cho góp ý.
+    /// API controller quản lý Votes theo requirement
+    /// - Users can vote on contributions (upvote/downvote)
+    /// - Votes có weight và mỗi user chỉ có thể vote 1 lần cho mỗi contribution
     [Route("api/votes")]
     [ApiController]
     public class VoteController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IVoteService _voteService;
 
-        public VoteController(ApplicationDbContext context)
+        public VoteController(IVoteService voteService)
         {
-            _context = context;
+            _voteService = voteService;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var votes = _context.Votes.ToList();
-            return Ok(votes);
-        }
-
+        /// Lấy vote theo ID
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var vote = _context.Votes.Find(id);
-            if (vote == null)
-                return NotFound();
-            return Ok(vote);
-        }
-
-        [HttpPost]
-        public IActionResult Create([FromBody] VoteDto voteDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var vote = new Vote
+            try
             {
-                ContributionId = voteDto.ContributionId,
-                UserId = voteDto.UserId,
-                Value = voteDto.Value ? 1 : -1,
-                IsUpvote = voteDto.Value,
-                Weight = voteDto.Weight,
-                CreatedAt = DateTime.Now
-            };
-
-            _context.Votes.Add(vote);
-            _context.SaveChanges();
-            return Ok(vote);
+                var vote = await _voteService.GetByIdAsync(id);
+                return Ok(vote);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] VoteDto voteDto)
+        /// Lấy tất cả votes của một contribution
+        [HttpGet("contribution/{contributionId}")]
+        public async Task<IActionResult> GetByContributionId([FromRoute] int contributionId)
         {
-            var vote = _context.Votes.Find(id);
-            if (vote == null)
-                return NotFound();
+            try
+            {
+                var votes = await _voteService.GetByContributionIdAsync(contributionId);
+                return Ok(votes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
 
+        /// Lấy tất cả votes của một user
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetByUserId([FromRoute] int userId)
+        {
+            try
+            {
+                var votes = await _voteService.GetByUserIdAsync(userId);
+                return Ok(votes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Lấy tổng hợp votes của một contribution
+        [HttpGet("contribution/{contributionId}/summary")]
+        public async Task<IActionResult> GetVoteSummary([FromRoute] int contributionId)
+        {
+            try
+            {
+                var summary = await _voteService.GetVoteSummaryAsync(contributionId);
+                return Ok(summary);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Tạo vote mới
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] VoteCreateRequest request)
+        {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // Cập nhật các trường cần thiết
-            vote.Value = voteDto.Value ? 1 : -1;
-            vote.IsUpvote = voteDto.Value;
-            vote.Weight = voteDto.Weight;
-            vote.UserId = voteDto.UserId;
-            vote.ContributionId = voteDto.ContributionId;
-
-            _context.SaveChanges();
-            return Ok(vote);
+            try
+            {
+                var vote = await _voteService.CreateAsync(request);
+                return CreatedAtAction(nameof(GetById), new { id = vote.Id }, vote);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        /// Cập nhật vote
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] VoteUpdateRequest request)
         {
-            var vote = _context.Votes.Find(id);
-            if (vote == null)
-                return NotFound();
-            _context.Votes.Remove(vote);
-            _context.SaveChanges();
-            return Ok(vote);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var vote = await _voteService.UpdateAsync(id, request);
+                return Ok(vote);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Xóa vote
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            try
+            {
+                var result = await _voteService.DeleteAsync(id);
+                if (result)
+                    return Ok(new { message = "Vote deleted successfully" });
+                return NotFound(new { message = "Vote not found" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Filter votes với các điều kiện
+        [HttpPost("filter")]
+        public async Task<IActionResult> Filter([FromBody] VoteFilterRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var votes = await _voteService.FilterAsync(request);
+                return Ok(votes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
         }
     }
 }

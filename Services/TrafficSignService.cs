@@ -4,6 +4,7 @@ using WebAppTrafficSign.Models;
 using WebAppTrafficSign.DTOs;
 using WebAppTrafficSign.Services.Interfaces;
 using NetTopologySuite.Geometries;
+using WebAppTrafficSign.Mapper;
 
 namespace WebAppTrafficSign.Services
 {
@@ -42,7 +43,7 @@ namespace WebAppTrafficSign.Services
                 .Where(s => s.Status == "Active" && s.ValidTo >= DateTime.UtcNow)
                 .ToListAsync();
 
-            return signs.Select(s => ToDto(s));
+            return signs.Select(s => s.toDto());
         }
 
         /// Lấy traffic sign theo ID
@@ -51,8 +52,8 @@ namespace WebAppTrafficSign.Services
             var sign = await _context.TrafficSigns.FindAsync(id);
             if (sign == null)
                 throw new InvalidOperationException("Traffic sign not found");
-            
-            return ToDto(sign);
+
+            return sign.toDto();
         }
 
         /// Tìm kiếm traffic signs theo type hoặc location - tốn 1 coin cho advanced filters
@@ -90,7 +91,7 @@ namespace WebAppTrafficSign.Services
             }
 
             var signs = await query.ToListAsync();
-            return signs.Select(s => ToDto(s));
+            return signs.Select(s => s.toDto());
         }
 
         /// Filter theo proximity (bán kính) - tốn 1 coin
@@ -110,7 +111,7 @@ namespace WebAppTrafficSign.Services
                            s.Location.Distance(centerPoint) <= radiusInMeters)
                 .ToListAsync();
 
-            return signs.Select(s => ToDto(s));
+            return signs.Select(s => s.toDto());
         }
 
         /// Filter theo type - tốn 1 coin
@@ -122,7 +123,7 @@ namespace WebAppTrafficSign.Services
                            s.Type.Contains(type))
                 .ToListAsync();
 
-            return signs.Select(s => ToDto(s));
+            return signs.Select(s => s.toDto());
         }
 
         /// Tạo traffic sign mới (dành cho admin hoặc từ approved contribution)
@@ -141,7 +142,7 @@ namespace WebAppTrafficSign.Services
             await _context.TrafficSigns.AddAsync(sign);
             await _context.SaveChangesAsync();
 
-            return ToDto(sign);
+            return sign.toDto();
         }
 
         /// Cập nhật traffic sign
@@ -164,7 +165,7 @@ namespace WebAppTrafficSign.Services
                 sign.ValidTo = request.ValidTo.Value;
 
             await _context.SaveChangesAsync();
-            return ToDto(sign);
+            return sign.toDto();
         }
 
         /// Xóa traffic sign
@@ -193,21 +194,6 @@ namespace WebAppTrafficSign.Services
             return true;
         }
 
-        /// Convert TrafficSign entity to DTO
-        private TrafficSignDto ToDto(TrafficSign sign)
-        {
-            return new TrafficSignDto
-            {
-                Id = sign.Id,
-                Type = sign.Type,
-                Latitude = sign.Location.Y,
-                Longitude = sign.Location.X,
-                Status = sign.Status,
-                ImageUrl = sign.ImageUrl,
-                ValidFrom = sign.ValidFrom,
-                ValidTo = sign.ValidTo == DateTime.MaxValue ? null : sign.ValidTo
-            };
-        }
     }
 }
 

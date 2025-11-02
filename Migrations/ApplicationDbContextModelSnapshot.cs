@@ -72,6 +72,12 @@ namespace WebAppTrafficSign.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("float");
+
                     b.Property<int>("SignId")
                         .HasColumnType("int");
 
@@ -81,6 +87,10 @@ namespace WebAppTrafficSign.Migrations
 
                     b.Property<int>("TrafficSignId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

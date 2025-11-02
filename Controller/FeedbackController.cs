@@ -1,77 +1,191 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebAppTrafficSign.Data;
-using WebAppTrafficSign.Models;
+using WebAppTrafficSign.DTOs;
+using WebAppTrafficSign.Services.Interfaces;
 
 namespace WebAppTrafficSign.Controller
 {
-    /// API controller quản lý các phản hồi/feedback từ người dùng.  
-    /// Cho phép thêm mới, xem, cập nhật trạng thái và xoá feedback.
+    /// API controller quản lý Feedbacks theo requirement
+    /// - Users can submit feedback or report issues with the app or database
+    /// - Reporting inappropriate content or misuse is supported
+    /// - Admins can review and manage feedback status (Pending, Reviewed, Resolved)
     [Route("api/feedbacks")]
     [ApiController]
     public class FeedbackController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IFeedbackService _feedbackService;
 
-        public FeedbackController(ApplicationDbContext context)
+        public FeedbackController(IFeedbackService feedbackService)
         {
-            _context = context;
+            _feedbackService = feedbackService;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var feedbacks = _context.Feedbacks.ToList();
-            return Ok(feedbacks);
-        }
-
+        /// Lấy feedback theo ID
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var feedback = _context.Feedbacks.Find(id);
-            if (feedback == null)
-                return NotFound();
-            return Ok(feedback);
+            try
+            {
+                var feedback = await _feedbackService.GetByIdAsync(id);
+                return Ok(feedback);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
         }
 
+        /// Lấy tất cả feedbacks của một user
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetByUserId([FromRoute] int userId)
+        {
+            try
+            {
+                var feedbacks = await _feedbackService.GetByUserIdAsync(userId);
+                return Ok(feedbacks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Lấy tất cả feedbacks theo status
+        [HttpGet("status/{status}")]
+        public async Task<IActionResult> GetByStatus([FromRoute] string status)
+        {
+            try
+            {
+                var feedbacks = await _feedbackService.GetByStatusAsync(status);
+                return Ok(feedbacks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Lấy tổng hợp feedbacks
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummary()
+        {
+            try
+            {
+                var summary = await _feedbackService.GetSummaryAsync();
+                return Ok(summary);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Tạo feedback mới
         [HttpPost]
-        public IActionResult Create([FromBody] Feedback feedback)
+        public async Task<IActionResult> Create([FromBody] FeedbackCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            _context.Feedbacks.Add(feedback);
-            _context.SaveChanges();
-            return Ok(feedback);
+
+            try
+            {
+                var feedback = await _feedbackService.CreateAsync(request);
+                return CreatedAtAction(nameof(GetById), new { id = feedback.Id }, feedback);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
         }
 
-        /// <summary>
-        /// Cập nhật trạng thái hoặc nội dung phản hồi.  
-        /// Trạng thái có thể là New, InProgress, Resolved.
-        /// </summary>
+        /// Cập nhật feedback (content và status)
         [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] Feedback updated)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] FeedbackUpdateRequest request)
         {
-            var feedback = _context.Feedbacks.Find(id);
-            if (feedback == null)
-                return NotFound();
-            feedback.Content    = updated.Content;
-            feedback.Status     = updated.Status;
-            feedback.UserId     = updated.UserId;
-            // cập nhật thời gian giải quyết nếu cần
-            feedback.ResolvedAt = updated.ResolvedAt;
-            _context.SaveChanges();
-            return Ok(feedback);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var feedback = await _feedbackService.UpdateAsync(id, request);
+                return Ok(feedback);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        /// Cập nhật status của feedback
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateStatus([FromRoute] int id, [FromBody] FeedbackStatusUpdateRequest request)
         {
-            var feedback = _context.Feedbacks.Find(id);
-            if (feedback == null)
-                return NotFound();
-            _context.Feedbacks.Remove(feedback);
-            _context.SaveChanges();
-            return Ok(feedback);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var feedback = await _feedbackService.UpdateStatusAsync(id, request);
+                return Ok(feedback);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Xóa feedback
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            try
+            {
+                var result = await _feedbackService.DeleteAsync(id);
+                if (result)
+                    return Ok(new { message = "Feedback deleted successfully" });
+                return NotFound(new { message = "Feedback not found" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        /// Filter feedbacks với các điều kiện
+        [HttpPost("filter")]
+        public async Task<IActionResult> Filter([FromBody] FeedbackFilterRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var feedbacks = await _feedbackService.FilterAsync(request);
+                return Ok(feedbacks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
         }
     }
 }

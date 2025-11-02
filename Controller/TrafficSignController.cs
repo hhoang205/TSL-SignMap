@@ -8,11 +8,9 @@ using NetTopologySuite.Geometries;
 
 namespace WebAppTrafficSign.Controller
 {
-    /// <summary>
     /// API controller quản lý Traffic Signs theo requirement
     /// - Hiển thị real-time traffic sign locations (không tốn coin)
     /// - Search và filter (tốn 1 coin cho advanced filters)
-    /// </summary>
     [Route("api/signs")]
     [ApiController]
     public class TrafficSignController : ControllerBase
@@ -24,9 +22,7 @@ namespace WebAppTrafficSign.Controller
             _trafficSignService = trafficSignService;
         }
 
-        /// <summary>
         /// Lấy tất cả traffic signs active (hiển thị trên map) - KHÔNG TỐN COIN
-        /// </summary>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -41,9 +37,7 @@ namespace WebAppTrafficSign.Controller
             }
         }
 
-        /// <summary>
         /// Lấy traffic sign theo ID
-        /// </summary>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
@@ -62,11 +56,9 @@ namespace WebAppTrafficSign.Controller
             }
         }
 
-        /// <summary>
         /// Tìm kiếm traffic signs với các filter options
         /// - Nếu dùng Type filter hoặc Proximity filter -> TỐN 1 COIN
         /// - Nếu không có filter nào -> KHÔNG TỐN COIN (chỉ lấy tất cả active signs)
-        /// </summary>
         [HttpPost("search")]
         public async Task<IActionResult> Search([FromBody] TrafficSignSearchRequest request)
         {
@@ -92,9 +84,7 @@ namespace WebAppTrafficSign.Controller
             }
         }
 
-        /// <summary>
         /// Filter traffic signs theo proximity (bán kính) - TỐN 1 COIN
-        /// </summary>
         [HttpPost("filter/proximity")]
         public async Task<IActionResult> FilterByProximity([FromBody] TrafficSignProximityFilterRequest request)
         {
@@ -123,9 +113,7 @@ namespace WebAppTrafficSign.Controller
             }
         }
 
-        /// <summary>
         /// Filter traffic signs theo type - TỐN 1 COIN
-        /// </summary>
         [HttpGet("filter/type/{type}")]
         public async Task<IActionResult> FilterByType([FromRoute] string type, [FromQuery] int? userId = null)
         {
@@ -147,9 +135,7 @@ namespace WebAppTrafficSign.Controller
             }
         }
 
-        /// <summary>
         /// Tạo traffic sign mới (Admin only hoặc từ approved contribution)
-        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TrafficSignCreateRequest request)
         {
@@ -167,9 +153,7 @@ namespace WebAppTrafficSign.Controller
             }
         }
 
-        /// <summary>
         /// Cập nhật traffic sign
-        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] TrafficSignUpdateRequest request)
         {
@@ -191,9 +175,7 @@ namespace WebAppTrafficSign.Controller
             }
         }
 
-        /// <summary>
         /// Xóa traffic sign
-        /// </summary>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {

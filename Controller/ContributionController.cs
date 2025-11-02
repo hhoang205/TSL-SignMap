@@ -1,96 +1,222 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebAppTrafficSign.Data;
-using WebAppTrafficSign.Models;
 using WebAppTrafficSign.DTOs;
+using WebAppTrafficSign.Services;
 
 namespace WebAppTrafficSign.Controller
 {
-    /// API controller cung cấp CRUD cho các góp ý (Contribution).  
-    /// Góp ý bao gồm hành động thêm/sửa/xoá biển báo do người dùng gửi lên.  
+    /// API controller quản lý Contributions theo requirement
+    /// - Users submit contributions (tốn 5 coins)
+    /// - Admin approve/reject contributions
+    /// - Approved contributions -> convert to TrafficSign + reward coins (10+)
     [Route("api/contributions")]
     [ApiController]
     public class ContributionController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IContributionService _contributionService;
 
-        public ContributionController(ApplicationDbContext context)
+        public ContributionController(IContributionService contributionService)
         {
-            _context = context;
+            _contributionService = contributionService;
         }
 
+        /// Lấy tất cả contributions
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            // Lấy toàn bộ góp ý. Sử dụng ToList() vì chúng ta không cần load navigation property ở đây.
-            var contributions = _context.Contributions.ToList();
-            return Ok(contributions);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
-        {
-            var contribution = _context.Contributions.Find(id);
-            if (contribution == null)
-                return NotFound();
-            return Ok(contribution);
-        }
-
-        [HttpPost]
-        public IActionResult Create([FromBody] ContributionDto contributionDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var contribution = new Contribution
+            try
             {
-                UserId = contributionDto.UserId,
-                SignId = contributionDto.SignId,
-                TrafficSignId = contributionDto.SignId,
-                Action = contributionDto.Action,
-                Description = contributionDto.Description,
-                ImageUrl = contributionDto.ImageUrl,
-                Status = contributionDto.Status,
-                CreatedAt = DateTime.Now
-            };
-
-            _context.Contributions.Add(contribution);
-            _context.SaveChanges();
-            return Ok(contribution);
+                var contributions = await _contributionService.GetAllAsync();
+                return Ok(new { message = "Lấy danh sách contributions thành công", count = contributions.Count(), data = contributions });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] ContributionDto contributionDto)
+        /// Lấy contribution theo ID
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var contribution = _context.Contributions.Find(id);
-            if (contribution == null)
-                return NotFound();
+            try
+            {
+                var contribution = await _contributionService.GetByIdAsync(id);
+                return Ok(new { message = "Lấy contribution thành công", data = contribution });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
 
+        /// Lấy contributions theo status
+        [HttpGet("status/{status}")]
+        public async Task<IActionResult> GetByStatus([FromRoute] string status)
+        {
+            try
+            {
+                var contributions = await _contributionService.GetByStatusAsync(status);
+                return Ok(new { message = $"Lấy contributions với status '{status}' thành công", count = contributions.Count(), data = contributions });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Lấy contributions theo userId
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetByUserId([FromRoute] int userId)
+        {
+            try
+            {
+                var contributions = await _contributionService.GetByUserIdAsync(userId);
+                return Ok(new { message = $"Lấy contributions của user {userId} thành công", count = contributions.Count(), data = contributions });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Filter contributions theo các criteria
+        [HttpPost("filter")]
+        public async Task<IActionResult> Filter([FromBody] ContributionFilterRequest request)
+        {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // Cập nhật các trường cần thiết
-            contribution.Action = contributionDto.Action;
-            contribution.Description = contributionDto.Description;
-            contribution.ImageUrl = contributionDto.ImageUrl;
-            contribution.Status = contributionDto.Status;
-            contribution.SignId = contributionDto.SignId;
-            contribution.TrafficSignId = contributionDto.SignId;
-            contribution.UserId = contributionDto.UserId;
-
-            _context.SaveChanges();
-            return Ok(contribution);
+            try
+            {
+                var contributions = await _contributionService.FilterAsync(request);
+                return Ok(new { message = "Filter contributions thành công", count = contributions.Count(), data = contributions });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        /// Submit contribution mới (tốn 5 coins)
+        [HttpPost]
+        public async Task<IActionResult> Submit([FromBody] ContributionCreateRequest request)
         {
-            var contribution = _context.Contributions.Find(id);
-            if (contribution == null)
-                return NotFound();
-            _context.Contributions.Remove(contribution);
-            _context.SaveChanges();
-            return Ok(contribution);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var contribution = await _contributionService.SubmitAsync(request);
+                return Ok(new { message = $"Đã submit contribution thành công. Đã trừ {5} coin.", data = contribution });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Admin approve contribution (reward 10+ coins, convert to TrafficSign if Action = "Add")
+        [HttpPost("{id}/approve")]
+        public async Task<IActionResult> Approve([FromRoute] int id, [FromBody] ContributionReviewRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var contribution = await _contributionService.ApproveAsync(id, request);
+                decimal rewardAmount = request.RewardAmount ?? 10m;
+                return Ok(new { message = $"Đã approve contribution #{id}. User nhận {rewardAmount} coin reward.", data = contribution });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Admin reject contribution (notify user)
+        [HttpPost("{id}/reject")]
+        public async Task<IActionResult> Reject([FromRoute] int id, [FromBody] ContributionReviewRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var contribution = await _contributionService.RejectAsync(id, request);
+                return Ok(new { message = $"Đã reject contribution #{id}. User đã được thông báo.", data = contribution });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Update contribution (chỉ có thể update nếu status là Pending và user sở hữu nó)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] ContributionCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                var contribution = await _contributionService.UpdateAsync(id, request);
+                return Ok(new { message = $"Đã cập nhật contribution #{id} thành công", data = contribution });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Delete contribution (chỉ có thể delete nếu status là Pending và user sở hữu nó)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            try
+            {
+                var result = await _contributionService.DeleteAsync(id);
+                if (result)
+                    return Ok(new { message = $"Đã xóa contribution #{id} thành công" });
+                return NotFound(new { message = "Contribution not found" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
         }
     }
 }

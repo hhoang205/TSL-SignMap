@@ -8,5 +8,8 @@
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; } // e.g., Credit Card, PayPal
         public string Status { get; set; } // e.g., Completed, Pending, Failed
+
+        // Navigation property
+        public User User { get; set; }
     }
 }
