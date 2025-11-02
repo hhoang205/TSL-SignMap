@@ -11,13 +11,9 @@ namespace WebAppTrafficSign.Models
         public string Firstname { get; set; }
         public int RoleId { get; set; }
         public string Email { get; set; }
-
         public string PhoneNumber { get; set; }
-
         public float Reputation { get; set; }
-
         public CoinWallet Wallet { get; set; }
-
         public List<Notification> Notifications { get; set; } = new();
         public ICollection<Contribution> Contributions { get; set; }
         public ICollection<Vote> Votes { get; set; } = new List<Vote>();

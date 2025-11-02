@@ -41,6 +41,7 @@ builder.Services.AddScoped<ICoinWalletService, CoinWalletService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<ITrafficSignService, TrafficSignService>();
 
 // Cấu hình JWT (có thể thêm vào appsettings.json)
 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
