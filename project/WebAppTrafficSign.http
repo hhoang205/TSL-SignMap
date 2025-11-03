@@ -1,0 +1,6 @@
+@WebAppTrafficSign_HostAddress = http://localhost:5003
+
+GET {{WebAppTrafficSign_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

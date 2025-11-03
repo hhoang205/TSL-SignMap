@@ -1,0 +1,11 @@
+# ASP.NET Core ignore
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.vsidx
+*.log
+*.cache
+*.dbmdl
+*.tmp
