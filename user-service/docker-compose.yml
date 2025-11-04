@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  user-service:
+    build: .
+    container_name: user-service
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/user_service
+      - JWT_SECRET=your_jwt_secret
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - signmap-net
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./user-service/.env
+    depends_on:
+      - mongo
+    networks:
+      - signmap-net
+
+  admin-web:
+    build: ./admin-web
+    container_name: admin-web
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./admin-web/.env
+    networks:
+      - signmap-net
+
+volumes:
+  mongo-data:
+
+networks:
+  signmap-net:
+    driver: bridge

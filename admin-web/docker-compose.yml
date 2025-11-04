@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./user-service/.env
+    depends_on:
+      - mongo
+    networks:
+      - signmap-net
+
+  admin-web:
+    build: ./admin-web
+    ports:
+      - "5002:5002"
+    depends_on:
+      - user-service
+    env_file:
+      - ./admin-web/.env
+    networks:
+      - signmap-net
+
+networks:
+  signmap-net:
+
+volumes:
+  mongo-data:
