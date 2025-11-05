@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebAppTrafficSign")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e3e496a5319b1d7ec0fc4455d5939e608a34666")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+156b0ffa3f2b95c0e767bc0056239bad99bb89b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebAppTrafficSign")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebAppTrafficSign")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

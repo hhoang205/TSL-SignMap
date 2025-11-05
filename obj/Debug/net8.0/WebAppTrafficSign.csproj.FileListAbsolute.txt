@@ -382,3 +382,4 @@ Z:\Project Code Cshap\WebAppTrafficSign\obj\Debug\net8.0\refint\WebAppTrafficSig
 Z:\Project Code Cshap\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.pdb
 Z:\Project Code Cshap\WebAppTrafficSign\obj\Debug\net8.0\WebAppTrafficSign.genruntimeconfig.cache
 Z:\Project Code Cshap\WebAppTrafficSign\obj\Debug\net8.0\ref\WebAppTrafficSign.dll
+Z:\Project Code Cshap\WebAppTrafficSign\bin\Debug\net8.0\ADMIN.WEB\package.json
