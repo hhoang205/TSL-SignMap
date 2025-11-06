@@ -37,28 +37,26 @@
 - ✅ DbContext: ContributionDbContext
 - ✅ Program.cs, appsettings.json, launchSettings.json, .csproj
 
+### 5. VotingService (Port 5004) - ✅ HOÀN THÀNH 100%
+- ✅ Models: Vote
+- ✅ DTOs: VoteDto + các Request/Response
+- ✅ Mappers: VoteMapper
+- ✅ Services: VoteService (với HTTP clients cho UserService và ContributionService để validate)
+- ✅ Controllers: VoteController
+- ✅ DbContext: VoteDbContext
+- ✅ Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
+
+### 6. NotificationService (Port 5005) - ✅ HOÀN THÀNH 100%
+- ✅ Models: Notification
+- ✅ DTOs: NotificationDto + các Request/Response
+- ✅ Mappers: NotificationMapper
+- ✅ Services: NotificationService (với HTTP client cho UserService để validate)
+- ✅ Controllers: NotificationController
+- ✅ DbContext: NotificationDbContext
+- ✅ SignalR Hub: NotificationHub cho real-time notifications
+- ✅ Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
+
 ## ⏳ Cần hoàn thiện
-
-### 5. VotingService (Port 5004) - ⏳ CẦN TẠO
-**Cần làm:**
-- Models/Vote.cs
-- DTOs/VoteDto.cs
-- Mapper/VoteMapper.cs
-- Services/VoteService.cs (có thể cần HTTP client cho UserService để lấy reputation)
-- Controllers/VoteController.cs
-- Data/VoteDbContext.cs
-- Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
-
-### 6. NotificationService (Port 5005) - ⏳ CẦN TẠO
-**Cần làm:**
-- Models/Notification.cs
-- DTOs/NotificationDto.cs
-- Mapper/NotificationMapper.cs
-- Services/NotificationService.cs
-- Controllers/NotificationController.cs
-- Data/NotificationDbContext.cs
-- Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
-- **Thêm:** SignalR Hub cho real-time notifications (optional)
 
 ### 7. PaymentService (Port 5006) - ⏳ CẦN TẠO
 **Cần làm:**
@@ -113,7 +111,9 @@ ServiceName/
 - **ContributionService** → UserService (HTTP) - để debit/credit coins
 - **ContributionService** → TrafficSignService (HTTP) - để tạo/update/delete signs
 - **ContributionService** → NotificationService (HTTP) - để gửi notifications
-- **VotingService** → UserService (HTTP) - để lấy reputation (optional)
+- **VotingService** → UserService (HTTP) - để validate User tồn tại
+- **VotingService** → ContributionService (HTTP) - để validate Contribution tồn tại
+- **NotificationService** → UserService (HTTP) - để validate User tồn tại
 - **PaymentService** → UserService (HTTP) - để credit coins sau payment
 
 ## 📚 Files đã tạo
@@ -127,13 +127,19 @@ ServiceName/
 ### ContributionService
 - ✅ Tất cả files cần thiết
 
+### VotingService
+- ✅ Tất cả files cần thiết
+
+### NotificationService
+- ✅ Tất cả files cần thiết (bao gồm SignalR Hub)
+
 ## 🎯 Tiến độ
 
 - [x] UserService - 100%
 - [x] TrafficSignService - 100%
 - [x] ContributionService - 100%
-- [ ] VotingService - 0%
-- [ ] NotificationService - 0%
+- [x] VotingService - 100%
+- [x] NotificationService - 100%
 - [ ] PaymentService - 0%
 - [ ] FeedbackService - 0%
 - [ ] API Gateway updates - 0%
@@ -149,7 +155,7 @@ ServiceName/
 
 ## 🚀 Next Steps
 
-1. Hoàn thiện các services còn lại (VotingService, NotificationService, PaymentService, FeedbackService)
+1. Hoàn thiện các services còn lại (PaymentService, FeedbackService)
 2. Test inter-service communication
 3. Cập nhật API Gateway routes
 4. Setup Docker containers cho mỗi service
