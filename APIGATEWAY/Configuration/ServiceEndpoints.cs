@@ -1,8 +1,8 @@
 namespace ApiGateway.Configuration;
 
-/// <summary>
+
 /// Configuration class for service endpoints
-/// </summary>
+
 public class ServiceEndpoints
 {
     public const string SectionName = "Services";

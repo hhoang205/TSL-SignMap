@@ -26,9 +26,7 @@ public class HealthController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
     /// Health check endpoint for API Gateway
-    /// </summary>
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> GetHealth()

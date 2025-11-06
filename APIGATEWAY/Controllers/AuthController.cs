@@ -20,9 +20,8 @@ public class AuthController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
     /// Refresh access token using refresh token
-    /// </summary>
+
     [HttpPost("refresh")]
     [AllowAnonymous]
     public IActionResult RefreshToken([FromBody] RefreshTokenRequest request)

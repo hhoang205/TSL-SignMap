@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ApiGateway.Filters;
 
-/// <summary>
+
 /// Custom authorization attribute để check roles
-/// </summary>
+
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
 public class AuthorizeRoleAttribute : AuthorizeAttribute, IAuthorizationFilter
 {

@@ -4,9 +4,9 @@ using ApiGateway.Models;
 
 namespace ApiGateway.Middleware;
 
-/// <summary>
+
 /// Middleware để handle errors globally và transform thành standard response format
-/// </summary>
+
 public class ErrorHandlingMiddleware
 {
     private readonly RequestDelegate _next;

@@ -2,9 +2,9 @@ using System.Diagnostics;
 
 namespace ApiGateway.Middleware;
 
-/// <summary>
+
 /// Middleware để generate và forward request ID cho correlation tracking
-/// </summary>
+
 public class RequestIdMiddleware
 {
     private readonly RequestDelegate _next;

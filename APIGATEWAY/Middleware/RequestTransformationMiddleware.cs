@@ -2,9 +2,9 @@ using System.Security.Claims;
 
 namespace ApiGateway.Middleware;
 
-/// <summary>
+
 /// Middleware để transform requests và add user context headers
-/// </summary>
+
 public class RequestTransformationMiddleware
 {
     private readonly RequestDelegate _next;

@@ -3,9 +3,9 @@ using System.Text;
 
 namespace ApiGateway.Middleware;
 
-/// <summary>
+
 /// Middleware để log requests và responses
-/// </summary>
+
 public class LoggingMiddleware
 {
     private readonly RequestDelegate _next;

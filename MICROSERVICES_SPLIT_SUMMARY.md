@@ -6,7 +6,7 @@
 - ✅ Tạo folder cho tất cả 7 services
 - ✅ Tạo cấu trúc folder chuẩn cho mỗi service
 
-### 2. UserService (Port 5001) - ✅ HOÀN THÀNH
+### 2. UserService (Port 5001) - ✅ HOÀN THÀNH 100%
 - ✅ Models: User, CoinWallet
 - ✅ DTOs: UserDto, CoinWalletDto + các Request/Response
 - ✅ Mappers: UserMapper, CoinWalletMapper
@@ -19,117 +19,127 @@
 - ✅ .csproj file
 - ✅ README.md
 
-**Files đã tạo:**
-- `UserService/Models/User.cs`
-- `UserService/Models/CoinWallet.cs`
-- `UserService/DTOs/UserDto.cs`
-- `UserService/DTOs/CoinWalletDto.cs`
-- `UserService/Mapper/UserMapper.cs`
-- `UserService/Mapper/CoinWalletMapper.cs`
-- `UserService/Services/TokenService.cs`
-- `UserService/Services/EmailService.cs`
-- `UserService/Services/CoinWalletService.cs`
-- `UserService/Services/UserService.cs`
-- `UserService/Controllers/UserController.cs`
-- `UserService/Controllers/CoinWalletController.cs`
-- `UserService/Data/UserDbContext.cs`
-- `UserService/Program.cs`
-- `UserService/appsettings.json`
-- `UserService/Properties/launchSettings.json`
-- `UserService/UserService.csproj`
-- `UserService/README.md`
+### 3. TrafficSignService (Port 5002) - ✅ HOÀN THÀNH 100%
+- ✅ Models: TrafficSign
+- ✅ DTOs: TrafficSignDto + các Request
+- ✅ Mappers: TrafficSignMapper
+- ✅ Services: TrafficSignService (với HTTP client cho UserService)
+- ✅ Controllers: TrafficSignController
+- ✅ DbContext: TrafficSignDbContext
+- ✅ Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
+
+### 4. ContributionService (Port 5003) - ✅ HOÀN THÀNH 100%
+- ✅ Models: Contribution
+- ✅ DTOs: ContributionDto + các Request
+- ✅ Mappers: ContributionMapper
+- ✅ Services: ContributionService (với HTTP clients cho UserService, TrafficSignService, NotificationService)
+- ✅ Controllers: ContributionController
+- ✅ DbContext: ContributionDbContext
+- ✅ Program.cs, appsettings.json, launchSettings.json, .csproj
 
 ## ⏳ Cần hoàn thiện
 
-### 2. TrafficSignService (Port 5002)
+### 5. VotingService (Port 5004) - ⏳ CẦN TẠO
 **Cần làm:**
-- Copy Models/TrafficSign.cs → `TrafficSignService/Models/`
-- Copy DTOs/TrafficSignDto.cs → `TrafficSignService/DTOs/`
-- Copy Mapper/TrafficSignMapper.cs → `TrafficSignService/Mapper/`
-- Copy Services/TrafficSignService.cs → `TrafficSignService/Services/`
-- Copy Controller/TrafficSignController.cs → `TrafficSignService/Controllers/`
-- Tạo DbContext chỉ cho TrafficSign
-- Tạo Program.cs (tương tự UserService)
-- Tạo appsettings.json, launchSettings.json
-- Update namespaces
+- Models/Vote.cs
+- DTOs/VoteDto.cs
+- Mapper/VoteMapper.cs
+- Services/VoteService.cs (có thể cần HTTP client cho UserService để lấy reputation)
+- Controllers/VoteController.cs
+- Data/VoteDbContext.cs
+- Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
 
-### 3. ContributionService (Port 5003)
+### 6. NotificationService (Port 5005) - ⏳ CẦN TẠO
 **Cần làm:**
-- Tương tự TrafficSignService
-- **Thêm:** HTTP clients cho:
-  - UserService (để check coin balance, debit coins)
-  - TrafficSignService (để tạo/update signs)
-  - NotificationService (để gửi notifications)
-  - AI Vision Service (để detect signs)
+- Models/Notification.cs
+- DTOs/NotificationDto.cs
+- Mapper/NotificationMapper.cs
+- Services/NotificationService.cs
+- Controllers/NotificationController.cs
+- Data/NotificationDbContext.cs
+- Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
+- **Thêm:** SignalR Hub cho real-time notifications (optional)
 
-### 4. VotingService (Port 5004)
+### 7. PaymentService (Port 5006) - ⏳ CẦN TẠO
 **Cần làm:**
-- Tương tự TrafficSignService
-- **Thêm:** HTTP client cho UserService (để lấy reputation)
+- Models/Payment.cs
+- DTOs/PaymentDto.cs
+- Mapper/PaymentMapper.cs
+- Services/PaymentService.cs (với HTTP client cho UserService để credit coins)
+- Controllers/PaymentController.cs
+- Data/PaymentDbContext.cs
+- Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
 
-### 5. NotificationService (Port 5005)
+### 8. FeedbackService (Port 5007) - ⏳ CẦN TẠO
 **Cần làm:**
-- Tương tự TrafficSignService
-- **Thêm:** SignalR Hub cho real-time notifications
-- EmailService (đã có trong UserService, có thể copy hoặc tạo shared)
+- Models/Feedback.cs
+- DTOs/FeedbackDto.cs
+- Mapper/FeedbackMapper.cs
+- Services/FeedbackService.cs
+- Controllers/FeedbackController.cs
+- Data/FeedbackDbContext.cs
+- Program.cs, appsettings.json, launchSettings.json, .csproj, README.md
 
-### 6. PaymentService (Port 5006)
-**Cần làm:**
-- Tương tự TrafficSignService
-- **Thêm:** HTTP client cho CoinWalletService (để credit coins sau payment)
+## 📋 Template để tạo service mới
 
-### 7. FeedbackService (Port 5007)
-**Cần làm:**
-- Tương tự TrafficSignService
-- Không có dependencies
+Mỗi service cần có cấu trúc tương tự:
 
-## 📋 Các bước tiếp theo
-
-### Bước 1: Hoàn thiện các services còn lại
-Làm theo template UserService:
-1. Copy Models → cập nhật namespace
-2. Copy DTOs → cập nhật namespace
-3. Copy Mappers → cập nhật namespace
-4. Copy Services → cập nhật namespace + loại bỏ dependencies không cần
-5. Copy Controllers → cập nhật namespace
-6. Tạo DbContext riêng
-7. Tạo Program.cs
-8. Tạo appsettings.json, launchSettings.json
-9. Tạo .csproj
-10. Tạo README.md
-
-### Bước 2: Inter-Service Communication
-Tạo HTTP clients cho các services cần giao tiếp:
-- ContributionService → UserService, TrafficSignService, NotificationService
-- VotingService → UserService
-- PaymentService → CoinWalletService (qua UserService)
-
-### Bước 3: Cập nhật API Gateway
-Cập nhật `APIGATEWAY/Configuration/ServiceEndpoints.cs`:
-```csharp
-public const string UserService = "http://localhost:5001";
-public const string TrafficSignService = "http://localhost:5002";
-// ... etc
+```
+ServiceName/
+├── Models/
+│   └── ModelName.cs
+├── DTOs/
+│   └── ModelNameDto.cs
+├── Mapper/
+│   └── ModelNameMapper.cs
+├── Services/
+│   └── ModelNameService.cs
+├── Controllers/
+│   └── ModelNameController.cs
+├── Data/
+│   └── ServiceNameDbContext.cs
+├── Program.cs
+├── appsettings.json
+├── Properties/
+│   └── launchSettings.json
+├── ServiceName.csproj
+└── README.md
 ```
 
-Cập nhật routes trong `APIGATEWAY/Program.cs` để route đúng.
+## 🔗 Inter-Service Communication
 
-### Bước 4: Testing
-- Test từng service độc lập
-- Test inter-service communication
-- Test qua API Gateway
+### Service Dependencies:
+- **TrafficSignService** → UserService (HTTP) - để debit coins cho advanced filters
+- **ContributionService** → UserService (HTTP) - để debit/credit coins
+- **ContributionService** → TrafficSignService (HTTP) - để tạo/update/delete signs
+- **ContributionService** → NotificationService (HTTP) - để gửi notifications
+- **VotingService** → UserService (HTTP) - để lấy reputation (optional)
+- **PaymentService** → UserService (HTTP) - để credit coins sau payment
 
-### Bước 5: Docker & Deployment
-- Tạo Dockerfile cho mỗi service
-- Tạo docker-compose.yml để chạy tất cả services
-- Setup service discovery
+## 📚 Files đã tạo
 
-## 📚 Tài liệu tham khảo
+### UserService
+- ✅ Tất cả files cần thiết
 
-- `SERVICES_MIGRATION_GUIDE.md` - Hướng dẫn chi tiết cách tách services
-- `UserService/README.md` - Template cho các services khác
+### TrafficSignService
+- ✅ Tất cả files cần thiết
 
-## ⚠️ Lưu ý
+### ContributionService
+- ✅ Tất cả files cần thiết
+
+## 🎯 Tiến độ
+
+- [x] UserService - 100%
+- [x] TrafficSignService - 100%
+- [x] ContributionService - 100%
+- [ ] VotingService - 0%
+- [ ] NotificationService - 0%
+- [ ] PaymentService - 0%
+- [ ] FeedbackService - 0%
+- [ ] API Gateway updates - 0%
+- [ ] Inter-service communication testing - 0%
+
+## 📝 Lưu ý
 
 1. **Namespace:** Tất cả namespace phải đổi từ `WebAppTrafficSign.*` → `ServiceName.*`
 2. **DbContext:** Mỗi service chỉ include các DbSet liên quan
@@ -137,15 +147,10 @@ Cập nhật routes trong `APIGATEWAY/Program.cs` để route đúng.
 4. **Connection String:** Có thể dùng chung database hoặc tách riêng
 5. **JWT:** Có thể dùng chung secret key hoặc mỗi service riêng
 
-## 🎯 Tiến độ
+## 🚀 Next Steps
 
-- [x] UserService - 100%
-- [ ] TrafficSignService - 0%
-- [ ] ContributionService - 0%
-- [ ] VotingService - 0%
-- [ ] NotificationService - 0%
-- [ ] PaymentService - 0%
-- [ ] FeedbackService - 0%
-- [ ] API Gateway updates - 0%
-- [ ] Inter-service communication - 0%
-
+1. Hoàn thiện các services còn lại (VotingService, NotificationService, PaymentService, FeedbackService)
+2. Test inter-service communication
+3. Cập nhật API Gateway routes
+4. Setup Docker containers cho mỗi service
+5. Setup service discovery (nếu cần)

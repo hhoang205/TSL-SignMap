@@ -1,8 +1,6 @@
 namespace ApiGateway.Configuration;
 
-/// <summary>
 /// Gateway configuration settings
-/// </summary>
 public class GatewayConfig
 {
     public JwtConfig Jwt { get; set; } = new();

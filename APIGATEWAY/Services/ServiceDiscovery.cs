@@ -2,9 +2,9 @@ using ApiGateway.Configuration;
 
 namespace ApiGateway.Services;
 
-/// <summary>
+
 /// Service discovery implementation (basic - can be extended with Consul, Eureka, etc.)
-/// </summary>
+
 public class ServiceDiscovery : IServiceDiscovery
 {
     private readonly IConfiguration _configuration;

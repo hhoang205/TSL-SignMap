@@ -1,8 +1,8 @@
 namespace ApiGateway.Middleware;
 
-/// <summary>
+
 /// Middleware để add security headers
-/// </summary>
+
 public class SecurityHeadersMiddleware
 {
     private readonly RequestDelegate _next;
