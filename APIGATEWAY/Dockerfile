@@ -3,12 +3,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy csproj and restore dependencies
-COPY ["ApiGateway.csproj", "./"]
-RUN dotnet restore "ApiGateway.csproj"
+COPY ["APIGATEWAY/ApiGateway.csproj", "APIGATEWAY/"]
+RUN dotnet restore "APIGATEWAY/ApiGateway.csproj"
 
 # Copy everything else and build
 COPY . .
-WORKDIR "/src"
+WORKDIR "/src/APIGATEWAY"
 RUN dotnet build "ApiGateway.csproj" -c Release -o /app/build
 
 # Publish stage
@@ -34,4 +34,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Run the app
 ENTRYPOINT ["dotnet", "ApiGateway.dll"]
+
 

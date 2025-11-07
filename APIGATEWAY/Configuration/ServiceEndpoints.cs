@@ -14,5 +14,6 @@ public class ServiceEndpoints
     public string AIVisionService { get; set; } = string.Empty;
     public string NotificationService { get; set; } = string.Empty;
     public string PaymentService { get; set; } = string.Empty;
+    public string FeedbackService { get; set; } = string.Empty;
 }
 

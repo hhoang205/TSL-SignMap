@@ -1,0 +1,199 @@
+version: '3.8'
+
+services:
+  # SQL Server Database
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: traffic-sign-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Admin123@
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - traffic-sign-network
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Admin123@ -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+
+  # User Service
+  user-service:
+    build:
+      context: .
+      dockerfile: UserService/Dockerfile
+    container_name: user-service
+    ports:
+      - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5001
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TFSIGN;User Id=SA;Password=Admin123@;TrustServerCertificate=True;MultipleActiveResultSets=True;
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - traffic-sign-network
+    restart: unless-stopped
+
+  # Traffic Sign Service
+  traffic-sign-service:
+    build:
+      context: .
+      dockerfile: TrafficSignService/Dockerfile
+    container_name: traffic-sign-service
+    ports:
+      - "5002:5002"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5002
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TFSIGN;User Id=SA;Password=Admin123@;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ServiceEndpoints__UserService=http://user-service:5001
+    depends_on:
+      - sqlserver
+      - user-service
+    networks:
+      - traffic-sign-network
+    restart: unless-stopped
+
+  # Contribution Service
+  contribution-service:
+    build:
+      context: .
+      dockerfile: ContributionService/Dockerfile
+    container_name: contribution-service
+    ports:
+      - "5003:5003"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5003
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TFSIGN;User Id=SA;Password=Admin123@;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ServiceEndpoints__UserService=http://user-service:5001
+      - ServiceEndpoints__TrafficSignService=http://traffic-sign-service:5002
+      - ServiceEndpoints__NotificationService=http://notification-service:5005
+    depends_on:
+      - sqlserver
+      - user-service
+      - traffic-sign-service
+      - notification-service
+    networks:
+      - traffic-sign-network
+    restart: unless-stopped
+
+  # Voting Service
+  voting-service:
+    build:
+      context: .
+      dockerfile: VotingService/Dockerfile
+    container_name: voting-service
+    ports:
+      - "5004:5004"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5004
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TFSIGN;User Id=SA;Password=Admin123@;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ServiceEndpoints__UserService=http://user-service:5001
+      - ServiceEndpoints__ContributionService=http://contribution-service:5003
+    depends_on:
+      - sqlserver
+      - user-service
+      - contribution-service
+    networks:
+      - traffic-sign-network
+    restart: unless-stopped
+
+  # Notification Service
+  notification-service:
+    build:
+      context: .
+      dockerfile: NotificationService/Dockerfile
+    container_name: notification-service
+    ports:
+      - "5005:5005"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5005
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TFSIGN;User Id=SA;Password=Admin123@;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ServiceEndpoints__UserService=http://user-service:5001
+    depends_on:
+      - sqlserver
+      - user-service
+    networks:
+      - traffic-sign-network
+    restart: unless-stopped
+
+  # Payment Service
+  payment-service:
+    build:
+      context: .
+      dockerfile: PaymentService/Dockerfile
+    container_name: payment-service
+    ports:
+      - "5006:5006"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5006
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TFSIGN;User Id=SA;Password=Admin123@;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ServiceEndpoints__UserService=http://user-service:5001
+    depends_on:
+      - sqlserver
+      - user-service
+    networks:
+      - traffic-sign-network
+    restart: unless-stopped
+
+  # Feedback Service
+  feedback-service:
+    build:
+      context: .
+      dockerfile: FeedbackService/Dockerfile
+    container_name: feedback-service
+    ports:
+      - "5007:5007"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5007
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TFSIGN;User Id=SA;Password=Admin123@;TrustServerCertificate=True;MultipleActiveResultSets=True;
+      - ServiceEndpoints__UserService=http://user-service:5001
+    depends_on:
+      - sqlserver
+      - user-service
+    networks:
+      - traffic-sign-network
+    restart: unless-stopped
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: .
+      dockerfile: APIGATEWAY/Dockerfile
+    container_name: api-gateway
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5000
+    depends_on:
+      - user-service
+      - traffic-sign-service
+      - contribution-service
+      - voting-service
+      - notification-service
+      - payment-service
+      - feedback-service
+    networks:
+      - traffic-sign-network
+    restart: unless-stopped
+
+networks:
+  traffic-sign-network:
+    driver: bridge
+
+volumes:
+  sqlserver-data:
+
