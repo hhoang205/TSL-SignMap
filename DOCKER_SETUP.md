@@ -211,6 +211,49 @@ Nếu ports đã được sử dụng, có thể:
 
 1. ✅ Setup Docker containers
 2. Run database migrations
+
+### Run database migrations
+
+Có 2 cách để chạy migrations:
+
+#### Cách 1: Sử dụng script tự động (Recommended)
+
+**Windows (PowerShell):**
+```powershell
+.\run-migrations.ps1
+```
+
+**Linux/Mac (Bash):**
+```bash
+chmod +x run-migrations.sh
+./run-migrations.sh
+```
+
+Script sẽ tự động:
+- Kiểm tra SQL Server health
+- Chạy migrations cho tất cả services
+- Hiển thị summary kết quả
+
+#### Cách 2: Chạy migrations thủ công cho từng service
+
+```bash
+# Đảm bảo SQL Server đã healthy trước khi chạy migrations
+docker-compose ps sqlserver
+
+# Chạy migrations cho từng service
+docker-compose exec user-service dotnet ef database update
+docker-compose exec traffic-sign-service dotnet ef database update
+docker-compose exec contribution-service dotnet ef database update
+docker-compose exec voting-service dotnet ef database update
+docker-compose exec notification-service dotnet ef database update
+docker-compose exec payment-service dotnet ef database update
+docker-compose exec feedback-service dotnet ef database update
+```
+
+**Lưu ý:** 
+- Migrations sẽ được chạy trên shared database `TFSIGN`
+- Mỗi service có DbContext riêng nhưng dùng chung database
+- Đảm bảo tất cả services đã được build và containers đang chạy
 3. Test inter-service communication
 4. Setup CI/CD pipeline
 5. Configure monitoring and logging
