@@ -13,6 +13,7 @@ namespace UserService.Services
         Task<UserDto> RegisterAsync(UserRegistrationRequest request);
         Task<AuthResponse> LoginAsync(LoginRequest request);
         Task<UserDto> GetByIdAsync(int id);
+        Task<PaginatedUsersResponse> GetAllAsync(int pageNumber, int pageSize, string? username = null);
         Task<UserDto> UpdateProfileAsync(int id, UserUpdateRequest request);
         Task<bool> ChangePasswordAsync(int id, ChangePasswordRequest request);
         Task<bool> ForgotPasswordAsync(ForgotPasswordRequest request);
@@ -27,7 +28,6 @@ namespace UserService.Services
     {
         private readonly UserDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly ITokenService _tokenService;
         private readonly ICoinWalletService _coinWalletService;
         private readonly IEmailService _emailService;
         // TODO: Add HTTP client for PaymentService communication
@@ -36,13 +36,11 @@ namespace UserService.Services
         public UserService(
             UserDbContext context,
             IPasswordHasher<User> passwordHasher,
-            ITokenService tokenService,
             ICoinWalletService coinWalletService,
             IEmailService emailService)
         {
             _context = context;
             _passwordHasher = passwordHasher;
-            _tokenService = tokenService;
             _coinWalletService = coinWalletService;
             _emailService = emailService;
         }
@@ -120,8 +118,11 @@ namespace UserService.Services
             if (verifyResult != PasswordVerificationResult.Success)
                 throw new InvalidOperationException("Mật khẩu không đúng.");
 
-            var token = _tokenService.GenerateToken(user);
-            return new AuthResponse { User = user.toDto(), Token = token };
+            return new AuthResponse 
+            { 
+                User = user.toDto(),
+                Message = "Đăng nhập thành công bằng Firebase token."
+            };
         }
 
         /// Lấy thông tin người dùng theo Id
@@ -133,18 +134,75 @@ namespace UserService.Services
             return user.toDto();
         }
 
-        /// Cập nhật hồ sơ người dùng (tên, email, phone)
+        /// Lấy danh sách users với pagination và filter
+        public async Task<PaginatedUsersResponse> GetAllAsync(int pageNumber, int pageSize, string? username = null)
+        {
+            var query = _context.Users.AsQueryable();
+
+            // Filter by username if provided
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                query = query.Where(u => u.Username.Contains(username) || u.Email.Contains(username));
+            }
+
+            var totalCount = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            var users = await query
+                .OrderByDescending(u => u.CreatedAt)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(u => u.toDto())
+                .ToListAsync();
+
+            return new PaginatedUsersResponse
+            {
+                Data = users,
+                Count = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalPages = totalPages
+            };
+        }
+
+        /// Cập nhật hồ sơ người dùng (tên, email, phone, role)
         public async Task<UserDto> UpdateProfileAsync(int id, UserUpdateRequest request)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null) throw new InvalidOperationException("User not found");
 
-            if (await _context.Users.AnyAsync(u => (u.Email == request.Email || u.Username == request.Username) && u.Id != id))
-                throw new InvalidOperationException("Tên đăng nhập hoặc email đã được sử dụng.");
+            // Check for duplicate email/username if they're being updated
+            if (!string.IsNullOrWhiteSpace(request.Email) || !string.IsNullOrWhiteSpace(request.Username))
+            {
+                var email = request.Email ?? user.Email;
+                var username = request.Username ?? user.Username;
+                if (await _context.Users.AnyAsync(u => (u.Email == email || u.Username == username) && u.Id != id))
+                    throw new InvalidOperationException("Tên đăng nhập hoặc email đã được sử dụng.");
+            }
 
-            user.Username = request.Username;
-            user.Email = request.Email;
-            user.PhoneNumber = request.PhoneNumber;
+            // Update fields if provided
+            if (!string.IsNullOrWhiteSpace(request.Username))
+                user.Username = request.Username;
+            if (!string.IsNullOrWhiteSpace(request.Email))
+                user.Email = request.Email;
+            if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+                user.PhoneNumber = request.PhoneNumber;
+            if (!string.IsNullOrWhiteSpace(request.Firstname))
+                user.Firstname = request.Firstname;
+            if (!string.IsNullOrWhiteSpace(request.Lastname))
+                user.Lastname = request.Lastname;
+            
+            // Update role if provided (convert string to RoleId)
+            if (!string.IsNullOrWhiteSpace(request.Role))
+            {
+                user.RoleId = request.Role switch
+                {
+                    "Staff" => 1,
+                    "Admin" => 2,
+                    _ => 0  // Default to User
+                };
+            }
+
             user.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
@@ -173,7 +231,8 @@ namespace UserService.Services
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
             if (user == null) return false;
 
-            var token = _tokenService.GeneratePasswordResetToken(user);
+            var rawToken = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            var token = rawToken.TrimEnd('=').Replace('+', '-').Replace('/', '_');
             var resetLink = request.CallbackUrl + "?token=" + token;
             await _emailService.SendPasswordResetEmailAsync(user.Email, resetLink);
             return true;

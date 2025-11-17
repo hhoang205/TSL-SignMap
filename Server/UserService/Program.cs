@@ -1,6 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using UserService.Data;
 using UserService.Models;
 using UserService.Services;
@@ -12,6 +14,7 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
         options.JsonSerializerOptions.WriteIndented = true;
+        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
     });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -36,18 +39,38 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 
 // Register services
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICoinWalletService, CoinWalletService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserService, UserService.Services.UserService>();
 
-// Configure JWT
-builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+var firebaseProjectId = builder.Configuration.GetValue<string>("Firebase:ProjectId");
+if (string.IsNullOrWhiteSpace(firebaseProjectId))
 {
-    { "Jwt:SecretKey", builder.Configuration["Jwt:SecretKey"] ?? "YourSuperSecretKeyThatShouldBeAtLeast32CharactersLongForHS256" },
-    { "Jwt:Issuer", builder.Configuration["Jwt:Issuer"] ?? "UserService" },
-    { "Jwt:Audience", builder.Configuration["Jwt:Audience"] ?? "UserServiceUsers" }
+    throw new InvalidOperationException("Firebase:ProjectId is not configured.");
+}
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.Authority = $"https://securetoken.google.com/{firebaseProjectId}";
+    options.Audience = firebaseProjectId;
+    options.RequireHttpsMetadata = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = $"https://securetoken.google.com/{firebaseProjectId}",
+        ValidateAudience = true,
+        ValidAudience = firebaseProjectId,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true
+    };
 });
+
+builder.Services.AddAuthorization();
 
 // CORS
 builder.Services.AddCors(options =>
@@ -74,6 +97,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

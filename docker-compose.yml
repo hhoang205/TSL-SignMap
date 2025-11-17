@@ -29,7 +29,7 @@ services:
     ports:
       - "5001:5001"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:5001
       - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=TFSIGN;User Id=SA;Password=Admin123@;TrustServerCertificate=True;MultipleActiveResultSets=True;
     depends_on:
@@ -174,8 +174,15 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:5000
+      - Gateway__Services__UserService=http://user-service:5001
+      - Gateway__Services__TrafficSignService=http://traffic-sign-service:5002
+      - Gateway__Services__ContributionService=http://contribution-service:5003
+      - Gateway__Services__VotingService=http://voting-service:5004
+      - Gateway__Services__NotificationService=http://notification-service:5005
+      - Gateway__Services__PaymentService=http://payment-service:5006
+      - Gateway__Services__FeedbackService=http://feedback-service:5007
     depends_on:
       - user-service
       - traffic-sign-service

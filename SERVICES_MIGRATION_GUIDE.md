@@ -14,7 +14,7 @@ Codebase hiện tại đã được tách thành các microservices riêng biệ
 **Chức năng:** User management, Authentication, Coin Wallet
 **Models:** User, CoinWallet
 **Controllers:** UserController, CoinWalletController
-**Services:** UserService, CoinWalletService, TokenService, EmailService
+**Services:** UserService, CoinWalletService, EmailService
 
 ### 2. TrafficSignService (Port 5002)
 **Chức năng:** Traffic Sign CRUD, Search, Filter
@@ -90,8 +90,8 @@ ServiceName/
 
 ### Bước 5: Tạo appsettings.json
 - Connection string (có thể shared hoặc riêng)
-- JWT config (nếu cần)
 - Service endpoints (cho inter-service communication)
+- Authentication settings nếu service tự xử lý (UserService hiện rely vào Firebase qua API Gateway)
 
 ### Bước 6: Cập nhật dependencies
 - Thay direct dependencies bằng HTTP client calls

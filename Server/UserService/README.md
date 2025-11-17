@@ -10,7 +10,7 @@ Microservice quản lý người dùng, authentication và coin wallet.
 
 ### User Management
 - Đăng ký tài khoản (nhận 20 coin ban đầu)
-- Đăng nhập (JWT token)
+- Đăng nhập (xác thực thông tin, token do Firebase cung cấp)
 - Quản lý profile
 - Đổi mật khẩu
 - Reset password qua email
@@ -54,7 +54,6 @@ Microservice quản lý người dùng, authentication và coin wallet.
 
 - `UserService` - Business logic cho user
 - `CoinWalletService` - Business logic cho wallet
-- `TokenService` - JWT token generation
 - `EmailService` - Gửi email (mock implementation)
 
 ## Dependencies

@@ -1,7 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using FeedbackService.Data;
 using FeedbackService.Services;
 
@@ -23,9 +22,12 @@ builder.Services.AddDbContext<FeedbackDbContext>(options =>
 builder.Services.AddScoped<IFeedbackService, FeedbackService.Services.FeedbackService>();
 builder.Services.AddHttpClient<FeedbackService.Services.FeedbackService>();
 
-// Configure JWT Authentication
-var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey not found");
+// Configure Firebase Authentication
+var firebaseProjectId = builder.Configuration.GetValue<string>("Firebase:ProjectId");
+if (string.IsNullOrWhiteSpace(firebaseProjectId))
+{
+    throw new InvalidOperationException("Firebase:ProjectId is not configured.");
+}
 
 builder.Services.AddAuthentication(options =>
 {
@@ -34,15 +36,17 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
+    options.Authority = $"https://securetoken.google.com/{firebaseProjectId}";
+    options.Audience = firebaseProjectId;
+    options.RequireHttpsMetadata = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
+        ValidIssuer = $"https://securetoken.google.com/{firebaseProjectId}",
         ValidateAudience = true,
+        ValidAudience = firebaseProjectId,
         ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings["Issuer"] ?? "WebAppTrafficSign",
-        ValidAudience = jwtSettings["Audience"] ?? "WebAppTrafficSign",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+        ValidateIssuerSigningKey = true
     };
 });
 

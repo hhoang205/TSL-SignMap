@@ -65,6 +65,21 @@ namespace UserService.Controllers
             }
         }
 
+        /// Lấy danh sách users với pagination
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string? username = null)
+        {
+            try
+            {
+                var result = await _userService.GetAllAsync(pageNumber, pageSize, username);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
         /// Lấy thông tin user theo ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)

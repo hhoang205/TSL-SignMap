@@ -1,266 +1,76 @@
-# API Gateway Service
+# API Gateway (Ocelot)
 
-API Gateway cho SignMap Traffic Sign Management System sử dụng YARP (Yet Another Reverse Proxy) và .NET 8.
+Gateway dành cho hệ thống **AI-Enabled Community-based Traffic Sign Location Management System**. Dự án này gom toàn bộ microservices phía sau thành một entrypoint duy nhất, xử lý:
 
-## Features
+- CORS và logging tập trung
+- Firebase JWT authentication / authorization
+- Điều phối request bằng [Ocelot](https://github.com/ThreeMammals/Ocelot)
+- Forward WebSocket traffic tới SignalR hub (NotificationService)
 
-- ✅ JWT Authentication & Authorization
-- ✅ Firebase Authentication (optional)
-- ✅ Dual Authentication Support (JWT + Firebase)
-- ✅ Role-Based Access Control (RBAC)
-- ✅ Reverse Proxy với YARP
-- ✅ Rate Limiting
-- ✅ Request/Response Logging
-- ✅ Error Handling
-- ✅ Health Checks
-- ✅ CORS Configuration
-- ✅ Security Headers
-- ✅ Request ID Correlation
-- ✅ Token Refresh Endpoint
+## Kiến trúc & cấu hình
 
-## Project Structure
+| Service | Downstream | Mặc định (Docker) | Local override (Development) |
+|---------|------------|-------------------|------------------------------|
+| User / Wallet | `/api/users`, `/api/wallets` | `http://user-service:5001` | `http://localhost:5001` |
+| Traffic Sign | `/api/signs` | `http://traffic-sign-service:5002` | `http://localhost:5002` |
+| Contribution | `/api/contributions` | `http://contribution-service:5003` | `http://localhost:5003` |
+| Voting | `/api/votes` | `http://voting-service:5004` | `http://localhost:5004` |
+| Notification REST | `/api/notifications` | `http://notification-service:5005` | `http://localhost:5005` |
+| Notification Hub | `/notificationHub` | `http://notification-service:5005` | `http://localhost:5005` |
+| Payment | `/api/payments` | `http://payment-service:5006` | `http://localhost:5006` |
+| Feedback | `/api/feedbacks` | `http://feedback-service:5007` | `http://localhost:5007` |
 
-```
-APIGATEWAY/
-├── Configuration/       # Configuration classes
-├── Controllers/         # API controllers (Auth, Health)
-├── Middleware/          # Custom middleware
-├── Models/              # DTOs, ViewModels
-├── Filters/             # Authorization filters
-├── Program.cs           # Application entry point
-└── appsettings.json     # Configuration
-```
-
-## Setup
-
-### Prerequisites
-
-- .NET 8 SDK
-- Visual Studio 2022 hoặc VS Code
-
-### Installation
-
-1. Restore packages:
-```bash
-dotnet restore
-```
-
-2. Update `appsettings.json` với service endpoints thực tế
-
-3. Run:
-```bash
-dotnet run
-```
-
-API Gateway sẽ chạy tại `http://localhost:5000`
-
-## Configuration
-
-### Service Endpoints
-
-Cấu hình service endpoints trong `appsettings.json`:
-
-```json
-{
-  "Services": {
-    "UserService": "http://localhost:5001",
-    "TrafficSignService": "http://localhost:5002",
-    ...
-  }
-}
-```
-
-### JWT Configuration
-
-```json
-{
-  "Gateway": {
-    "Jwt": {
-      "SecretKey": "your-secret-key",
-      "Issuer": "WebAppTrafficSign",
-      "Audience": "WebAppTrafficSignUsers"
-    }
-  }
-}
-```
-
-### Firebase Authentication Configuration
-
-API Gateway hỗ trợ Firebase Authentication song song với JWT. Để enable Firebase:
-
-```json
-{
-  "Gateway": {
-    "Firebase": {
-      "ProjectId": "your-firebase-project-id",
-      "ServiceAccountPath": "path/to/service-account.json",
-      "Enabled": true,
-      "AllowJwtFallback": true
-    }
-  }
-}
-```
-
-**Configuration Options:**
-- `ProjectId` (required): Firebase Project ID
-- `ServiceAccountPath` (optional): Đường dẫn đến Firebase service account JSON file
-- `Enabled` (default: false): Enable/disable Firebase authentication
-- `AllowJwtFallback` (default: true): Cho phép sử dụng JWT tokens khi Firebase token không hợp lệ
-
-**Cách lấy Firebase credentials:**
-
-1. **Service Account File (Recommended):**
-   - Vào Firebase Console → Project Settings → Service Accounts
-   - Click "Generate new private key"
-   - Lưu file JSON và cấu hình `ServiceAccountPath` trong `appsettings.json`
-
-2. **Environment Variable:**
-   - Set environment variable `FIREBASE_CREDENTIALS` với nội dung JSON của service account
-   - Không cần cấu hình `ServiceAccountPath`
-
-3. **Default Credentials (GCP environments):**
-   - Nếu chạy trên GCP (Cloud Run, GKE, etc.), có thể sử dụng default credentials
-   - Chỉ cần cấu hình `ProjectId`
-
-**Lưu ý:**
-- Khi Firebase được enable, API Gateway sẽ tự động validate Firebase ID tokens từ header `Authorization: Bearer {firebase-token}`
-- Nếu `AllowJwtFallback` = true, hệ thống sẽ thử validate JWT token nếu Firebase token không hợp lệ
-- Firebase tokens sẽ được convert thành claims và có thể sử dụng với các authorization policies hiện có
-
-### Rate Limiting
-
-Cấu hình rate limiting trong `appsettings.json`:
-
-```json
-{
-  "RateLimiting": {
-    "GeneralRules": [
-      {
-        "Endpoint": "*",
-        "Period": "1m",
-        "Limit": 100
-      }
-    ]
-  }
-}
-```
-
-## API Routes
-
-### Public Routes (No Auth Required)
-- `POST /api/auth/refresh` - Refresh access token
-- `GET /api/health` - Health check
-- `GET /health` - Health check endpoint
-
-### Protected Routes (Auth Required)
-- `/api/users/*` → User Service
-- `/api/signs/*` → Traffic Sign Service
-- `/api/contributions/*` → Contribution Service
-- `/api/votes/*` → Vote Service
-- `/api/ai/*` → AI Vision Service
-- `/api/notifications/*` → Notification Service
-- `/api/payments/*` → Payment Service
-- `/api/wallets/*` → User Service (CoinWallet)
-
-## Authentication
-
-API Gateway hỗ trợ 2 loại authentication:
-
-### JWT Authentication
-
-Sử dụng JWT Bearer tokens từ hệ thống nội bộ:
-
-```
-Authorization: Bearer {jwt-token}
-```
+Các giá trị này được đặt trong `appsettings*.json` (section `Gateway:Services`). File `Configuration/ServiceEndpoints.cs` cung cấp fallback để tránh thiếu cấu hình.
 
 ### Firebase Authentication
 
-Sử dụng Firebase ID tokens từ Firebase Authentication:
+- `Gateway:Firebase:ProjectId` = Firebase project đang dùng (hiện tại `tfsignmangage`).
+- Scheme mặc định đặt là `Firebase`; Ocelot routes nào có `AuthenticationOptions.AuthenticationProviderKey = "Firebase"` sẽ yêu cầu token hợp lệ.
+- Public routes (đăng ký / đăng nhập / quên mật khẩu) được định nghĩa riêng với `Priority` cao hơn trong `ocelot.json`.
 
-```
-Authorization: Bearer {firebase-id-token}
-```
+### CORS
 
-**Lưu ý:**
-- Cả 2 loại tokens đều sử dụng format `Authorization: Bearer {token}`
-- API Gateway tự động detect và validate loại token phù hợp
-- Firebase tokens được convert thành claims tương thích với JWT claims
-- User context (User ID, Email, Role) được tự động thêm vào request headers cho backend services
+- `Gateway:Cors:AllowedOrigins` (array). `Development` đã bật sẵn `http://localhost:5173` và `http://localhost:3000`.
+- Nếu mảng rỗng, gateway fallback sang `AllowAnyOrigin`.
 
-## Health Checks
+### Health check
 
-Check health của gateway và backend services:
+`GET /api/health` trả về environment + downstream URLs. Dockerfile và docker-compose dùng endpoint này cho health probe.
+
+## Chạy gateway
 
 ```bash
-curl http://localhost:5000/api/health
+# Restore & run từ root solution
+dotnet restore Server/APIGATEWAY/ApiGateway.csproj
+dotnet run --project Server/APIGATEWAY/ApiGateway.csproj
+
+# hoặc chạy trong docker (docker-compose ở root)
+docker compose up api-gateway
 ```
 
-Response:
-```json
-{
-  "status": "Healthy",
-  "checks": {
-    "gateway": "Healthy",
-    "userService": "Healthy",
-    ...
-  },
-  "timestamp": "2025-01-01T00:00:00Z"
-}
-```
+> Lưu ý: Khi chạy ngoài Docker, các microservices cũng cần chạy trên `localhost:500x` (đã pre-config trong `appsettings.Development.json`). Nếu bạn khởi chạy service ở port khác, cập nhật lại config tương ứng.
+
+## Route map quan trọng (`ocelot.json`)
+
+- `POST /api/users/register|login|forgot-password` → UserService (public)
+- `* /api/users/**` (các HTTP verb) → UserService (yêu cầu token)
+- `* /api/wallets/**` → UserService (yêu cầu token)
+- `* /api/signs/**` → TrafficSignService (yêu cầu token)
+- `* /api/contributions/**` → ContributionService (yêu cầu token)
+- `* /api/votes/**` → VotingService (yêu cầu token)
+- `* /api/notifications/**` → NotificationService (yêu cầu token)
+- `GET /notificationHub` → SignalR hub (yêu cầu token, hỗ trợ WebSocket)
+- `* /api/payments/**` → PaymentService (yêu cầu token)
+- `* /api/feedbacks/**` → FeedbackService (yêu cầu token)
+
+Tất cả routes secure đều forward header `Authorization` sang service downstream.
 
 ## Logging
 
-Logs được ghi vào:
-- Console (development)
-- File: `logs/apigateway-{date}.txt`
+`Middleware/RequestLoggingMiddleware` log mỗi request với thời gian xử lý và `TraceId`. Bạn có thể mở rộng để push sang hệ thống observability (Seq, ELK, v.v.).
 
-Log format sử dụng Serilog với structured logging.
+## Tham khảo thêm
 
-## Rate Limiting
-
-Rate limiting được áp dụng per IP và per user. Response headers:
-- `X-RateLimit-Limit`: Limit
-- `X-RateLimit-Remaining`: Remaining requests
-- `X-RateLimit-Reset`: Reset time
-
-## CORS
-
-CORS được cấu hình trong `appsettings.json`. Default allows:
-- Origins: `http://localhost:3000`, `http://localhost:19006`, `http://localhost:5173`
-- Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS
-- Headers: Authorization, Content-Type, X-Request-Id
-
-## Development
-
-### Swagger UI
-
-Access Swagger UI tại: `http://localhost:5000/swagger`
-
-### Testing
-
-Test với Postman hoặc curl:
-
-```bash
-# Health check
-curl http://localhost:5000/api/health
-
-# Protected route (requires JWT)
-curl -H "Authorization: Bearer {token}" http://localhost:5000/api/users
-```
-
-## Production Deployment
-
-1. Update `appsettings.json` với production service endpoints
-2. Configure JWT secret key từ environment variables hoặc secret store
-3. Enable HTTPS
-4. Configure Redis cho caching (optional)
-5. Setup monitoring và alerting
-
-## Notes
-
-- API Gateway proxy requests đến backend services
-- Backend services cần expose tại ports được cấu hình
-- JWT secret key phải match với backend services
-- Rate limiting sử dụng in-memory cache (Redis recommended cho production)
+- `ApiGateway/` ở root repo cung cấp ví dụ tối giản khi cần so sánh.
+- `SERVICES_MIGRATION_GUIDE.md` & `MICROSERVICES_SPLIT_SUMMARY.md` mô tả đầy đủ vai trò từng service.
 

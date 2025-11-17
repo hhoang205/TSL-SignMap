@@ -11,6 +11,7 @@ namespace UserService.DTOs
         public string PhoneNumber { get; set; }
         public float Reputation { get; set; }
         public int RoleId { get; set; }  // 0: user, 1: staff, 2: admin
+        public string Role { get; set; }  // "User", "Staff", "Admin"
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
@@ -32,14 +33,17 @@ namespace UserService.DTOs
     public class AuthResponse
     {
         public UserDto User { get; set; }
-        public string Token { get; set; }
+        public string Message { get; set; } = "Authenticated via Firebase token.";
     }
     
     public class UserUpdateRequest
     {
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
+        public string? Username { get; set; }
+        public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Firstname { get; set; }
+        public string? Lastname { get; set; }
+        public string? Role { get; set; }  // "User", "Staff", "Admin"
     }
     
     public class ChangePasswordRequest
@@ -87,6 +91,16 @@ namespace UserService.DTOs
         public decimal CoinBalance { get; set; }
         public int TotalContributions { get; set; }
         public int TotalVotes { get; set; }
+    }
+
+    /// Response paginated users
+    public class PaginatedUsersResponse
+    {
+        public List<UserDto> Data { get; set; } = new List<UserDto>();
+        public int Count { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public int TotalPages { get; set; }
     }
 }
 

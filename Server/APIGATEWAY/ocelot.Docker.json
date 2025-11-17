@@ -1,0 +1,8 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://api-gateway:5000",
+    "RequestIdKey": "X-Correlation-ID"
+  }
+}
+
+

@@ -10,7 +10,7 @@
 - ✅ Models: User, CoinWallet
 - ✅ DTOs: UserDto, CoinWalletDto + các Request/Response
 - ✅ Mappers: UserMapper, CoinWalletMapper
-- ✅ Services: UserService, CoinWalletService, TokenService, EmailService
+- ✅ Services: UserService, CoinWalletService, EmailService
 - ✅ Controllers: UserController, CoinWalletController
 - ✅ DbContext: UserDbContext (chỉ User và CoinWallet)
 - ✅ Program.cs với cấu hình đầy đủ
@@ -181,7 +181,7 @@ ServiceName/
 2. **DbContext:** Mỗi service chỉ include các DbSet liên quan
 3. **Dependencies:** Loại bỏ direct dependencies, thay bằng HTTP calls
 4. **Connection String:** Có thể dùng chung database hoặc tách riêng
-5. **JWT:** Có thể dùng chung secret key hoặc mỗi service riêng
+5. **Authentication:** Các dịch vụ tin cậy Firebase tokens được API Gateway forward
 
 ## 🚀 Next Steps
 
