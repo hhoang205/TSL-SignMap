@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using PaymentService.DTOs;
 using PaymentService.Services;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace PaymentService.Controllers
 {
@@ -15,10 +17,12 @@ namespace PaymentService.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly IPaymentService _paymentService;
+        private readonly IConfiguration _configuration;
 
-        public PaymentController(IPaymentService paymentService)
+        public PaymentController(IPaymentService paymentService, IConfiguration configuration)
         {
             _paymentService = paymentService;
+            _configuration = configuration;
         }
 
         /// Lấy payment theo ID
@@ -192,6 +196,113 @@ namespace PaymentService.Controllers
             {
                 return StatusCode(500, new { message = "An error occurred", error = ex.Message });
             }
+        }
+
+        /// Tạo URL thanh toán VNPAY cho giao dịch nạp coin
+        [HttpPost("vnpay/create")]
+        public async Task<IActionResult> CreateVnPayPayment([FromBody] VnPayPaymentRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (request.Amount <= 0)
+                return BadRequest(new { message = "Số tiền phải lớn hơn 0" });
+
+            try
+            {
+                // Tạo payment pending trong hệ thống
+                var payment = await _paymentService.CreateAsync(new PaymentCreateRequest
+                {
+                    UserId = request.UserId,
+                    Amount = request.Amount,
+                    PaymentMethod = "VNPAY",
+                    Status = "Pending",
+                    PaymentDate = DateTime.UtcNow
+                });
+
+                var vnPaySection = _configuration.GetSection("VnPay");
+                var tmnCode = vnPaySection["TmnCode"];
+                var hashSecret = vnPaySection["HashSecret"];
+                var baseUrl = vnPaySection["BaseUrl"];
+                var returnUrl = vnPaySection["ReturnUrl"];
+
+                if (string.IsNullOrWhiteSpace(tmnCode) ||
+                    string.IsNullOrWhiteSpace(hashSecret) ||
+                    string.IsNullOrWhiteSpace(baseUrl) ||
+                    string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    return StatusCode(500, new { message = "VNPAY configuration is missing" });
+                }
+
+                var vnpParams = new SortedDictionary<string, string>
+                {
+                    ["vnp_Version"] = "2.1.0",
+                    ["vnp_Command"] = "pay",
+                    ["vnp_TmnCode"] = tmnCode,
+                    ["vnp_Amount"] = ((long)(request.Amount * 100)).ToString(),
+                    ["vnp_CurrCode"] = "VND",
+                    ["vnp_TxnRef"] = payment.Id.ToString(),
+                    ["vnp_OrderInfo"] = $"Top-up for user {request.UserId}, payment #{payment.Id}",
+                    ["vnp_OrderType"] = "topup",
+                    ["vnp_ReturnUrl"] = returnUrl,
+                    ["vnp_Locale"] = "vn",
+                    ["vnp_CreateDate"] = DateTime.UtcNow.ToString("yyyyMMddHHmmss"),
+                    ["vnp_IpAddr"] = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "127.0.0.1"
+                };
+
+                if (!string.IsNullOrWhiteSpace(request.BankCode))
+                {
+                    vnpParams["vnp_BankCode"] = request.BankCode;
+                }
+
+                var query = new StringBuilder();
+                var dataToSign = new StringBuilder();
+                foreach (var kv in vnpParams)
+                {
+                    if (query.Length > 0)
+                    {
+                        query.Append('&');
+                        dataToSign.Append('&');
+                    }
+
+                    query.Append(Uri.EscapeDataString(kv.Key));
+                    query.Append('=');
+                    query.Append(Uri.EscapeDataString(kv.Value));
+
+                    dataToSign.Append(kv.Key);
+                    dataToSign.Append('=');
+                    dataToSign.Append(kv.Value);
+                }
+
+                var secureHash = HmacSHA512(hashSecret, dataToSign.ToString());
+                query.Append("&vnp_SecureHash=");
+                query.Append(secureHash);
+
+                var paymentUrl = $"{baseUrl}?{query}";
+
+                return Ok(new VnPayPaymentUrlResponse
+                {
+                    PaymentUrl = paymentUrl
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
+
+        private static string HmacSHA512(string key, string data)
+        {
+            var keyBytes = Encoding.UTF8.GetBytes(key);
+            var dataBytes = Encoding.UTF8.GetBytes(data);
+            using var hmac = new HMACSHA512(keyBytes);
+            var hashBytes = hmac.ComputeHash(dataBytes);
+            var sb = new StringBuilder(hashBytes.Length * 2);
+            foreach (var b in hashBytes)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
         }
     }
 }

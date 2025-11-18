@@ -41,14 +41,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "user-service", "Port": 5001 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     },
     {
       "RouteKey": "WalletsSecure",
@@ -58,14 +51,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "user-service", "Port": 5001 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     },
     {
       "RouteKey": "TrafficSignsSecure",
@@ -75,14 +61,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "traffic-sign-service", "Port": 5002 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     },
     {
       "RouteKey": "ContributionsSecure",
@@ -92,14 +71,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "contribution-service", "Port": 5003 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     },
     {
       "RouteKey": "VotesSecure",
@@ -109,14 +81,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "voting-service", "Port": 5004 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     },
     {
       "RouteKey": "NotificationsSecure",
@@ -126,14 +91,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "notification-service", "Port": 5005 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     },
     {
       "RouteKey": "NotificationHub",
@@ -143,14 +101,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "notification-service", "Port": 5005 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     },
     {
       "RouteKey": "PaymentsSecure",
@@ -160,14 +111,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "payment-service", "Port": 5006 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     },
     {
       "RouteKey": "FeedbackSecure",
@@ -177,14 +121,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "feedback-service", "Port": 5007 }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Firebase",
-        "AllowedScopes": []
-      },
-      "DownstreamHeaderTransform": {
-        "Authorization": "{Authorization}"
-      }
+      ]
     }
   ],
   "GlobalConfiguration": {

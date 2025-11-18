@@ -27,8 +27,8 @@ using var context = new UserDbContext(optionsBuilder.Options);
 var passwordHasher = new PasswordHasher<User>();
 
 // Admin credentials
-var adminEmail = "admin@tsl.com";
-var adminUsername = "admin";
+var adminEmail = "admin@.com";
+var adminUsername = "admin02";
 var adminPassword = "Admin123@";
 var adminPhone = "+84123456789";
 

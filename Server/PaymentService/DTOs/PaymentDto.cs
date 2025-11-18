@@ -57,6 +57,18 @@ namespace PaymentService.DTOs
         public decimal TotalCompletedAmount { get; set; }
     }
 
+    public class VnPayPaymentRequest
+    {
+        public int UserId { get; set; }
+        public decimal Amount { get; set; }
+        public string? BankCode { get; set; }
+    }
+
+    public class VnPayPaymentUrlResponse
+    {
+        public string PaymentUrl { get; set; }
+    }
+
     // Helper DTOs cho HTTP calls
     public class CreditRequest
     {
