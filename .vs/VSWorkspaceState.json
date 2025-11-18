@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Models"
+    "\\Server",
+    "\\Server\\APIGATEWAY"
   ],
-  "SelectedNode": "\\Program.cs",
+  "SelectedNode": "\\Server\\APIGATEWAY\\Middleware",
   "PreviewInSolutionExplorer": false
 }

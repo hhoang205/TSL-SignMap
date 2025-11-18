@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserService.DTOs;
 using UserService.Services;
@@ -17,6 +18,7 @@ namespace UserService.Controllers
         }
 
         /// Đăng ký tài khoản mới - User nhận 20 coin ban đầu
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest request)
         {
@@ -44,6 +46,7 @@ namespace UserService.Controllers
         }
 
         /// Đăng nhập - Trả về token và thông tin user
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {

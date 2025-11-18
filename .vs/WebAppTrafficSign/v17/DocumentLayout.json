@@ -1,62 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "Z:\\Project Code C#\\WebAppTrafficSign\\",
+  "WorkspaceRootPath": "C:\\Users\\HP\\OneDrive\\Desktop\\NVC\\TSL-SignMap\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{13EB8754-5AE6-B3B3-79D4-7C7D0DF90A82}|Server\\APIGATEWAY\\ApiGateway.csproj|c:\\users\\hp\\onedrive\\desktop\\nvc\\tsl-signmap\\server\\apigateway\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{13EB8754-5AE6-B3B3-79D4-7C7D0DF90A82}|Server\\APIGATEWAY\\ApiGateway.csproj|solutionrelative:server\\apigateway\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|z:\\project code c#\\webapptrafficsign\\models\\trafficsign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\trafficsign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\models\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\dtos\\votedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:dtos\\votedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\mapper\\usermapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:mapper\\usermapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:dtos\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\models\\feedback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\feedback.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\models\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\models\\contribution.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\contribution.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\dtos\\coinwalletdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:dtos\\coinwalletdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|Z:\\Project Code C#\\WebAppTrafficSign\\models\\coinwallet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{66123545-7E20-983A-D352-B93B5D5B8EF4}|WebAppTrafficSign.csproj|solutionrelative:models\\coinwallet.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{13EB8754-5AE6-B3B3-79D4-7C7D0DF90A82}|Server\\APIGATEWAY\\ApiGateway.csproj|c:\\users\\hp\\onedrive\\desktop\\nvc\\tsl-signmap\\server\\apigateway\\apigateway.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{13EB8754-5AE6-B3B3-79D4-7C7D0DF90A82}|Server\\APIGATEWAY\\ApiGateway.csproj|solutionrelative:server\\apigateway\\apigateway.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,177 +18,36 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T11:02:02.829Z",
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\NVC\\TSL-SignMap\\Server\\APIGATEWAY\\docker-compose.yml",
+              "RelativeDocumentMoniker": "Server\\APIGATEWAY\\docker-compose.yml",
+              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\NVC\\TSL-SignMap\\Server\\APIGATEWAY\\docker-compose.yml",
+              "RelativeToolTip": "Server\\APIGATEWAY\\docker-compose.yml",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAUwB0AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2025-11-17T07:51:25.876Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TrafficSign.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\TrafficSign.cs",
-              "RelativeDocumentMoniker": "Models\\TrafficSign.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\TrafficSign.cs",
-              "RelativeToolTip": "Models\\TrafficSign.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAABEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:26:45.231Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "VoteDto.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\VoteDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\VoteDto.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\VoteDto.cs",
-              "RelativeToolTip": "DTOs\\VoteDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:25:40.852Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Feedback.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\Feedback.cs",
-              "RelativeDocumentMoniker": "Models\\Feedback.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\Feedback.cs",
-              "RelativeToolTip": "Models\\Feedback.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:24:07.537Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Notification.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\Notification.cs",
-              "RelativeDocumentMoniker": "Models\\Notification.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\Notification.cs",
-              "RelativeToolTip": "Models\\Notification.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:23:51.189Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Contribution.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\Contribution.cs",
-              "RelativeDocumentMoniker": "Models\\Contribution.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\Contribution.cs",
-              "RelativeToolTip": "Models\\Contribution.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA0AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:16:11.131Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Vote.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\Vote.cs",
-              "RelativeDocumentMoniker": "Models\\Vote.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\Vote.cs",
-              "RelativeToolTip": "Models\\Vote.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:15:53.164Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UserServices.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\UserServices.cs",
-              "RelativeDocumentMoniker": "Services\\UserServices.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Services\\UserServices.cs",
-              "RelativeToolTip": "Services\\UserServices.cs",
-              "ViewState": "AQIAAGQAAAAAAAAAAAAywAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:10:18.86Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ApplicationDBContext.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Data\\ApplicationDBContext.cs",
-              "RelativeDocumentMoniker": "Data\\ApplicationDBContext.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Data\\ApplicationDBContext.cs",
-              "RelativeToolTip": "Data\\ApplicationDBContext.cs",
-              "ViewState": "AQIAAE0AAAAAAAAAAAAgwKcAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:06:36.45Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CoinWalletDto.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\CoinWalletDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\CoinWalletDto.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\CoinWalletDto.cs",
-              "RelativeToolTip": "DTOs\\CoinWalletDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:05:40.725Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "CoinWallet.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\CoinWallet.cs",
-              "RelativeDocumentMoniker": "Models\\CoinWallet.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\CoinWallet.cs",
-              "RelativeToolTip": "Models\\CoinWallet.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:05:29.385Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UserDto.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\UserDto.cs",
-              "RelativeDocumentMoniker": "DTOs\\UserDto.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\DTOs\\UserDto.cs",
-              "RelativeToolTip": "DTOs\\UserDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:02:25.441Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "User.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Models\\User.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Models\\User.cs",
-              "RelativeToolTip": "Models\\User.cs",
-              "ViewState": "AQIAAAcAAAAAAAAAAAAgwBUAAABEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:02:21.211Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserMapper.cs",
-              "DocumentMoniker": "Z:\\Project Code C#\\WebAppTrafficSign\\Mapper\\UserMapper.cs",
-              "RelativeDocumentMoniker": "Mapper\\UserMapper.cs",
-              "ToolTip": "Z:\\Project Code C#\\WebAppTrafficSign\\Mapper\\UserMapper.cs",
-              "RelativeToolTip": "Mapper\\UserMapper.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAABkAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-07T13:02:19.206Z"
+              "Title": "ApiGateway.csproj",
+              "DocumentMoniker": "C:\\Users\\HP\\OneDrive\\Desktop\\NVC\\TSL-SignMap\\Server\\APIGATEWAY\\ApiGateway.csproj",
+              "RelativeDocumentMoniker": "Server\\APIGATEWAY\\ApiGateway.csproj",
+              "ToolTip": "C:\\Users\\HP\\OneDrive\\Desktop\\NVC\\TSL-SignMap\\Server\\APIGATEWAY\\ApiGateway.csproj",
+              "RelativeToolTip": "Server\\APIGATEWAY\\ApiGateway.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-17T07:24:47.534Z"
             }
           ]
         }
