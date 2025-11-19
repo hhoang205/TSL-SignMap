@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  apigateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:5000
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+    networks:
+      - apigateway-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - apigateway-network
+
+volumes:
+  redis-data:
+
+networks:
+  apigateway-network:
+    driver: bridge
+

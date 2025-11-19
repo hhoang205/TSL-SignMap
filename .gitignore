@@ -9,3 +9,13 @@ obj/
 *.cache
 *.dbmdl
 *.tmp
+
+# Frontend build artifacts
+ADMIN.WEB/node_modules/
+ADMIN.WEB/dist/
+ADMIN.WEB/.env
+ADMIN.WEB/.env.local
+ADMIN.WEB/.env.*.local
+ADMIN.WEB/*.tsbuildinfo
+ADMIN.WEB/vite.config.js
+ADMIN.WEB/vite.config.d.ts
