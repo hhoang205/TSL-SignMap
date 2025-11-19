@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "504791894738",
+    "project_id": "traffic-sign-ma",
+    "storage_bucket": "traffic-sign-ma.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504791894738:android:51a0929f0508f58c167b0b",
+        "android_client_info": {
+          "package_name": "com.example.traffic_sign_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk-3F_knUpLPRWrx78BwPzmNRDi7Zis0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
