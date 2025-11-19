@@ -5,6 +5,7 @@ import '../../map/presentation/map_screen.dart';
 import '../../notifications/presentation/notifications_screen.dart';
 import '../../votes/presentation/voting_screen.dart';
 import '../../wallet/presentation/wallet_screen.dart';
+import '../../auth/presentation/user_screen.dart';
 
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key});
@@ -22,6 +23,7 @@ class _HomeShellState extends State<HomeShell> {
     VotingScreen(),
     WalletScreen(),
     NotificationsScreen(),
+    UserScreen(),
   ];
 
   @override
@@ -51,6 +53,10 @@ class _HomeShellState extends State<HomeShell> {
           NavigationDestination(
             icon: Icon(Icons.notifications_outlined),
             label: 'Thông báo',
+          ),
+           NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            label: 'Người dùng',
           ),
         ],
       ),

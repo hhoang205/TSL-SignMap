@@ -120,6 +120,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           )
                         : const Text('Đăng ký'),
                   ),
+                  TextButton(
+                    onPressed: () => context.go('/auth/login'),
+                    child: const Text('Đã có tài khoản? Đăng nhập ngay'),
+                  ),
                 ],
               ),
             ),

@@ -77,10 +77,17 @@ final apiClientProvider = Provider<ApiClient>((ref) {
     ),
   );
 
+  dio.interceptors.add(LogInterceptor(
+    requestBody: true,    // Log payload gửi đi
+    responseBody: true,   // Log body response (có thể chứa message error từ server)
+    error: true,          // Log chi tiết error
+  ));
+
   dio.interceptors.add(
     InterceptorsWrapper(
       onRequest: (options, handler) async {
         final token = await tokenStorage.readAccessToken();
+
         if (token != null && token.isNotEmpty) {
           options.headers['Authorization'] = 'Bearer $token';
         }

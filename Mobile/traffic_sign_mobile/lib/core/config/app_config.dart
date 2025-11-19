@@ -8,7 +8,7 @@ class AppConfig {
   final String notificationHubUrl;
 
   static AppConfig fromEnv() {
-    final apiBaseUrl = dotenv.env['API_BASE_URL'] ?? 'http://10.0.2.2:5080';
+    final apiBaseUrl = dotenv.env['API_BASE_URL'] ?? 'http://10.0.2.2:5000';
     final notificationHubUrl =
         dotenv.env['NOTIFICATION_HUB_URL'] ??
         'http://10.0.2.2:5207/hubs/notifications';
