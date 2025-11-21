@@ -1,4 +1,3 @@
-# Dockerfile for User Service (Node.js + MongoDB)
 FROM node:18-alpine
 
 WORKDIR /app

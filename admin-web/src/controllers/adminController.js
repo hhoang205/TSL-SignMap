@@ -1,40 +1,39 @@
-const axios = require("axios");
-const path = require("path");
+// src/controllers/adminController.js
+import axios from "axios";
+import dotenv from "dotenv";
+dotenv.config();
 
-const API_BASE =
-  process.env.API_MODE === "gateway"
-    ? "http://api-gateway:5000/api/users"
-    : "http://user-service:5001/api/users";
+// URL của user-service (nếu chạy qua Docker)
+const USER_SERVICE_URL = process.env.USER_SERVICE_URL || "http://user-service:5001/api/users";
 
-exports.getLogin = (req, res) => {
-  res.sendFile("login.html", { root: path.join(__dirname, "../views") });
+// 🟢 Trang đăng nhập (render file login.html)
+export const getLoginPage = (req, res) => {
+  res.sendFile("/app/src/views/login.html");
 };
 
-exports.login = async (req, res) => {
+// 🟢 Xử lý đăng nhập admin
+export const handleLogin = async (req, res) => {
   const { email, password } = req.body;
+
   try {
-    const response = await axios.post(`${API_BASE}/login`, { email, password });
-    const token = response.data.token;
-    res.redirect(`/users?token=${token}`);
-  } catch (err) {
-    res.send("❌ Login failed. Check your credentials.");
+    const response = await axios.post(`${USER_SERVICE_URL}/login`, { email, password });
+    const { token } = response.data;
+
+    // Lưu token vào cookie
+    res.cookie("token", token, { httpOnly: true });
+    res.json({ message: "Login successful", token });
+  } catch (error) {
+    res.status(401).json({ message: "Invalid credentials" });
   }
 };
 
-exports.getUsers = async (req, res) => {
-  const token = req.query.token;
+// 🟢 Lấy danh sách user (chỉ admin)
+export const getAllUsers = async (req, res) => {
   try {
-    const response = await axios.get(`${API_BASE}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const users = response.data;
-    let html = "<h1>User List</h1><ul>";
-    users.forEach((u) => {
-      html += `<li>${u.email} - ${u.role}</li>`;
-    });
-    html += "</ul>";
-    res.send(html);
-  } catch (err) {
-    res.send("⚠️ Cannot load users.");
+    const response = await axios.get(`${USER_SERVICE_URL}/`);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error fetching users:", error.message);
+    res.status(500).json({ message: "Failed to fetch users" });
   }
 };

@@ -1,0 +1,26 @@
+<h2>Danh sách người dùng</h2>
+<% if (error) { %>
+  <div class="alert alert-danger"><%= error %></div>
+<% } %>
+<table class="table table-bordered table-striped mt-3">
+  <thead class="table-light">
+    <tr>
+      <th>Tên</th>
+      <th>Email</th>
+      <th>Điện thoại</th>
+      <th>Xu</th>
+      <th>Vai trò</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% users.forEach(u => { %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.email %></td>
+        <td><%= u.phone || "-" %></td>
+        <td><%= u.coins %></td>
+        <td><%= u.role %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

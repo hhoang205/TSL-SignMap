@@ -1,0 +1,9 @@
+
+body { margin: 0; font-family: Arial, sans-serif; background: #f9f9f9; }
+.sidebar { width: 220px; background: #fff; border-right: 1px solid #ddd; position: fixed; top: 0; left: 0; bottom: 0; padding: 20px; }
+.sidebar h2 { color: #333; }
+.sidebar a { text-decoration: none; color: #333; display: block; padding: 8px 0; }
+.sidebar a.logout { color: red; }
+.content { margin-left: 240px; padding: 20px; }
+.login-page { display: flex; justify-content: center; align-items: center; height: 100vh; }
+.login-form { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
