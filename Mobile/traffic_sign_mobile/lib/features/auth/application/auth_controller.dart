@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../core/storage/token_storage.dart';
 import '../data/auth_repository.dart';
 import '../data/models/auth_user.dart';
@@ -71,12 +70,14 @@ class AuthController extends StateNotifier<AuthState> {
 
   Future<void> login(String email, String password) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
+
     try {
       final repository = _ref.read(authRepositoryProvider);
       final storage = _ref.read(tokenStorageProvider);
       final response = await repository.login(email: email, password: password);
 
       await storage.saveSession(token: response.token, user: response.user);
+
       state = state.copyWith(
         status: AuthStatus.authenticated,
         user: response.user,
@@ -102,8 +103,10 @@ class AuthController extends StateNotifier<AuthState> {
     required String phoneNumber,
   }) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
+
     try {
       final repository = _ref.read(authRepositoryProvider);
+
       final user = await repository.register(
         username: username,
         email: email,
@@ -117,9 +120,30 @@ class AuthController extends StateNotifier<AuthState> {
     }
   }
 
+  Future<void> fetchUserProfile(int userId) async {
+    state = state.copyWith(isLoading: true);
+
+    try {
+      final repository = _ref.read(authRepositoryProvider);
+      final user = await repository.fetchProfile(userId);
+
+      state = state.copyWith(
+        user: user,
+        isLoading: false,
+        status: AuthStatus.authenticated,
+      );
+    } catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
   Future<void> logout() async {
     final storage = _ref.read(tokenStorageProvider);
     await storage.clear();
+
     state = const AuthState(
       status: AuthStatus.unauthenticated,
       isSessionChecked: true,
@@ -127,8 +151,7 @@ class AuthController extends StateNotifier<AuthState> {
   }
 }
 
-final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
-  (ref) {
-    return AuthController(ref);
-  },
+final authControllerProvider =
+    StateNotifierProvider<AuthController, AuthState>(
+  (ref) => AuthController(ref),
 );
