@@ -102,5 +102,19 @@ namespace UserService.DTOs
         public int PageSize { get; set; }
         public int TotalPages { get; set; }
     }
+
+    /// Request to save FCM token
+    public class SaveFcmTokenRequest
+    {
+        public string Token { get; set; } = string.Empty;
+    }
+
+    /// Response after saving FCM token
+    public class FcmTokenResponse
+    {
+        public int UserId { get; set; }
+        public string? Token { get; set; }
+        public string Message { get; set; } = string.Empty;
+    }
 }
 

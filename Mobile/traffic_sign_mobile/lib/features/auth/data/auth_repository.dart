@@ -48,6 +48,58 @@ class AuthRepository {
     );
     return AuthUser.fromJson(response.data!);
   }
+
+  Future<AuthUser> updateProfile({
+    required int userId,
+    String? username,
+    String? email,
+    String? phoneNumber,
+  }) async {
+    final response = await _apiClient.put<Map<String, dynamic>>(
+      '$_basePath/$userId',
+      data: {
+        if (username != null) 'username': username,
+        if (email != null) 'email': email,
+        if (phoneNumber != null) 'phoneNumber': phoneNumber,
+      },
+    );
+    final data = response.data?['user'] as Map<String, dynamic>? ?? response.data!;
+    return AuthUser.fromJson(data);
+  }
+
+  Future<void> changePassword({
+    required int userId,
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    await _apiClient.post<Map<String, dynamic>>(
+      '$_basePath/$userId/change-password',
+      data: {
+        'currentPassword': currentPassword,
+        'newPassword': newPassword,
+      },
+    );
+  }
+
+  /// Save FCM token to backend
+  Future<void> saveFCMToken({
+    required int userId,
+    required String fcmToken,
+  }) async {
+    await _apiClient.post<Map<String, dynamic>>(
+      '$_basePath/$userId/fcm-token',
+      data: {'fcmToken': fcmToken},
+    );
+  }
+
+  /// Delete FCM token from backend
+  Future<void> deleteFCMToken({
+    required int userId,
+  }) async {
+    await _apiClient.delete<Map<String, dynamic>>(
+      '$_basePath/$userId/fcm-token',
+    );
+  }
 }
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {

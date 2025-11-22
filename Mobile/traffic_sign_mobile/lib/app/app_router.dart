@@ -5,12 +5,21 @@ import 'package:go_router/go_router.dart';
 import '../features/auth/application/auth_controller.dart';
 import '../features/auth/presentation/login_screen.dart';
 import '../features/auth/presentation/register_screen.dart';
+import '../features/auth/presentation/user_profile_screen.dart';
 import '../features/contributions/presentation/contribution_form_screen.dart';
 import '../features/home/presentation/home_shell.dart';
 import '../features/map/presentation/map_search_screen.dart';
 import '../features/splash/presentation/splash_screen.dart';
 
-enum AppRoute { splash, login, register, home, contributionForm, mapSearch }
+enum AppRoute {
+  splash,
+  login,
+  register,
+  home,
+  contributionForm,
+  mapSearch,
+  userProfile,
+}
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authControllerProvider);
@@ -49,6 +58,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: 'map/search',
             name: AppRoute.mapSearch.name,
             builder: (context, state) => const MapSearchScreen(),
+          ),
+          GoRoute(
+            path: 'profile',
+            name: AppRoute.userProfile.name,
+            builder: (context, state) => const UserProfileScreen(),
           ),
         ],
       ),

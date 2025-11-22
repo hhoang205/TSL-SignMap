@@ -248,6 +248,63 @@ namespace UserService.Controllers
                 return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
             }
         }
+
+        /// Lưu FCM token cho user để nhận push notifications
+        [HttpPost("{userId}/fcm-token")]
+        public async Task<IActionResult> SaveFcmToken([FromRoute] int userId, [FromBody] SaveFcmTokenRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (string.IsNullOrWhiteSpace(request.Token))
+                return BadRequest(new { message = "FCM token cannot be empty" });
+
+            try
+            {
+                var result = await _userService.SaveFcmTokenAsync(userId, request.Token);
+                if (result)
+                    return Ok(new FcmTokenResponse 
+                    { 
+                        UserId = userId, 
+                        Token = request.Token,
+                        Message = "FCM token saved successfully" 
+                    });
+                return BadRequest(new { message = "Failed to save FCM token" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
+
+        /// Xóa FCM token khi user logout
+        [HttpDelete("{userId}/fcm-token")]
+        public async Task<IActionResult> DeleteFcmToken([FromRoute] int userId)
+        {
+            try
+            {
+                var result = await _userService.DeleteFcmTokenAsync(userId);
+                if (result)
+                    return Ok(new { message = "FCM token deleted successfully" });
+                return NotFound(new { message = "User not found" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi hệ thống: " + ex.Message });
+            }
+        }
     }
 }
 

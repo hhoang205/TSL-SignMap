@@ -19,3 +19,6 @@ ADMIN.WEB/.env.*.local
 ADMIN.WEB/*.tsbuildinfo
 ADMIN.WEB/vite.config.js
 ADMIN.WEB/vite.config.d.ts
+
+#diagrams
+diagrams/

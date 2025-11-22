@@ -31,7 +31,6 @@ class VotingScreen extends ConsumerWidget {
     final pendingAsync = ref.watch(pendingContributionsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Bỏ phiếu đóng góp')),
       body: pendingAsync.when(
         data: (items) {
           if (items.isEmpty) {

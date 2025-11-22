@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1036892315010",
+    "project_id": "tfsignmangage",
+    "storage_bucket": "tfsignmangage.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036892315010:android:8b104f83176cf74f41439b",
+        "android_client_info": {
+          "package_name": "com.trafficsign.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEsa4OOvR-Ha0UOVZR5NvCojgf2bHcELg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

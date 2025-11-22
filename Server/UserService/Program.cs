@@ -37,6 +37,9 @@ builder.Services.AddDbContext<UserDbContext>(options =>
         x => x.UseNetTopologySuite());
 });
 
+// Register HTTP client for inter-service communication
+builder.Services.AddHttpClient();
+
 // Register services
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<ICoinWalletService, CoinWalletService>();

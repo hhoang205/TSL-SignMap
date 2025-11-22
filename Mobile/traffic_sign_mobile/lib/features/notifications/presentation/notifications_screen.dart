@@ -13,16 +13,6 @@ class NotificationsScreen extends ConsumerWidget {
     final formatter = DateFormat('dd/MM HH:mm');
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Thông báo'),
-        actions: [
-          IconButton(
-            onPressed: () =>
-                ref.read(notificationControllerProvider.notifier).refresh(),
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
-      ),
       body: notificationsAsync.when(
         data: (items) {
           if (items.isEmpty) {

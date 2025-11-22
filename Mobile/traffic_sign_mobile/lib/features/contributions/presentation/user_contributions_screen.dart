@@ -13,15 +13,6 @@ class UserContributionsScreen extends ConsumerWidget {
     final contributionsAsync = ref.watch(userContributionsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Đóng góp của tôi'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => context.push('/home/contribution/new'),
-          ),
-        ],
-      ),
       body: contributionsAsync.when(
         data: (items) {
           if (items.isEmpty) {

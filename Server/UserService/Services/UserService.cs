@@ -21,6 +21,8 @@ namespace UserService.Services
         Task<WalletBalanceResponse> GetWalletBalanceAsync(int id);
         Task<TopUpCoinsResponse> TopUpCoinsAsync(int userId, CoinTopUpRequest request);
         Task<UserProfileResponse> GetUserProfileAsync(int id);
+        Task<bool> SaveFcmTokenAsync(int userId, string token);
+        Task<bool> DeleteFcmTokenAsync(int userId);
     }
 
     /// Lớp triển khai UserService chứa toàn bộ nghiệp vụ người dùng
@@ -318,6 +320,35 @@ namespace UserService.Services
                 TotalContributions = 0, // TODO: Get from ContributionService
                 TotalVotes = 0 // TODO: Get from VotingService
             };
+        }
+
+        /// Lưu FCM token cho user để nhận push notifications
+        public async Task<bool> SaveFcmTokenAsync(int userId, string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                throw new ArgumentException("FCM token cannot be empty");
+
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+
+            user.FcmToken = token;
+            user.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        /// Xóa FCM token khi user logout
+        public async Task<bool> DeleteFcmTokenAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+
+            user.FcmToken = null;
+            user.UpdatedAt = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

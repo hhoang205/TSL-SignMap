@@ -262,6 +262,29 @@ namespace UserService.Controllers
                 return StatusCode(500, new { message = "An error occurred", error = ex.Message });
             }
         }
+
+        /// Lấy lịch sử giao dịch của user (aggregate từ wallet transactions và payments)
+        [HttpGet("user/{userId}/transactions")]
+        public async Task<IActionResult> GetTransactions(
+            [FromRoute] int userId,
+            [FromQuery] int? page = null,
+            [FromQuery] int? pageSize = null,
+            [FromQuery] string? type = null,
+            [FromQuery] string? status = null)
+        {
+            try
+            {
+                var transactions = await _coinWalletService.GetTransactionsAsync(userId, page, pageSize, type, status);
+                
+                // Convert to list and return in format expected by mobile app
+                var transactionList = transactions.ToList();
+                return Ok(new { transactions = transactionList });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred", error = ex.Message });
+            }
+        }
     }
 
     // Helper DTOs

@@ -1,5 +1,6 @@
-package com.example.traffic_sign_mobile
+package com.trafficsign.app
 
 import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity : FlutterActivity()
+

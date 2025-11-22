@@ -12,6 +12,7 @@ namespace UserService.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<CoinWallet> CoinWallets { get; set; }
+        public DbSet<WalletTransaction> WalletTransactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -29,6 +30,7 @@ namespace UserService.Data
                 entity.Property(u => u.Password).IsRequired();
                 entity.Property(u => u.RoleId).IsRequired();
                 entity.Property(u => u.CreatedAt).IsRequired();
+                entity.Property(u => u.FcmToken).HasMaxLength(500); // FCM tokens can be long
 
                 entity.HasIndex(u => u.Username).IsUnique();
                 entity.HasIndex(u => u.Email).IsUnique();
@@ -55,6 +57,44 @@ namespace UserService.Data
 
                 // Đảm bảo quan hệ 1–1
                 entity.HasIndex(c => c.UserId).IsUnique();
+            });
+
+            // =========================
+            // WalletTransaction
+            // =========================
+            builder.Entity<WalletTransaction>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+
+                entity.Property(t => t.Amount)
+                      .HasColumnType("decimal(18,2)")
+                      .IsRequired();
+
+                entity.Property(t => t.Type)
+                      .HasMaxLength(50)
+                      .IsRequired();
+
+                entity.Property(t => t.Status)
+                      .HasMaxLength(50)
+                      .IsRequired();
+
+                entity.Property(t => t.Description)
+                      .HasMaxLength(500);
+
+                entity.Property(t => t.RelatedId)
+                      .HasMaxLength(100);
+
+                entity.Property(t => t.RelatedType)
+                      .HasMaxLength(50);
+
+                entity.Property(t => t.CreatedAt).IsRequired();
+
+                // Indexes for performance
+                entity.HasIndex(t => t.UserId);
+                entity.HasIndex(t => t.Type);
+                entity.HasIndex(t => t.Status);
+                entity.HasIndex(t => t.CreatedAt);
+                entity.HasIndex(t => new { t.UserId, t.Type });
             });
         }
     }

@@ -11,6 +11,7 @@ namespace UserService.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public float Reputation { get; set; }
+        public string? FcmToken { get; set; } // Firebase Cloud Messaging token for push notifications
         public CoinWallet Wallet { get; set; }
         // Note: Navigation properties to other services (Contributions, Votes, etc.) 
         // are removed as they belong to other microservices

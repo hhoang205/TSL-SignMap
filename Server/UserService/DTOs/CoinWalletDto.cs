@@ -56,5 +56,19 @@ namespace UserService.DTOs
         public int WalletsWithLowBalance { get; set; } // Balance < 10
         public int WalletsWithHighBalance { get; set; } // Balance >= 100
     }
+
+    /// DTO cho WalletTransaction
+    public class WalletTransactionDto
+    {
+        public string Id { get; set; } = string.Empty; // String ID for compatibility with mobile app
+        public int UserId { get; set; }
+        public double Amount { get; set; } // Double for compatibility with mobile app
+        public string Type { get; set; } = string.Empty; // credit, debit, adjustment, payment, contribution, voting
+        public string Status { get; set; } = "completed"; // pending, completed, failed, cancelled
+        public string Description { get; set; } = string.Empty;
+        public DateTime CreatedAt { get; set; }
+        public string? RelatedId { get; set; }
+        public string? RelatedType { get; set; }
+    }
 }
 
