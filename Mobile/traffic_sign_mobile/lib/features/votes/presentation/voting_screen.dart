@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../auth/application/auth_controller.dart';
 import '../application/pending_contributions_controller.dart';
 import '../data/vote_repository.dart';
@@ -34,8 +35,8 @@ class VotingScreen extends ConsumerWidget {
       body: pendingAsync.when(
         data: (items) {
           if (items.isEmpty) {
-            return const Center(
-              child: Text('Không có đóng góp nào chờ duyệt.'),
+            return Center(
+              child: Text(AppLocalizations.of(context)!.noPendingContributions),
             );
           }
           return ListView.separated(
@@ -55,42 +56,52 @@ class VotingScreen extends ConsumerWidget {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       if (contribution.type != null)
-                        Text('Loại biển báo: ${contribution.type}'),
+                        Builder(
+                          builder: (context) {
+                            final l10n = AppLocalizations.of(context)!;
+                            return Text(l10n.signType(contribution.type!));
+                          },
+                        ),
                       const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              onPressed: () => _vote(
-                                ref,
-                                contributionId: contribution.id,
-                                isUpvote: true,
+                      Builder(
+                        builder: (context) {
+                          final l10n = AppLocalizations.of(context)!;
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: () => _vote(
+                                    ref,
+                                    contributionId: contribution.id,
+                                    isUpvote: true,
+                                  ),
+                                  icon: const Icon(Icons.thumb_up_alt_outlined),
+                                  label: Text(l10n.agree),
+                                ),
                               ),
-                              icon: const Icon(Icons.thumb_up_alt_outlined),
-                              label: const Text('Đồng ý'),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(
-                                  context,
-                                ).colorScheme.errorContainer,
-                                foregroundColor: Theme.of(
-                                  context,
-                                ).colorScheme.onErrorContainer,
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).colorScheme.errorContainer,
+                                    foregroundColor: Theme.of(
+                                      context,
+                                    ).colorScheme.onErrorContainer,
+                                  ),
+                                  onPressed: () => _vote(
+                                    ref,
+                                    contributionId: contribution.id,
+                                    isUpvote: false,
+                                  ),
+                                  icon: const Icon(Icons.thumb_down_alt_outlined),
+                                  label: Text(l10n.disagree),
+                                ),
                               ),
-                              onPressed: () => _vote(
-                                ref,
-                                contributionId: contribution.id,
-                                isUpvote: false,
-                              ),
-                              icon: const Icon(Icons.thumb_down_alt_outlined),
-                              label: const Text('Không đồng ý'),
-                            ),
-                          ),
-                        ],
+                            ],
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -100,8 +111,10 @@ class VotingScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) =>
-            Center(child: Text('Không thể tải dữ liệu: $err')),
+        error: (err, stack) {
+          final l10n = AppLocalizations.of(context)!;
+          return Center(child: Text(l10n.cannotLoadData(err.toString())));
+        },
       ),
     );
   }

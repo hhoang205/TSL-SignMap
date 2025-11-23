@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../application/auth_controller.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -40,6 +41,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authControllerProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: SafeArea(
@@ -59,7 +61,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Chào mừng trở lại!',
+                    l10n.welcomeBack,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -67,7 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Đăng nhập để tiếp tục đóng góp biển báo giao thông',
+                    l10n.loginToContinue,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
@@ -78,17 +80,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'Nhập email của bạn',
-                      prefixIcon: Icon(Icons.email_outlined),
+                    decoration: InputDecoration(
+                      labelText: l10n.email,
+                      hintText: l10n.enterYourEmail,
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Vui lòng nhập email';
+                        return l10n.pleaseEnterEmail;
                       }
                       if (!value.contains('@')) {
-                        return 'Email không hợp lệ';
+                        return l10n.invalidEmail;
                       }
                       return null;
                     },
@@ -99,17 +101,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     obscureText: true,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) => _submit(),
-                    decoration: const InputDecoration(
-                      labelText: 'Mật khẩu',
-                      hintText: 'Nhập mật khẩu của bạn',
-                      prefixIcon: Icon(Icons.lock_outline),
+                    decoration: InputDecoration(
+                      labelText: l10n.password,
+                      hintText: l10n.enterYourPassword,
+                      prefixIcon: const Icon(Icons.lock_outline),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Vui lòng nhập mật khẩu';
+                        return l10n.pleaseEnterPassword;
                       }
                       if (value.length < 6) {
-                        return 'Mật khẩu phải có ít nhất 6 ký tự';
+                        return l10n.passwordMinLength;
                       }
                       return null;
                     },
@@ -132,8 +134,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              authState.errorMessage!,
-                              style: TextStyle(
+                      authState.errorMessage!,
+                      style: TextStyle(
                                 color: Theme.of(context).colorScheme.onErrorContainer,
                                 fontSize: 14,
                               ),
@@ -155,9 +157,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             width: 20,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Text(
-                            'Đăng nhập',
-                            style: TextStyle(fontSize: 16),
+                        : Text(
+                            l10n.login,
+                            style: const TextStyle(fontSize: 16),
                           ),
                   ),
                   const SizedBox(height: 16),
@@ -165,15 +167,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Chưa có tài khoản? ',
+                        l10n.dontHaveAccount,
                         style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      TextButton(
-                        onPressed: () => context.go('/auth/register'),
+                  ),
+                  TextButton(
+                    onPressed: () => context.go('/auth/register'),
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                         ),
-                        child: const Text('Đăng ký ngay'),
+                        child: Text(l10n.registerNow),
                       ),
                     ],
                   ),

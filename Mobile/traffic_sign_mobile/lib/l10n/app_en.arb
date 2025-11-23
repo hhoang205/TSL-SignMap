@@ -1,0 +1,338 @@
+{
+  "@@locale": "en",
+  "appTitle": "Traffic Sign",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "welcomeBack": "Welcome back!",
+  "@welcomeBack": {
+    "description": "Welcome message on login screen"
+  },
+  "loginToContinue": "Login to continue contributing traffic signs",
+  "@loginToContinue": {
+    "description": "Subtitle on login screen"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "enterYourEmail": "Enter your email",
+  "@enterYourEmail": {
+    "description": "Email field hint"
+  },
+  "pleaseEnterEmail": "Please enter email",
+  "@pleaseEnterEmail": {
+    "description": "Email validation error"
+  },
+  "invalidEmail": "Invalid email",
+  "@invalidEmail": {
+    "description": "Email format validation error"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "enterYourPassword": "Enter your password",
+  "@enterYourPassword": {
+    "description": "Password field hint"
+  },
+  "pleaseEnterPassword": "Please enter password",
+  "@pleaseEnterPassword": {
+    "description": "Password validation error"
+  },
+  "passwordMinLength": "Password must be at least 6 characters",
+  "@passwordMinLength": {
+    "description": "Password length validation error"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button text"
+  },
+  "dontHaveAccount": "Don't have an account? ",
+  "@dontHaveAccount": {
+    "description": "Text before register link"
+  },
+  "registerNow": "Register now",
+  "@registerNow": {
+    "description": "Register link text"
+  },
+  "registerSuccess": "Registration successful, please login.",
+  "@registerSuccess": {
+    "description": "Registration success message"
+  },
+  "createAccount": "Create Account",
+  "@createAccount": {
+    "description": "Register screen title"
+  },
+  "map": "Map",
+  "@map": {
+    "description": "Map tab label"
+  },
+  "contributions": "Contributions",
+  "@contributions": {
+    "description": "Contributions tab label"
+  },
+  "voting": "Voting",
+  "@voting": {
+    "description": "Voting tab label"
+  },
+  "wallet": "Wallet",
+  "@wallet": {
+    "description": "Wallet tab label"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications tab label"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile menu item"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Account tooltip"
+  },
+  "advancedSearch": "Advanced search",
+  "@advancedSearch": {
+    "description": "Advanced search tooltip"
+  },
+  "createNewContribution": "Create new contribution",
+  "@createNewContribution": {
+    "description": "Create contribution tooltip"
+  },
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Refresh button tooltip"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Close button text"
+  },
+  "locationInfo": "Location Information",
+  "@locationInfo": {
+    "description": "Location info dialog title"
+  },
+  "coordinates": "Coordinates: {lat}, {lng}",
+  "@coordinates": {
+    "description": "Coordinates display",
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      },
+      "lng": {
+        "type": "String"
+      }
+    }
+  },
+  "status": "Status",
+  "@status": {
+    "description": "Status label"
+  },
+  "validFrom": "Valid from",
+  "@validFrom": {
+    "description": "Valid from label"
+  },
+  "validTo": "Valid to",
+  "@validTo": {
+    "description": "Valid to label"
+  },
+  "cannotLoadData": "Cannot load data: {error}",
+  "@cannotLoadData": {
+    "description": "Error message when data loading fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "tryAgain": "Try again",
+  "@tryAgain": {
+    "description": "Try again button text"
+  },
+  "noData": "No data available.",
+  "@noData": {
+    "description": "Message when no data is available"
+  },
+  "noContributions": "You don't have any contributions yet.",
+  "@noContributions": {
+    "description": "Message when user has no contributions"
+  },
+  "newContribution": "New Contribution",
+  "@newContribution": {
+    "description": "New contribution button text"
+  },
+  "noNotifications": "No notifications yet.",
+  "@noNotifications": {
+    "description": "Message when there are no notifications"
+  },
+  "cannotLoadNotifications": "Cannot load notifications: {error}",
+  "@cannotLoadNotifications": {
+    "description": "Error message when notifications loading fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noPendingContributions": "No pending contributions to vote on.",
+  "@noPendingContributions": {
+    "description": "Message when there are no pending contributions"
+  },
+  "signType": "Sign Type: {type}",
+  "@signType": {
+    "description": "Sign type label",
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "agree": "Agree",
+  "@agree": {
+    "description": "Agree button text"
+  },
+  "disagree": "Disagree",
+  "@disagree": {
+    "description": "Disagree button text"
+  },
+  "noWalletData": "No wallet data available.",
+  "@noWalletData": {
+    "description": "Message when wallet data is not available"
+  },
+  "addMoreCoins": "Add more coins",
+  "@addMoreCoins": {
+    "description": "Add coins button text"
+  },
+  "cannotLoadWallet": "Cannot load wallet: {error}",
+  "@cannotLoadWallet": {
+    "description": "Error message when wallet loading fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "updateSuccess": "Update successful",
+  "@updateSuccess": {
+    "description": "Update success message"
+  },
+  "changePassword": "Change Password",
+  "@changePassword": {
+    "description": "Change password screen title"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "newContributionTitle": "New Contribution",
+  "@newContributionTitle": {
+    "description": "New contribution form title"
+  },
+  "actionType": "Action Type",
+  "@actionType": {
+    "description": "Action type field label"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Add action option"
+  },
+  "update": "Update",
+  "@update": {
+    "description": "Update action option"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete action option"
+  },
+  "signTypeLabel": "Sign Type",
+  "@signTypeLabel": {
+    "description": "Sign type field label"
+  },
+  "pleaseEnterSignType": "Please enter sign type",
+  "@pleaseEnterSignType": {
+    "description": "Sign type validation error"
+  },
+  "detailedDescription": "Detailed Description",
+  "@detailedDescription": {
+    "description": "Description field label"
+  },
+  "latitude": "Latitude: {lat}",
+  "@latitude": {
+    "description": "Latitude display",
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      }
+    }
+  },
+  "longitude": "Longitude: {lng}",
+  "@longitude": {
+    "description": "Longitude display",
+    "placeholders": {
+      "lng": {
+        "type": "String"
+      }
+    }
+  },
+  "takePhoto": "Take Photo",
+  "@takePhoto": {
+    "description": "Take photo button text"
+  },
+  "submitContribution": "Submit Contribution (costs 5 coins)",
+  "@submitContribution": {
+    "description": "Submit contribution button text"
+  },
+  "dash": "-",
+  "@dash": {
+    "description": "Dash character for empty values"
+  },
+  "joinCommunity": "Join the community",
+  "@joinCommunity": {
+    "description": "Register screen header"
+  },
+  "createAccountToContribute": "Create an account to start contributing traffic signs",
+  "@createAccountToContribute": {
+    "description": "Register screen subtitle"
+  },
+  "username": "Username",
+  "@username": {
+    "description": "Username field label"
+  },
+  "enterUsername": "Enter username",
+  "@enterUsername": {
+    "description": "Username field hint"
+  },
+  "pleaseEnterUsername": "Please enter username",
+  "@pleaseEnterUsername": {
+    "description": "Username validation error"
+  },
+  "usernameMinLength": "Username must be at least 3 characters",
+  "@usernameMinLength": {
+    "description": "Username length validation error"
+  },
+  "phoneNumber": "Phone Number (optional)",
+  "@phoneNumber": {
+    "description": "Phone number field label"
+  },
+  "enterPhoneNumber": "Enter phone number",
+  "@enterPhoneNumber": {
+    "description": "Phone number field hint"
+  },
+  "passwordMinHint": "Minimum 6 characters",
+  "@passwordMinHint": {
+    "description": "Password field hint"
+  },
+  "register": "Register",
+  "@register": {
+    "description": "Register button text"
+  },
+  "alreadyHaveAccount": "Already have an account? ",
+  "@alreadyHaveAccount": {
+    "description": "Text before login link"
+  },
+  "pleaseCaptureLocation": "Please capture your location first",
+  "@pleaseCaptureLocation": {
+    "description": "Error message when location is required but not captured"
+  }
+}
+

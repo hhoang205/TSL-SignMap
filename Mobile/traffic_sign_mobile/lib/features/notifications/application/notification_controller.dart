@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:signalr_netcore/hub_connection.dart';
 import 'package:signalr_netcore/hub_connection_builder.dart';
@@ -16,9 +18,18 @@ class NotificationController
     final user = ref.read(authControllerProvider).user;
     if (user == null) return [];
     ref.onDispose(_disposeConnection);
-    await _initSignalR();
+    
+    // Fetch notifications first, don't wait for SignalR
     final repository = ref.read(notificationRepositoryProvider);
-    return repository.getUserNotifications(user.id);
+    final notifications = await repository.getUserNotifications(user.id);
+    
+    // Initialize SignalR in background (non-blocking)
+    _initSignalR().catchError((error) {
+      // SignalR connection failure shouldn't block notifications display
+      print('SignalR connection failed: $error');
+    });
+    
+    return notifications;
   }
 
   Future<void> refresh() async {
@@ -36,22 +47,47 @@ class NotificationController
     if (user == null) return;
     if (_connection != null) return;
 
-    final config = ref.read(appConfigProvider);
-    final connection = HubConnectionBuilder()
-        .withUrl(config.notificationHubUrl)
-        .withAutomaticReconnect()
-        .build();
+    try {
+      final config = ref.read(appConfigProvider);
+      final connection = HubConnectionBuilder()
+          .withUrl(config.notificationHubUrl)
+          .withAutomaticReconnect()
+          .build();
 
-    connection.on('ReceiveNotification', (arguments) {
-      if (arguments == null || arguments.isEmpty) return;
-      final payload = arguments.first as Map<String, dynamic>;
-      final notification = AppNotification.fromJson(payload);
-      state = state.whenData((items) => [notification, ...items]);
-    });
+      connection.on('ReceiveNotification', (arguments) {
+        if (arguments == null || arguments.isEmpty) return;
+        final payload = arguments.first as Map<String, dynamic>;
+        final notification = AppNotification.fromJson(payload);
+        state = state.whenData((items) => [notification, ...items]);
+      });
 
-    await connection.start();
-    await connection.invoke('JoinUserGroup', args: [user.id]);
-    _connection = connection;
+      // Add timeout for SignalR connection
+      final startFuture = connection.start();
+      if (startFuture != null) {
+        await startFuture.timeout(
+          const Duration(seconds: 5),
+          onTimeout: () {
+            throw TimeoutException('SignalR connection timeout');
+          },
+        );
+      }
+      
+      final invokeFuture = connection.invoke('JoinUserGroup', args: [user.id]);
+      if (invokeFuture != null) {
+        await invokeFuture.timeout(
+          const Duration(seconds: 3),
+          onTimeout: () {
+            throw TimeoutException('SignalR join group timeout');
+          },
+        );
+      }
+      
+      _connection = connection;
+    } catch (e) {
+      // Log error but don't throw - SignalR is optional for notifications display
+      print('Failed to initialize SignalR: $e');
+      _connection = null;
+    }
   }
 
   Future<void> _disposeConnection() async {

@@ -6,10 +6,15 @@ class WalletBalance {
   });
 
   factory WalletBalance.fromJson(Map<String, dynamic> json) {
+    // Support both camelCase and PascalCase for compatibility
+    final userIdValue = json['userId'] ?? json['UserId'];
+    final usernameValue = json['username'] ?? json['Username'];
+    final balanceValue = json['balance'] ?? json['Balance'];
+    
     return WalletBalance(
-      userId: json['userId'] as int,
-      username: json['username'] as String? ?? '',
-      balance: (json['balance'] as num).toDouble(),
+      userId: userIdValue as int,
+      username: usernameValue as String? ?? '',
+      balance: (balanceValue as num).toDouble(),
     );
   }
 

@@ -154,6 +154,7 @@ namespace UserService.Controllers
         }
 
         [HttpPost("user/{userId}/credit")]
+        [AllowAnonymous] // Allow service-to-service calls
         public async Task<IActionResult> Credit([FromRoute] int userId, [FromBody] CreditRequest request)
         {
             if (!ModelState.IsValid)
@@ -180,6 +181,7 @@ namespace UserService.Controllers
         }
 
         [HttpPost("user/{userId}/debit")]
+        [AllowAnonymous] // Allow service-to-service calls
         public async Task<IActionResult> Debit([FromRoute] int userId, [FromBody] DebitRequest request)
         {
             if (!ModelState.IsValid)
@@ -210,6 +212,7 @@ namespace UserService.Controllers
         }
 
         [HttpPost("user/{userId}/check-balance")]
+        [AllowAnonymous] // Allow service-to-service calls
         public async Task<IActionResult> CheckBalance([FromRoute] int userId, [FromBody] CheckBalanceRequest request)
         {
             if (!ModelState.IsValid)

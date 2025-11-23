@@ -1,0 +1,133 @@
+{
+  "@@locale": "vi",
+  "appTitle": "Biển Báo Giao Thông",
+  "welcomeBack": "Chào mừng trở lại!",
+  "loginToContinue": "Đăng nhập để tiếp tục đóng góp biển báo giao thông",
+  "email": "Email",
+  "enterYourEmail": "Nhập email của bạn",
+  "pleaseEnterEmail": "Vui lòng nhập email",
+  "invalidEmail": "Email không hợp lệ",
+  "password": "Mật khẩu",
+  "enterYourPassword": "Nhập mật khẩu của bạn",
+  "pleaseEnterPassword": "Vui lòng nhập mật khẩu",
+  "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+  "login": "Đăng nhập",
+  "dontHaveAccount": "Chưa có tài khoản? ",
+  "registerNow": "Đăng ký ngay",
+  "registerSuccess": "Đăng ký thành công, vui lòng đăng nhập.",
+  "createAccount": "Tạo tài khoản",
+  "map": "Bản đồ",
+  "contributions": "Đóng góp",
+  "voting": "Bỏ phiếu",
+  "wallet": "Ví",
+  "notifications": "Thông báo",
+  "profile": "Hồ sơ",
+  "account": "Tài khoản",
+  "advancedSearch": "Tìm kiếm nâng cao",
+  "createNewContribution": "Tạo đóng góp mới",
+  "refresh": "Làm mới",
+  "close": "Đóng",
+  "locationInfo": "Thông tin vị trí",
+  "coordinates": "Tọa độ: {lat}, {lng}",
+  "@coordinates": {
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      },
+      "lng": {
+        "type": "String"
+      }
+    }
+  },
+  "status": "Trạng thái",
+  "validFrom": "Có hiệu lực từ",
+  "validTo": "Có hiệu lực đến",
+  "cannotLoadData": "Không thể tải dữ liệu: {error}",
+  "@cannotLoadData": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "tryAgain": "Thử lại",
+  "noData": "Không có dữ liệu.",
+  "noContributions": "Bạn chưa có đóng góp nào.",
+  "newContribution": "Tạo đóng góp mới",
+  "noNotifications": "Chưa có thông báo nào.",
+  "cannotLoadNotifications": "Không thể tải thông báo: {error}",
+  "@cannotLoadNotifications": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "noPendingContributions": "Không có đóng góp nào chờ duyệt.",
+  "signType": "Loại biển báo: {type}",
+  "@signType": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "agree": "Đồng ý",
+  "disagree": "Không đồng ý",
+  "noWalletData": "Không có dữ liệu ví.",
+  "addMoreCoins": "Nạp thêm coin",
+  "cannotLoadWallet": "Không thể tải ví: {error}",
+  "@cannotLoadWallet": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "updateSuccess": "Cập nhật thông tin thành công",
+  "changePassword": "Đổi mật khẩu",
+  "cancel": "Hủy",
+  "newContributionTitle": "Đóng góp mới",
+  "actionType": "Loại hành động",
+  "add": "Thêm mới",
+  "update": "Cập nhật",
+  "delete": "Xóa",
+  "signTypeLabel": "Loại biển báo",
+  "pleaseEnterSignType": "Vui lòng nhập loại biển báo",
+  "detailedDescription": "Mô tả chi tiết",
+  "latitude": "Vĩ độ: {lat}",
+  "@latitude": {
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      }
+    }
+  },
+  "longitude": "Kinh độ: {lng}",
+  "@longitude": {
+    "placeholders": {
+      "lng": {
+        "type": "String"
+      }
+    }
+  },
+  "takePhoto": "Chụp ảnh biển báo",
+  "submitContribution": "Gửi đóng góp (tốn 5 coin)",
+  "dash": "-",
+  "joinCommunity": "Tham gia cộng đồng",
+  "createAccountToContribute": "Tạo tài khoản để bắt đầu đóng góp biển báo giao thông",
+  "username": "Tên người dùng",
+  "enterUsername": "Nhập tên người dùng",
+  "pleaseEnterUsername": "Vui lòng nhập tên người dùng",
+  "usernameMinLength": "Tên người dùng phải có ít nhất 3 ký tự",
+  "phoneNumber": "Số điện thoại (tùy chọn)",
+  "enterPhoneNumber": "Nhập số điện thoại",
+  "passwordMinHint": "Tối thiểu 6 ký tự",
+  "register": "Đăng ký",
+  "alreadyHaveAccount": "Đã có tài khoản? ",
+  "pleaseCaptureLocation": "Vui lòng lấy vị trí trước",
+  "@pleaseCaptureLocation": {
+    "description": "Thông báo lỗi khi cần vị trí nhưng chưa được lấy"
+  }
+}
+

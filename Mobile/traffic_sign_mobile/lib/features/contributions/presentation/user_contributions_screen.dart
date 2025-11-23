@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../application/user_contributions_controller.dart';
 
 class UserContributionsScreen extends ConsumerWidget {
@@ -16,15 +17,16 @@ class UserContributionsScreen extends ConsumerWidget {
       body: contributionsAsync.when(
         data: (items) {
           if (items.isEmpty) {
+            final l10n = AppLocalizations.of(context)!;
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Bạn chưa có đóng góp nào.'),
+                  Text(l10n.noContributions),
                   const SizedBox(height: 12),
                   ElevatedButton(
                     onPressed: () => context.push('/home/contribution/new'),
-                    child: const Text('Tạo đóng góp mới'),
+                    child: Text(l10n.newContribution),
                   ),
                 ],
               ),
@@ -56,21 +58,24 @@ class UserContributionsScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Không thể tải dữ liệu: $err'),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () => ref
-                    .read(userContributionsControllerProvider.notifier)
-                    .refresh(),
-                child: const Text('Thử lại'),
-              ),
-            ],
-          ),
-        ),
+        error: (err, stack) {
+          final l10n = AppLocalizations.of(context)!;
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(l10n.cannotLoadData(err.toString())),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: () => ref
+                      .read(userContributionsControllerProvider.notifier)
+                      .refresh(),
+                  child: Text(l10n.tryAgain),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

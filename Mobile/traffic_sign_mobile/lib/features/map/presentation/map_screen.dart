@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../l10n/app_localizations.dart';
+
 import '../application/geocoding_controller.dart';
 import '../application/traffic_sign_controller.dart';
 import '../data/models/geocoding_result.dart';
@@ -83,15 +85,18 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                     ],
                     const SizedBox(height: 12),
                   ],
-                  _buildInfoRow('Trạng thái', sign.status),
-                  _buildInfoRow('Có hiệu lực từ', 
+                  _buildInfoRow(AppLocalizations.of(context)!.status, sign.status),
+                  _buildInfoRow(AppLocalizations.of(context)!.validFrom, 
                     '${sign.validFrom.day}/${sign.validFrom.month}/${sign.validFrom.year}'),
                   if (sign.validTo != null)
-                    _buildInfoRow('Có hiệu lực đến', 
+                    _buildInfoRow(AppLocalizations.of(context)!.validTo, 
                       '${sign.validTo!.day}/${sign.validTo!.month}/${sign.validTo!.year}'),
                   const SizedBox(height: 8),
                   Text(
-                    'Tọa độ: ${point.latitude.toStringAsFixed(6)}, ${point.longitude.toStringAsFixed(6)}',
+                    AppLocalizations.of(context)!.coordinates(
+                      point.latitude.toStringAsFixed(6),
+                      point.longitude.toStringAsFixed(6),
+                    ),
                     style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   ),
                   if (sign.imageUrl != null) ...[
@@ -123,7 +128,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Đóng'),
+                child: Text(AppLocalizations.of(context)!.close),
               ),
             ],
           ),
@@ -137,10 +142,11 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       
       final geocodingState = ref.read(geocodingControllerProvider);
       if (geocodingState.selectedLocation != null && mounted) {
+        final l10n = AppLocalizations.of(context)!;
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Thông tin vị trí'),
+            title: Text(l10n.locationInfo),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +164,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                 ],
                 const SizedBox(height: 8),
                 Text(
-                  'Tọa độ: ${point.latitude.toStringAsFixed(6)}, ${point.longitude.toStringAsFixed(6)}',
+                  l10n.coordinates(
+                    point.latitude.toStringAsFixed(6),
+                    point.longitude.toStringAsFixed(6),
+                  ),
                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                 ),
               ],
@@ -166,7 +175,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Đóng'),
+                child: Text(l10n.close),
               ),
             ],
           ),
@@ -212,7 +221,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       body: signsAsync.when(
         data: (signs) {
           final markers = <Marker>[];
-
+    
           // Thêm markers cho biển báo với màu sắc và icon khác nhau theo type
           markers.addAll(
             signs.map<Marker>(
@@ -220,17 +229,17 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                 final markerColor = MapMarkerHelper.getMarkerColor(sign.type);
                 final markerIcon = MapMarkerHelper.getMarkerIcon(sign.type);
                 
-                return Marker(
-                  point: LatLng(sign.latitude, sign.longitude),
-                  width: 60,
-                  height: 60,
+        return Marker(
+          point: LatLng(sign.latitude, sign.longitude),
+          width: 60,
+          height: 60,
                   child: GestureDetector(
                     onTap: () => _onMarkerTap(
                       LatLng(sign.latitude, sign.longitude),
                       sign,
                     ),
-                    child: Tooltip(
-                      message: sign.type,
+          child: Tooltip( 
+            message: sign.type,
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -249,9 +258,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                           size: 36,
                         ),
                       ),
-                    ),
-                  ),
-                );
+            ),
+          ),
+        );
               },
             ),
           );
@@ -274,17 +283,17 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                           color: Colors.blue.withOpacity(0.3),
                           blurRadius: 8,
                           spreadRadius: 2,
-                        ),
-                      ],
-                    ),
+          ),
+        ],
+      ),
                     child: const Icon(
                       Icons.place,
                       color: Colors.blue,
                       size: 40,
                     ),
+                    ),
                   ),
                 ),
-              ),
             );
           }
 
@@ -303,13 +312,13 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                     // Có thể thêm tính năng click vào map để lấy địa chỉ
                   },
                 ),
-                children: [
-                  TileLayer(
-                    urlTemplate:
+            children: [
+              TileLayer(
+                urlTemplate:
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.trafficsign.app',
-                  ),
-                  MarkerLayer(markers: markers),
+              ),
+              MarkerLayer(markers: markers),
                 ],
               ),
               Positioned(
@@ -324,21 +333,24 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Không thể tải dữ liệu: $err'),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () => ref
-                    .read(trafficSignControllerProvider.notifier)
-                    .refreshSigns(),
-                child: const Text('Thử lại'),
-              ),
-            ],
-          ),
-        ),
+        error: (err, stack) {
+          final l10n = AppLocalizations.of(context)!;
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(l10n.cannotLoadData(err.toString())),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: () => ref
+                      .read(trafficSignControllerProvider.notifier)
+                      .refreshSigns(),
+                  child: Text(l10n.tryAgain),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

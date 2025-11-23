@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../contributions/presentation/user_contributions_screen.dart';
 import '../../map/presentation/map_screen.dart';
 import '../../notifications/presentation/notifications_screen.dart';
@@ -28,39 +29,43 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     NotificationsScreen(),
   ];
 
-  final List<String> _tabTitles = const [
-    'Bản đồ',
-    'Đóng góp',
-    'Bỏ phiếu',
-    'Ví',
-    'Thông báo',
-  ];
+  List<String> _getTabTitles(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      l10n.map,
+      l10n.contributions,
+      l10n.voting,
+      l10n.wallet,
+      l10n.notifications,
+    ];
+  }
 
   List<Widget> _getAppBarActions(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     switch (_index) {
       case 0: // Map
         return [
           IconButton(
             icon: const Icon(Icons.filter_alt),
-            tooltip: 'Tìm kiếm nâng cao',
+            tooltip: l10n.advancedSearch,
             onPressed: () => context.push('/home/map/search'),
           ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.account_circle_outlined),
-            tooltip: 'Tài khoản',
+            tooltip: l10n.account,
             onSelected: (value) {
               if (value == 'profile') {
                 context.push('/home/profile');
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'profile',
                 child: Row(
                   children: [
-                    Icon(Icons.person_outline, size: 20),
-                    SizedBox(width: 8),
-                    Text('Hồ sơ'),
+                    const Icon(Icons.person_outline, size: 20),
+                    const SizedBox(width: 8),
+                    Text(l10n.profile),
                   ],
                 ),
               ),
@@ -71,25 +76,25 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         return [
           IconButton(
             icon: const Icon(Icons.add),
-            tooltip: 'Tạo đóng góp mới',
+            tooltip: l10n.createNewContribution,
             onPressed: () => context.push('/home/contribution/new'),
           ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.account_circle_outlined),
-            tooltip: 'Tài khoản',
+            tooltip: l10n.account,
             onSelected: (value) {
               if (value == 'profile') {
                 context.push('/home/profile');
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'profile',
                 child: Row(
                   children: [
-                    Icon(Icons.person_outline, size: 20),
-                    SizedBox(width: 8),
-                    Text('Hồ sơ'),
+                    const Icon(Icons.person_outline, size: 20),
+                    const SizedBox(width: 8),
+                    Text(l10n.profile),
                   ],
                 ),
               ),
@@ -100,26 +105,26 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         return [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Làm mới',
+            tooltip: l10n.refresh,
             onPressed: () =>
                 ref.read(walletControllerProvider.notifier).refresh(),
           ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.account_circle_outlined),
-            tooltip: 'Tài khoản',
+            tooltip: l10n.account,
             onSelected: (value) {
               if (value == 'profile') {
                 context.push('/home/profile');
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'profile',
                 child: Row(
                   children: [
-                    Icon(Icons.person_outline, size: 20),
-                    SizedBox(width: 8),
-                    Text('Hồ sơ'),
+                    const Icon(Icons.person_outline, size: 20),
+                    const SizedBox(width: 8),
+                    Text(l10n.profile),
                   ],
                 ),
               ),
@@ -130,26 +135,26 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         return [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Làm mới',
+            tooltip: l10n.refresh,
             onPressed: () =>
                 ref.read(notificationControllerProvider.notifier).refresh(),
           ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.account_circle_outlined),
-            tooltip: 'Tài khoản',
+            tooltip: l10n.account,
             onSelected: (value) {
               if (value == 'profile') {
                 context.push('/home/profile');
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'profile',
                 child: Row(
                   children: [
-                    Icon(Icons.person_outline, size: 20),
-                    SizedBox(width: 8),
-                    Text('Hồ sơ'),
+                    const Icon(Icons.person_outline, size: 20),
+                    const SizedBox(width: 8),
+                    Text(l10n.profile),
                   ],
                 ),
               ),
@@ -160,20 +165,20 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         return [
           PopupMenuButton<String>(
             icon: const Icon(Icons.account_circle_outlined),
-            tooltip: 'Tài khoản',
+            tooltip: l10n.account,
             onSelected: (value) {
               if (value == 'profile') {
                 context.push('/home/profile');
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'profile',
                 child: Row(
                   children: [
-                    Icon(Icons.person_outline, size: 20),
-                    SizedBox(width: 8),
-                    Text('Hồ sơ'),
+                    const Icon(Icons.person_outline, size: 20),
+                    const SizedBox(width: 8),
+                    Text(l10n.profile),
                   ],
                 ),
               ),
@@ -185,35 +190,38 @@ class _HomeShellState extends ConsumerState<HomeShell> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final tabTitles = _getTabTitles(context);
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text(_tabTitles[_index]),
+        title: Text(tabTitles[_index]),
         actions: _getAppBarActions(context),
       ),
       body: _tabs[_index],
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: (value) => setState(() => _index = value),
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.map_outlined),
-            label: 'Bản đồ',
+            icon: const Icon(Icons.map_outlined),
+            label: l10n.map,
           ),
           NavigationDestination(
-            icon: Icon(Icons.add_location_alt_outlined),
-            label: 'Đóng góp',
+            icon: const Icon(Icons.add_location_alt_outlined),
+            label: l10n.contributions,
           ),
           NavigationDestination(
-            icon: Icon(Icons.how_to_vote),
-            label: 'Bỏ phiếu',
+            icon: const Icon(Icons.how_to_vote),
+            label: l10n.voting,
           ),
           NavigationDestination(
-            icon: Icon(Icons.account_balance_wallet_outlined),
-            label: 'Ví',
+            icon: const Icon(Icons.account_balance_wallet_outlined),
+            label: l10n.wallet,
           ),
           NavigationDestination(
-            icon: Icon(Icons.notifications_outlined),
-            label: 'Thông báo',
+            icon: const Icon(Icons.notifications_outlined),
+            label: l10n.notifications,
           ),
         ],
       ),

@@ -330,11 +330,50 @@ namespace ContributionService.Services
                 
                 if (!checkResponse.IsSuccessStatusCode)
                 {
-                    throw new InvalidOperationException($"Không đủ coin để submit contribution. Cần {SubmissionCost} coin.");
+                    // Try to extract error message from response
+                    string errorMessage = $"Không đủ coin để submit contribution. Cần {SubmissionCost} coin.";
+                    try
+                    {
+                        var errorContent = await checkResponse.Content.ReadFromJsonAsync<JsonElement>();
+                        if (errorContent.TryGetProperty("message", out var messageProp))
+                        {
+                            errorMessage = messageProp.GetString() ?? errorMessage;
+                        }
+                        else if (errorContent.TryGetProperty("Message", out var messagePropPascal))
+                        {
+                            errorMessage = messagePropPascal.GetString() ?? errorMessage;
+                        }
+                    }
+                    catch
+                    {
+                        // Use default message if parsing fails
+                    }
+                    throw new InvalidOperationException(errorMessage);
                 }
 
                 var checkResult = await checkResponse.Content.ReadFromJsonAsync<JsonElement>();
-                if (checkResult.TryGetProperty("hasEnoughBalance", out var hasEnough) && !hasEnough.GetBoolean())
+                // Try PascalCase first (default C# JSON serialization), then camelCase
+                bool hasEnough = false;
+                bool propertyFound = false;
+                
+                if (checkResult.TryGetProperty("HasEnoughBalance", out var hasEnoughPascal))
+                {
+                    hasEnough = hasEnoughPascal.GetBoolean();
+                    propertyFound = true;
+                }
+                else if (checkResult.TryGetProperty("hasEnoughBalance", out var hasEnoughCamel))
+                {
+                    hasEnough = hasEnoughCamel.GetBoolean();
+                    propertyFound = true;
+                }
+                
+                // If property not found, throw error instead of defaulting to false
+                if (!propertyFound)
+                {
+                    throw new InvalidOperationException($"Lỗi kiểm tra số dư: Không thể đọc kết quả từ UserService. Vui lòng thử lại.");
+                }
+                
+                if (!hasEnough)
                 {
                     throw new InvalidOperationException($"Không đủ coin để submit contribution. Cần {SubmissionCost} coin.");
                 }

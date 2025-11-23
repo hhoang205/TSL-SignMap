@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+      sdk: flutter
 
   cupertino_icons: ^1.0.8
   flutter_riverpod: ^2.5.1
@@ -39,7 +41,7 @@ dependencies:
   shared_preferences: ^2.3.0
   flutter_dotenv: ^5.1.0
   equatable: ^2.0.5
-  intl: ^0.19.0
+  intl: ^0.20.2
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
   geolocator: ^11.0.0
@@ -75,6 +77,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Enable localization code generation
+  generate: true
 
   assets:
     - assets/images/

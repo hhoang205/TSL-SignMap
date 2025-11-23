@@ -28,53 +28,53 @@ class WalletScreen extends ConsumerWidget {
           return Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Xin chào, ${user?.username ?? ''}',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              'Số dư hiện tại',
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
-                            Text(
-                              '${balance.balance.toStringAsFixed(1)} coins',
-                              style: Theme.of(context).textTheme.displaySmall,
-                            ),
-                          ],
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Xin chào, ${user?.username ?? ''}',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'Số dư hiện tại',
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
+                        Text(
+                          '${balance.balance.toStringAsFixed(1)} coins',
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Tính năng nạp coin sẽ tích hợp với cổng thanh toán trong giai đoạn tiếp theo.\nTạm thời bạn có thể liên hệ admin.',
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    ElevatedButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Tính năng nạp coin sẽ tích hợp với cổng thanh toán trong giai đoạn tiếp theo.\nTạm thời bạn có thể liên hệ admin.',
-                            ),
-                          ),
-                        );
-                      },
-                      child: const Text('Nạp thêm coin'),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Quy đổi tham khảo: 1 USD ≈ ${formatter.format(24000)} cho 10 coins',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
+                    );
+                  },
+                  child: const Text('Nạp thêm coin'),
                 ),
+                const SizedBox(height: 12),
+                Text(
+                  'Quy đổi tham khảo: 1 USD ≈ ${formatter.format(24000)} cho 10 coins',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
               ),
               const Divider(),
               Expanded(
